@@ -12,5 +12,12 @@
             <argument type="service" id="shipping_method.repository" />
             <argument type="service" id="bitbag.inpost.finder.shipping_parameters_finder" />
         </service>
+
+        <service class="BitBag\InPost\Factory\CreateCustomFieldsForPackageDetails"
+                 id="bitbag.inpost.factory.create_custom_fields_for_package_details"
+                 public="true"
+        >
+            <argument type="service" id="custom_field_set.repository" />
+        </service>
     </services>
 </container>

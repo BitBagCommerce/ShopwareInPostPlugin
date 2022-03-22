@@ -9,7 +9,7 @@ use DateTime;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 
-class CreateShippingMethodFactory implements CreateShippingMethodFactoryInterface
+final class CreateShippingMethodFactory implements CreateShippingMethodFactoryInterface
 {
     private EntityRepositoryInterface $shippingMethodRepository;
 
