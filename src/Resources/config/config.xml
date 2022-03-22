@@ -6,13 +6,13 @@
         <title>API Configuration</title>
 
         <input-field>
-            <name>api_login</name>
+            <name>apiLogin</name>
             <label>Login</label>
             <placeholder>API login</placeholder>
         </input-field>
 
         <input-field>
-            <name>api_password</name>
+            <name>apiPassword</name>
             <label>Password</label>
             <placeholder>API password</placeholder>
         </input-field>

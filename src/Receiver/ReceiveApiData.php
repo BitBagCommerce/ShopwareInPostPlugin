@@ -18,8 +18,8 @@ final class ReceiveApiData implements ReceiveApiDataInterface
     public function getData(): array
     {
         return [
-            'login' => $this->systemConfigService->get('BitBagInPost.config.api_login'),
-            'password' => $this->systemConfigService->get('BitBagInPost.config.api_password'),
+            'login' => $this->systemConfigService->get('BitBagInPost.config.apiLogin'),
+            'password' => $this->systemConfigService->get('BitBagInPost.config.apiPassword'),
         ];
     }
 }
