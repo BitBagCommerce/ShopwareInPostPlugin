@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
+
+    <card>
+        <title>API Configuration</title>
+
+        <input-field>
+            <name>api_login</name>
+            <label>Login</label>
+            <placeholder>API login</placeholder>
+        </input-field>
+
+        <input-field>
+            <name>api_password</name>
+            <label>Password</label>
+            <placeholder>API password</placeholder>
+        </input-field>
+    </card>
+</config>

@@ -13,7 +13,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\ContainsFilter;
 use Shopware\Core\Framework\Plugin;
 use Shopware\Core\Framework\Plugin\Context\ActivateContext;
 
-class BitBagInPost extends Plugin
+final class BitBagInPost extends Plugin
 {
     public function activate(ActivateContext $context): void
     {
