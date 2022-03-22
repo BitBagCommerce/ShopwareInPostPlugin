@@ -6,15 +6,30 @@
         <title>API Configuration</title>
 
         <input-field>
-            <name>apiLogin</name>
-            <label>Login</label>
-            <placeholder>API login</placeholder>
+            <name>inPostOrganizationId</name>
+            <label>Organization ID</label>
+            <placeholder>Organization ID</placeholder>
         </input-field>
 
         <input-field>
-            <name>apiPassword</name>
-            <label>Password</label>
-            <placeholder>API password</placeholder>
+            <name>inPostAccessToken</name>
+            <label>Access token</label>
+            <placeholder>Access token</placeholder>
+        </input-field>
+
+        <input-field type="single-select">
+            <name>inPostEnvironment</name>
+            <placeholder>Choose environment</placeholder>
+            <options>
+                <option>
+                    <id>sandbox</id>
+                    <name>Sandbox</name>
+                </option>
+                <option>
+                    <id>production</id>
+                    <name>Production</name>
+                </option>
+            </options>
         </input-field>
     </card>
 </config>
