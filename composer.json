@@ -1,0 +1,33 @@
+{
+    "name": "bitbag/inpost",
+    "description": "Plugin BitBag InPost for Shopware",
+    "version": "1.0.0",
+    "type": "shopware-platform-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "BitBag"
+        }
+    ],
+    "require": {
+        "shopware/core": "6.4.*"
+    }
+    ,
+    "require-dev": {
+        "roave/security-advisories": "dev-latest"
+    },
+    "extra": {
+        "shopware-plugin-class": "BitBag\\InPost\\BitBagInPost",
+        "label": {
+            "en-GB": "BitBag InPost"
+        },
+        "description": {
+            "en-GB": "This plugin allow to checkout order with InPost shipping method"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "BitBag\\InPost\\": "src/"
+        }
+    }
+}
