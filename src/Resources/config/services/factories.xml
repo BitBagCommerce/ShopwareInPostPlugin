@@ -5,12 +5,20 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
     <services>
-        <service class="BitBag\ShopwareInPostPlugin\Factory\CreateShippingMethodFactory"
+        <service class="BitBag\ShopwareInPostPlugin\Factory\ShippingMethodFactory"
                  id="BitBag\ShopwareInPostPlugin\Factory\CreateShippingMethodFactory"
                  public="true"
         >
             <argument type="service" id="shipping_method.repository" />
-            <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\ShippingParametersFinder" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\DeliveryTimeFinder" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\RuleFinder" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\CreateDeliveryTimeFactory" />
+            <argument type="service" id="rule.repository" />
+            <argument type="service" id="delivery_time.repository" />
         </service>
+
+        <service class="BitBag\ShopwareInPostPlugin\Factory\DeliveryTimeFactory"
+                 id="BitBag\ShopwareInPostPlugin\Factory\CreateDeliveryTimeFactory"
+        />
     </services>
 </container>

@@ -6,7 +6,7 @@ namespace BitBag\ShopwareInPostPlugin\Factory;
 
 use Shopware\Core\Framework\Context;
 
-interface CreateShippingMethodFactoryInterface
+interface DeliveryTimeFactoryInterface
 {
-    public function create(string $name, Context $context): void;
+    public function create(Context $context): array;
 }

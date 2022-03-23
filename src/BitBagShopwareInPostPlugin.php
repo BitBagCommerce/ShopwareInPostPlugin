@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin;
 
-use BitBag\ShopwareInPostPlugin\Factory\CreateShippingMethodFactory;
+use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodFactory;
 use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodFactoryInterface;
 use Shopware\Core\Checkout\Shipping\ShippingMethodEntity;
 use Shopware\Core\Framework\Context;
@@ -22,14 +22,14 @@ final class BitBagShopwareInPostPlugin extends Plugin
     private EntityRepositoryInterface $shippingMethodRepository;
 
     /** @psalm-suppress PropertyNotSetInConstructor */
-    private CreateShippingMethodFactory $createShippingMethodFactory;
+    private ShippingMethodFactory $createShippingMethodFactory;
 
     public function setShippingMethodRepository(EntityRepositoryInterface $shippingMethodRepository): void
     {
         $this->shippingMethodRepository = $shippingMethodRepository;
     }
 
-    public function setCreateShippingMethodFactory(CreateShippingMethodFactory $createShippingMethodFactory): void
+    public function setCreateShippingMethodFactory(ShippingMethodFactory $createShippingMethodFactory): void
     {
         $this->createShippingMethodFactory = $createShippingMethodFactory;
     }
@@ -52,11 +52,13 @@ final class BitBagShopwareInPostPlugin extends Plugin
         $criteria = (new Criteria())->addFilter(new ContainsFilter('name', $shippingKey));
 
         $shippingMethod = $this->shippingMethodRepository->searchIds($criteria, $context);
-        if ($shippingMethod->getTotal()) {
+        if (0 !== $shippingMethod->getTotal()) {
             return;
         }
 
-        $this->createShippingMethodFactory->create($shippingKey, $context);
+        $inPostShippingMethod = $this->createShippingMethodFactory->create($shippingKey, $context);
+
+        $this->shippingMethodRepository->create([$inPostShippingMethod], $context);
     }
 
     private function activateShippingMethod(Context $context): void
