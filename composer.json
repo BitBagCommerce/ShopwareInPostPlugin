@@ -16,7 +16,8 @@
     "require-dev": {
         "roave/security-advisories": "dev-latest",
         "psalm/plugin-symfony": "^3.1",
-        "sylius-labs/coding-standard": "^4.1"
+        "sylius-labs/coding-standard": "^4.1",
+        "phpunit/phpunit": "^9.5"
     },
     "extra": {
         "shopware-plugin-class": "BitBag\\ShopwareInPostPlugin\\BitBagShopwareInPostPlugin",
