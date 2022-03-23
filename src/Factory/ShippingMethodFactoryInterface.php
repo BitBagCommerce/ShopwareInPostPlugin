@@ -1,6 +1,6 @@
 <?php
 
-namespace BitBag\InPost\Factory;
+namespace BitBag\ShopwareInPostPlugin\Factory;
 
 interface ShippingMethodFactoryInterface
 {

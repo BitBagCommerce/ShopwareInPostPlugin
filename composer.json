@@ -1,6 +1,6 @@
 {
-    "name": "bitbag/inpost",
-    "description": "Plugin BitBag InPost for Shopware",
+    "name": "bitbag/shopware-inpost-plugin",
+    "description": "InPost integration for Shopware",
     "version": "1.0.0",
     "type": "shopware-platform-plugin",
     "license": "MIT",
@@ -17,7 +17,7 @@
         "roave/security-advisories": "dev-latest"
     },
     "extra": {
-        "shopware-plugin-class": "BitBag\\InPost\\BitBagInPost",
+        "shopware-plugin-class": "BitBag\\ShopwareInPostPlugin\\BitBagShopwareInPostPlugin",
         "label": {
             "en-GB": "BitBag InPost"
         },
@@ -27,7 +27,7 @@
     },
     "autoload": {
         "psr-4": {
-            "BitBag\\InPost\\": "src/"
+            "BitBag\\ShopwareInPostPlugin\\": "src/"
         }
     }
 }

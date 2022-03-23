@@ -5,8 +5,8 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
     <services>
-        <service class="BitBag\InPost\Finder\ShippingParametersFinder"
-                 id="bitbag.inpost.finder.shipping_parameters_finder"
+        <service class="BitBag\ShopwareInPostPlugin\Finder\ShippingParametersFinder"
+                 id="BitBag\ShopwareInPostPlugin\Finder\ShippingParametersFinder"
         >
             <argument type="service" id="delivery_time.repository" />
             <argument type="service" id="rule.repository" />

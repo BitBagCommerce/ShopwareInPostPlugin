@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace BitBag\InPost\Factory;
+namespace BitBag\ShopwareInPostPlugin\Factory;
 
-use BitBag\InPost\Finder\ShippingParametersFinder;
+use BitBag\ShopwareInPostPlugin\Finder\ShippingParametersFinder;
 use DateTime;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;

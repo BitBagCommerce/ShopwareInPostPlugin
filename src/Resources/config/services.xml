@@ -6,4 +6,18 @@
     <imports>
         <import resource="services/*.xml"/>
     </imports>
+
+    <services>
+        <service class="BitBag\ShopwareInPostPlugin\BitBagShopwareInPostPlugin"
+                 id="BitBag\ShopwareInPostPlugin\BitBagShopwareInPostPlugin"
+        >
+            <call method="setShippingMethodRepository">
+                <argument type="service" id="shipping_method.repository" />
+            </call>
+
+            <call method="setCreateShippingMethodFactory">
+                <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\CreateShippingMethodFactory" />
+            </call>
+        </service>
+    </services>
 </container>
