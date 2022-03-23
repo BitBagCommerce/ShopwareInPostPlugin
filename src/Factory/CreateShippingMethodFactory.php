@@ -30,7 +30,7 @@ class CreateShippingMethodFactory implements CreateShippingMethodFactoryInterfac
         $inPostShippingMethod = [
             'name' => $name,
             'active' => true,
-            'description' => $name . " shipping method",
+            'description' => $name . ' shipping method',
             'taxType' => 'auto',
             'translated' => [
                 'name' => $name,

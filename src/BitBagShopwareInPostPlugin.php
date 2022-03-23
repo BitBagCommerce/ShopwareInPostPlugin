@@ -15,11 +15,14 @@ use Shopware\Core\Framework\Plugin;
 use Shopware\Core\Framework\Plugin\Context\ActivateContext;
 use Shopware\Core\Framework\Plugin\Context\DeactivateContext;
 
-class BitBagShopwareInPostPlugin extends Plugin
+/** @psalm-suppress PropertyNotSetInConstructor */
+final class BitBagShopwareInPostPlugin extends Plugin
 {
-    private ?EntityRepositoryInterface $shippingMethodRepository;
+    /** @psalm-suppress PropertyNotSetInConstructor */
+    private EntityRepositoryInterface $shippingMethodRepository;
 
-    private ?CreateShippingMethodFactory $createShippingMethodFactory;
+    /** @psalm-suppress PropertyNotSetInConstructor */
+    private CreateShippingMethodFactory $createShippingMethodFactory;
 
     public function setShippingMethodRepository(EntityRepositoryInterface $shippingMethodRepository): void
     {
@@ -35,7 +38,6 @@ class BitBagShopwareInPostPlugin extends Plugin
     {
         $this->createShippingMethod($activateContext->getContext());
         $this->activateShippingMethod($activateContext->getContext());
-
     }
 
     public function deactivate(DeactivateContext $deactivateContext): void
@@ -72,8 +74,8 @@ class BitBagShopwareInPostPlugin extends Plugin
             $this->shippingMethodRepository->update([
                 [
                     'id' => $firstShippingMethod->getId(),
-                    'active' => true
-                ]
+                    'active' => true,
+                ],
             ], $context);
         }
     }
@@ -83,11 +85,9 @@ class BitBagShopwareInPostPlugin extends Plugin
         $criteria = (new Criteria())->addFilter(new ContainsFilter('name', ShippingMethodFactoryInterface::SHIPPING_KEY));
 
         $shippingMethod = $this->shippingMethodRepository->search($criteria, $context);
-        file_put_contents('shipping_method.json', json_encode($shippingMethod));
         if (0 !== $shippingMethod->getTotal()) {
             /** @var ShippingMethodEntity $firstShippingMethod */
             $firstShippingMethod = $shippingMethod->first();
-            file_put_contents('firstShippingMethod.json', json_encode($firstShippingMethod));
             if (false === $firstShippingMethod->getActive()) {
                 return;
             }
@@ -95,8 +95,8 @@ class BitBagShopwareInPostPlugin extends Plugin
             $this->shippingMethodRepository->update([
                 [
                     'id' => $firstShippingMethod->getId(),
-                    'active' => false
-                ]
+                    'active' => false,
+                ],
             ], $context);
         }
     }

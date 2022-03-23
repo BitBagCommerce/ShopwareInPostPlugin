@@ -14,7 +14,9 @@
     }
     ,
     "require-dev": {
-        "roave/security-advisories": "dev-latest"
+        "roave/security-advisories": "dev-latest",
+        "psalm/plugin-symfony": "^3.1",
+        "sylius-labs/coding-standard": "^4.1"
     },
     "extra": {
         "shopware-plugin-class": "BitBag\\ShopwareInPostPlugin\\BitBagShopwareInPostPlugin",
@@ -28,6 +30,11 @@
     "autoload": {
         "psr-4": {
             "BitBag\\ShopwareInPostPlugin\\": "src/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     }
 }
