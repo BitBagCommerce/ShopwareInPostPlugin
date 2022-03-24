@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BitBag\InPost\Factory;
+namespace BitBag\ShopwareInPostPlugin\Factory;
 
 use Shopware\Core\Framework\Context;
 

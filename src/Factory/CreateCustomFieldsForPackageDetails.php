@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BitBag\InPost\Factory;
+namespace BitBag\ShopwareInPostPlugin\Factory;
 
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
@@ -21,16 +21,16 @@ final class CreateCustomFieldsForPackageDetails implements CreateCustomFieldsFor
     {
         $this->customFieldSetRepository->upsert([
             [
-                'name' => ShippingMethodFactoryInterface::SHIPPING_KEY.' package details',
+                'name' => ShippingMethodPayloadFactoryInterface::SHIPPING_KEY . ' package details',
                 'config' => [
                     'label' => [
-                        'en-GB' => ShippingMethodFactoryInterface::SHIPPING_KEY.' package details'
-                    ]
+                        'en-GB' => ShippingMethodPayloadFactoryInterface::SHIPPING_KEY . ' package details',
+                    ],
                 ],
                 'customFields' => [
                     [
                         'name' => 'size',
-                        'label' => "Package size",
+                        'label' => 'Package size',
                         'type' => CustomFieldTypes::TEXT,
                         'config' => [
                             'label' => [
@@ -40,7 +40,7 @@ final class CreateCustomFieldsForPackageDetails implements CreateCustomFieldsFor
                     ],
                     [
                         'name' => 'locker',
-                        'label' => "Package locker",
+                        'label' => 'Package locker',
                         'type' => CustomFieldTypes::TEXT,
                         'config' => [
                             'label' => [
@@ -50,9 +50,9 @@ final class CreateCustomFieldsForPackageDetails implements CreateCustomFieldsFor
                     ],
                 ],
                 'relations' => [[
-                    'entityName' => 'order'
+                    'entityName' => 'order',
                 ]],
-            ]
+            ],
         ], $context);
     }
 }
