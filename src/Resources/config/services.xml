@@ -16,7 +16,7 @@
             </call>
 
             <call method="setCreateShippingMethodFactory">
-                <argument type="service" id="ShippingMethodFactory" />
+                <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\CreateShippingMethodFactory" />
             </call>
         </service>
     </services>
