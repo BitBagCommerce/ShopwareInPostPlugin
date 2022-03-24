@@ -39,12 +39,12 @@ final class BitBagShopwareInPostPlugin extends Plugin
     public function activate(ActivateContext $activateContext): void
     {
         $this->createShippingMethod($activateContext->getContext());
-        $this->activateShippingMethod($activateContext->getContext());
+        $this->toggleActiveShippingMethod(true, $activateContext->getContext());
     }
 
     public function deactivate(DeactivateContext $deactivateContext): void
     {
-        $this->deactivateShippingMethod($deactivateContext->getContext());
+        $this->toggleActiveShippingMethod(false, $deactivateContext->getContext());
     }
 
     private function createShippingMethod(Context $context): void
@@ -62,39 +62,17 @@ final class BitBagShopwareInPostPlugin extends Plugin
         $this->shippingMethodRepository->create([$inPostShippingMethod], $context);
     }
 
-    private function activateShippingMethod(Context $context): void
+    private function toggleActiveShippingMethod(bool $active, Context $context): void
     {
         $shippingMethod = $this->shippingMethodFinder->searchByShippingKey($context);
         if (0 !== $shippingMethod->getTotal()) {
             /** @var ShippingMethodEntity $firstShippingMethod */
             $firstShippingMethod = $shippingMethod->first();
-            if ($firstShippingMethod->getActive()) {
-                return;
-            }
 
             $this->shippingMethodRepository->update([
                 [
                     'id' => $firstShippingMethod->getId(),
-                    'active' => true,
-                ],
-            ], $context);
-        }
-    }
-
-    private function deactivateShippingMethod(Context $context): void
-    {
-        $shippingMethod = $this->shippingMethodFinder->searchByShippingKey($context);
-        if (0 !== $shippingMethod->getTotal()) {
-            /** @var ShippingMethodEntity $firstShippingMethod */
-            $firstShippingMethod = $shippingMethod->first();
-            if (false === $firstShippingMethod->getActive()) {
-                return;
-            }
-
-            $this->shippingMethodRepository->update([
-                [
-                    'id' => $firstShippingMethod->getId(),
-                    'active' => false,
+                    'active' => $active,
                 ],
             ], $context);
         }
