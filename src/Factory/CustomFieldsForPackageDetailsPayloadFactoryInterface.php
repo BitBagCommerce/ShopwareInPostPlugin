@@ -6,7 +6,7 @@ namespace BitBag\ShopwareInPostPlugin\Factory;
 
 use Shopware\Core\Framework\Context;
 
-interface CustomFieldsForPackageDetailsPayloadInterface
+interface CustomFieldsForPackageDetailsPayloadFactoryInterface
 {
     public function create(Context $context): void;
 }
