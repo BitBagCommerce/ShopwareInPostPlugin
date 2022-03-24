@@ -17,7 +17,7 @@
 
         <service id="BitBag\ShopwareInPostPlugin\Factory\DeliveryTimePayloadFactory" />
 
-        <service id="BitBag\ShopwareInPostPlugin\Factory\CreateCustomFieldsForPackageDetails"
+        <service id="CustomFieldsForPackageDetailsPayload"
         >
             <argument type="service" id="custom_field_set.repository" />
         </service>

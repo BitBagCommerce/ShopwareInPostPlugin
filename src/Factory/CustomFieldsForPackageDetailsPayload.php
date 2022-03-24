@@ -8,7 +8,7 @@ use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\System\CustomField\CustomFieldTypes;
 
-final class CreateCustomFieldsForPackageDetails implements CreateCustomFieldsForPackageDetailsInterface
+final class CustomFieldsForPackageDetailsPayload implements CustomFieldsForPackageDetailsPayloadInterface
 {
     private EntityRepositoryInterface $customFieldSetRepository;
 
