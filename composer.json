@@ -1,0 +1,41 @@
+{
+    "name": "bitbag/shopware-inpost-plugin",
+    "description": "InPost integration for Shopware",
+    "version": "1.0.0",
+    "type": "shopware-platform-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "BitBag"
+        }
+    ],
+    "require": {
+        "shopware/core": "6.4.*"
+    }
+    ,
+    "require-dev": {
+        "roave/security-advisories": "dev-latest",
+        "psalm/plugin-symfony": "^3.1",
+        "sylius-labs/coding-standard": "^4.1",
+        "phpunit/phpunit": "^9.5"
+    },
+    "extra": {
+        "shopware-plugin-class": "BitBag\\ShopwareInPostPlugin\\BitBagShopwareInPostPlugin",
+        "label": {
+            "en-GB": "BitBag InPost"
+        },
+        "description": {
+            "en-GB": "This plugin allow to checkout order with InPost shipping method"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "BitBag\\ShopwareInPostPlugin\\": "src/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

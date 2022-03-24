@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <imports>
+        <import resource="services/*.xml"/>
+    </imports>
+
+    <services>
+        <service class="BitBag\ShopwareInPostPlugin\BitBagShopwareInPostPlugin"
+                 id="BitBag\ShopwareInPostPlugin\BitBagShopwareInPostPlugin"
+        >
+            <call method="setShippingMethodRepository">
+                <argument type="service" id="shipping_method.repository" />
+            </call>
+
+            <call method="setShippingMethodFactory">
+                <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\ShippingMethodPayloadFactory" />
+            </call>
+
+            <call method="setShippingMethodFinder">
+                <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\ShippingMethodFinder" />
+            </call>
+        </service>
+    </services>
+</container>
