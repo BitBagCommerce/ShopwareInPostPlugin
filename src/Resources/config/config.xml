@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
+
+    <card>
+        <title>API Configuration</title>
+
+        <input-field>
+            <name>inPostOrganizationId</name>
+            <label>Organization ID</label>
+            <placeholder>Organization ID</placeholder>
+        </input-field>
+
+        <input-field>
+            <name>inPostAccessToken</name>
+            <label>Access token</label>
+            <placeholder>Access token</placeholder>
+        </input-field>
+
+        <input-field type="single-select">
+            <name>inPostEnvironment</name>
+            <placeholder>Choose environment</placeholder>
+            <options>
+                <option>
+                    <id>sandbox</id>
+                    <name>Sandbox</name>
+                </option>
+                <option>
+                    <id>production</id>
+                    <name>Production</name>
+                </option>
+            </options>
+        </input-field>
+    </card>
+</config>
