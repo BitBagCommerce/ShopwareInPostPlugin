@@ -15,8 +15,12 @@
                 <argument type="service" id="shipping_method.repository" />
             </call>
 
-            <call method="setCreateShippingMethodFactory">
+            <call method="setShippingMethodFactory">
                 <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\CreateShippingMethodFactory" />
+            </call>
+
+            <call method="setShippingMethodFinder">
+                <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\ShippingMethodFinder" />
             </call>
         </service>
     </services>

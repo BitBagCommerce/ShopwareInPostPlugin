@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin;
 
-use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodFactory;
 use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodFactoryInterface;
+use BitBag\ShopwareInPostPlugin\Finder\ShippingMethodFinderInterface;
 use Shopware\Core\Checkout\Shipping\ShippingMethodEntity;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\ContainsFilter;
 use Shopware\Core\Framework\Plugin;
 use Shopware\Core\Framework\Plugin\Context\ActivateContext;
 use Shopware\Core\Framework\Plugin\Context\DeactivateContext;
@@ -22,16 +20,24 @@ final class BitBagShopwareInPostPlugin extends Plugin
     private EntityRepositoryInterface $shippingMethodRepository;
 
     /** @psalm-suppress PropertyNotSetInConstructor */
-    private ShippingMethodFactory $createShippingMethodFactory;
+    private ShippingMethodFactoryInterface $shippingMethodFactory;
+
+    /** @psalm-suppress PropertyNotSetInConstructor */
+    private ShippingMethodFinderInterface $shippingMethodFinder;
 
     public function setShippingMethodRepository(EntityRepositoryInterface $shippingMethodRepository): void
     {
         $this->shippingMethodRepository = $shippingMethodRepository;
     }
 
-    public function setCreateShippingMethodFactory(ShippingMethodFactory $createShippingMethodFactory): void
+    public function setShippingMethodFactory(ShippingMethodFactoryInterface $shippingMethodFactory): void
     {
-        $this->createShippingMethodFactory = $createShippingMethodFactory;
+        $this->shippingMethodFactory = $shippingMethodFactory;
+    }
+
+    public function setShippingMethodFinder(ShippingMethodFinderInterface $shippingMethodFinder): void
+    {
+        $this->shippingMethodFinder = $shippingMethodFinder;
     }
 
     public function activate(ActivateContext $activateContext): void
@@ -47,29 +53,26 @@ final class BitBagShopwareInPostPlugin extends Plugin
 
     private function createShippingMethod(Context $context): void
     {
-        $shippingKey = ShippingMethodFactoryInterface::SHIPPING_KEY;
-
-        $criteria = (new Criteria())->addFilter(new ContainsFilter('name', $shippingKey));
-
-        $shippingMethod = $this->shippingMethodRepository->searchIds($criteria, $context);
+        $shippingMethod = $this->shippingMethodFinder->searchIdsByShippingKey($context);
         if (0 !== $shippingMethod->getTotal()) {
             return;
         }
 
-        $inPostShippingMethod = $this->createShippingMethodFactory->create($shippingKey, $context);
+        $inPostShippingMethod = $this->shippingMethodFactory->create(
+            ShippingMethodFactoryInterface::SHIPPING_KEY,
+            $context
+        );
 
         $this->shippingMethodRepository->create([$inPostShippingMethod], $context);
     }
 
     private function activateShippingMethod(Context $context): void
     {
-        $criteria = (new Criteria())->addFilter(new ContainsFilter('name', ShippingMethodFactoryInterface::SHIPPING_KEY));
-
-        $shippingMethod = $this->shippingMethodRepository->search($criteria, $context);
+        $shippingMethod = $this->shippingMethodFinder->searchByShippingKey($context);
         if (0 !== $shippingMethod->getTotal()) {
             /** @var ShippingMethodEntity $firstShippingMethod */
             $firstShippingMethod = $shippingMethod->first();
-            if (true === $firstShippingMethod->getActive()) {
+            if ($firstShippingMethod->getActive()) {
                 return;
             }
 
@@ -84,9 +87,7 @@ final class BitBagShopwareInPostPlugin extends Plugin
 
     private function deactivateShippingMethod(Context $context): void
     {
-        $criteria = (new Criteria())->addFilter(new ContainsFilter('name', ShippingMethodFactoryInterface::SHIPPING_KEY));
-
-        $shippingMethod = $this->shippingMethodRepository->search($criteria, $context);
+        $shippingMethod = $this->shippingMethodFinder->searchByShippingKey($context);
         if (0 !== $shippingMethod->getTotal()) {
             /** @var ShippingMethodEntity $firstShippingMethod */
             $firstShippingMethod = $shippingMethod->first();

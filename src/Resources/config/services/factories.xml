@@ -7,7 +7,6 @@
     <services>
         <service class="BitBag\ShopwareInPostPlugin\Factory\ShippingMethodFactory"
                  id="BitBag\ShopwareInPostPlugin\Factory\CreateShippingMethodFactory"
-                 public="true"
         >
             <argument type="service" id="shipping_method.repository" />
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\DeliveryTimeFinder" />

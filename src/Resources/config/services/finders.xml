@@ -16,5 +16,11 @@
         >
             <argument type="service" id="rule.repository" />
         </service>
+
+        <service class="BitBag\ShopwareInPostPlugin\Finder\ShippingMethodFinder"
+                 id="BitBag\ShopwareInPostPlugin\Finder\ShippingMethodFinder"
+        >
+            <argument type="service" id="shipping_method.repository" />
+        </service>
     </services>
 </container>
