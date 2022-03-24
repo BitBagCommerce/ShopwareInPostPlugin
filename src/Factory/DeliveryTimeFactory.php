@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Factory;
 
-use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\Uuid\Uuid;
 
 final class DeliveryTimeFactory implements DeliveryTimeFactoryInterface
 {
-    public function create(Context $context): array
+    public function create(): array
     {
         return [
             'id' => Uuid::randomHex(),

@@ -57,7 +57,7 @@ class ShippingMethodFactory implements ShippingMethodFactoryInterface
 
         $deliveryId = $this->deliveryTimeFinder->getDeliveryTimeIds($context)->firstId();
         if (null === $deliveryId) {
-            $this->deliveryTimeRepository->create([$this->createDeliveryTimeFactory->create($context)], $context);
+            $this->deliveryTimeRepository->create([$this->createDeliveryTimeFactory->create()], $context);
 
             $deliveryId = $this->deliveryTimeFinder->getDeliveryTimeIds($context)->firstId();
         }
