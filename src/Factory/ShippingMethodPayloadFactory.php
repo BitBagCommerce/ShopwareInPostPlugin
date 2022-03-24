@@ -9,7 +9,7 @@ use BitBag\ShopwareInPostPlugin\Finder\RuleFinderInterface;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 
-class ShippingMethodFactory implements ShippingMethodFactoryInterface
+class ShippingMethodPayloadFactory implements ShippingMethodPayloadFactoryInterface
 {
     private EntityRepositoryInterface $shippingMethodRepository;
 
@@ -17,7 +17,7 @@ class ShippingMethodFactory implements ShippingMethodFactoryInterface
 
     private RuleFinderInterface $ruleFinder;
 
-    private DeliveryTimeFactoryInterface $createDeliveryTimeFactory;
+    private DeliveryTimePayloadFactoryInterface $createDeliveryTimeFactory;
 
     private EntityRepositoryInterface $ruleRepository;
 
@@ -27,7 +27,7 @@ class ShippingMethodFactory implements ShippingMethodFactoryInterface
         EntityRepositoryInterface $shippingMethodRepository,
         DeliveryTimeFinderInterface $deliveryTimeFinder,
         RuleFinderInterface $ruleFinder,
-        DeliveryTimeFactoryInterface $createDeliveryTimeFactory,
+        DeliveryTimePayloadFactoryInterface $createDeliveryTimeFactory,
         EntityRepositoryInterface $ruleRepository,
         EntityRepositoryInterface $deliveryTimeRepository
     ) {

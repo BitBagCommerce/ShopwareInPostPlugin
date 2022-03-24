@@ -6,7 +6,7 @@ namespace BitBag\ShopwareInPostPlugin\Factory;
 
 use Shopware\Core\Framework\Context;
 
-interface ShippingMethodFactoryInterface
+interface ShippingMethodPayloadFactoryInterface
 {
     public const SHIPPING_KEY = 'InPost';
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Finder;
 
-use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodFactoryInterface;
+use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodPayloadFactoryInterface;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
@@ -23,14 +23,14 @@ final class ShippingMethodFinder implements ShippingMethodFinderInterface
 
     public function searchByShippingKey(Context $context): EntitySearchResult
     {
-        $criteria = (new Criteria())->addFilter(new ContainsFilter('name', ShippingMethodFactoryInterface::SHIPPING_KEY));
+        $criteria = (new Criteria())->addFilter(new ContainsFilter('name', ShippingMethodPayloadFactoryInterface::SHIPPING_KEY));
 
         return $this->shippingMethodRepository->search($criteria, $context);
     }
 
     public function searchIdsByShippingKey(Context $context): IdSearchResult
     {
-        $criteria = (new Criteria())->addFilter(new ContainsFilter('name', ShippingMethodFactoryInterface::SHIPPING_KEY));
+        $criteria = (new Criteria())->addFilter(new ContainsFilter('name', ShippingMethodPayloadFactoryInterface::SHIPPING_KEY));
 
         return $this->shippingMethodRepository->searchIds($criteria, $context);
     }

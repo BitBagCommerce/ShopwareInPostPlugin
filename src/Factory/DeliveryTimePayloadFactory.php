@@ -6,7 +6,7 @@ namespace BitBag\ShopwareInPostPlugin\Factory;
 
 use Shopware\Core\Framework\Uuid\Uuid;
 
-final class DeliveryTimeFactory implements DeliveryTimeFactoryInterface
+final class DeliveryTimePayloadFactory implements DeliveryTimePayloadFactoryInterface
 {
     public function create(): array
     {
