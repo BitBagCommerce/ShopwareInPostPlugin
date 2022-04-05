@@ -17,12 +17,18 @@ final class ApiDataResolver implements ApiDataResolverInterface
         $this->systemConfigService = $systemConfigService;
     }
 
-    public function getData(): array
+    public function getOrganizationId(): ?string
     {
-        return [
-            'organizationId' => $this->systemConfigService->get(self:: SYSTEM_CONFIG_PREFIX . '.inPostOrganizationId'),
-            'accessToken' => $this->systemConfigService->get(self:: SYSTEM_CONFIG_PREFIX . '.inPostAccessToken'),
-            'environment' => $this->systemConfigService->get(self:: SYSTEM_CONFIG_PREFIX . '.inPostEnvironment'),
-        ];
+        return $this->systemConfigService->get(self:: SYSTEM_CONFIG_PREFIX . '.inPostOrganizationId');
+    }
+
+    public function getAccessToken(): ?string
+    {
+        return $this->systemConfigService->get(self:: SYSTEM_CONFIG_PREFIX . '.inPostAccessToken');
+    }
+
+    public function getEnvironment(): ?string
+    {
+        return $this->systemConfigService->get(self:: SYSTEM_CONFIG_PREFIX . '.inPostEnvironment');
     }
 }
