@@ -14,7 +14,8 @@
     <issueHandlers>
         <PropertyNotSetInConstructor>
             <errorLevel type="suppress">
-                <file name="src/BitBagShopwareInPostPlugin.php"/>
+                <file name="src/BitBagShopwareInPostPlugin.php" />
+                <file name="src/Extension/Content/Order/OrderInPostExtensionDefinition.php" />
             </errorLevel>
         </PropertyNotSetInConstructor>
     </issueHandlers>
