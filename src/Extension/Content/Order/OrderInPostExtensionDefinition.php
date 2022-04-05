@@ -31,7 +31,7 @@ final class OrderInPostExtensionDefinition extends EntityDefinition
             (new StringField('point_name', 'pointName', 20))->addFlags(new Required()),
             new IntField('package_id', 'packageId'),
             new FkField('order_id', 'orderId', OrderDefinition::class),
-            new OneToOneAssociationField('order', 'order_id', 'id', OrderDefinition::class, false)
+            new OneToOneAssociationField('order', 'order_id', 'id', OrderDefinition::class, false),
         ]);
     }
 }
