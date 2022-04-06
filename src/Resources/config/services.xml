@@ -22,6 +22,18 @@
             <call method="setShippingMethodFinder">
                 <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\ShippingMethodFinder" />
             </call>
+
+            <call method="setCustomFieldSetRepository">
+                <argument type="service" id="custom_field_set.repository" />
+            </call>
+
+            <call method="setCustomFieldsForPackageDetailsPayloadFactory">
+                <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\CustomFieldsForPackageDetailsPayloadFactory" />
+            </call>
+
+            <call method="setPackageDetailsCustomFieldSetFinder">
+                <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\PackageDetailsCustomFieldSetFinder" />
+            </call>
         </service>
 
         <service id="BitBag\ShopwareInPostPlugin\Api\WebClient">

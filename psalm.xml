@@ -16,6 +16,7 @@
             <errorLevel type="suppress">
                 <file name="src/BitBagShopwareInPostPlugin.php" />
                 <file name="src/Extension/Content/Order/OrderInPostExtensionDefinition.php" />
+                <file name="src/Filter/CustomFieldSetForPackageDetailsFilter.php" />
             </errorLevel>
         </PropertyNotSetInConstructor>
     </issueHandlers>

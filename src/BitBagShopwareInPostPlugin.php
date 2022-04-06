@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin;
 
+use BitBag\ShopwareInPostPlugin\Factory\CustomFieldsForPackageDetailsPayloadFactory;
 use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodPayloadFactoryInterface;
+use BitBag\ShopwareInPostPlugin\Finder\PackageDetailsCustomFieldSetFinderInterface;
 use BitBag\ShopwareInPostPlugin\Finder\ShippingMethodFinderInterface;
 use Shopware\Core\Checkout\Shipping\ShippingMethodEntity;
 use Shopware\Core\Framework\Context;
@@ -21,6 +23,12 @@ final class BitBagShopwareInPostPlugin extends Plugin
 
     private ShippingMethodFinderInterface $shippingMethodFinder;
 
+    private EntityRepositoryInterface $customFieldSetRepository;
+
+    private CustomFieldsForPackageDetailsPayloadFactory $customFieldsForPackageDetailsPayloadFactory;
+
+    private PackageDetailsCustomFieldSetFinderInterface $packageDetailsCustomFieldSetFinder;
+
     public function setShippingMethodRepository(EntityRepositoryInterface $shippingMethodRepository): void
     {
         $this->shippingMethodRepository = $shippingMethodRepository;
@@ -36,15 +44,37 @@ final class BitBagShopwareInPostPlugin extends Plugin
         $this->shippingMethodFinder = $shippingMethodFinder;
     }
 
+    public function setCustomFieldSetRepository(EntityRepositoryInterface $customFieldSetRepository): void
+    {
+        $this->customFieldSetRepository = $customFieldSetRepository;
+    }
+
+    public function setCustomFieldsForPackageDetailsPayloadFactory(
+        CustomFieldsForPackageDetailsPayloadFactory $customFieldsForPackageDetailsPayloadFactory
+    ): void {
+        $this->customFieldsForPackageDetailsPayloadFactory = $customFieldsForPackageDetailsPayloadFactory;
+    }
+
+    public function setPackageDetailsCustomFieldSetFinder(
+        PackageDetailsCustomFieldSetFinderInterface $packageDetailsCustomFieldSetFinder
+    ): void {
+        $this->packageDetailsCustomFieldSetFinder = $packageDetailsCustomFieldSetFinder;
+    }
+
     public function activate(ActivateContext $activateContext): void
     {
-        $this->createShippingMethod($activateContext->getContext());
-        $this->toggleActiveShippingMethod(true, $activateContext->getContext());
+        $context = $activateContext->getContext();
+
+        $this->createShippingMethod($context);
+        $this->toggleActiveShippingMethod(true, $context);
+        $this->createCustomFieldSetForPackageDetails($context);
+        $this->setActiveCustomFieldSetForPackageDetails(true, $context);
     }
 
     public function deactivate(DeactivateContext $deactivateContext): void
     {
         $this->toggleActiveShippingMethod(false, $deactivateContext->getContext());
+        $this->setActiveCustomFieldSetForPackageDetails(false, $deactivateContext->getContext());
     }
 
     private function createShippingMethod(Context $context): void
@@ -76,5 +106,32 @@ final class BitBagShopwareInPostPlugin extends Plugin
                 ],
             ], $context);
         }
+    }
+
+    private function createCustomFieldSetForPackageDetails(Context $context): void
+    {
+        $customFields = $this->packageDetailsCustomFieldSetFinder->search($context);
+        if (0 < $customFields->getTotal()) {
+            return;
+        }
+
+        $data = $this->customFieldsForPackageDetailsPayloadFactory->create();
+
+        $this->customFieldSetRepository->upsert([$data], $context);
+    }
+
+    private function setActiveCustomFieldSetForPackageDetails(bool $active, Context $context): void
+    {
+        $customFields = $this->packageDetailsCustomFieldSetFinder->search($context);
+        if (0 === $customFields->getTotal()) {
+            return;
+        }
+
+        $this->customFieldSetRepository->update([
+            [
+                'id' => $customFields->firstId(),
+                'active' => $active,
+            ],
+        ], $context);
     }
 }
