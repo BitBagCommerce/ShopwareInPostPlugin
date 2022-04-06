@@ -26,6 +26,7 @@ final class CustomFieldsForPackageDetailsPayloadFactory implements CustomFieldsF
                 'label' => [
                     'en-GB' => 'Package details',
                 ],
+                'technical_name' => $customFieldPrefix,
             ],
             'customFields' => [
                 [
