@@ -7,7 +7,6 @@ namespace BitBag\ShopwareInPostPlugin\Api;
 use BitBag\ShopwareInPostPlugin\Resolver\ApiDataResolver;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Utils;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -38,6 +37,10 @@ final class WebClient implements WebClientInterface
 
     public function getApiEndpointForShipment(): string
     {
+        if (!$this->organizationId) {
+            throw new \Exception('Organization id was not found');
+        }
+
         return sprintf('%s/organizations/%s/shipments', $this->getApiEndpoint(), $this->organizationId);
     }
 
@@ -51,12 +54,17 @@ final class WebClient implements WebClientInterface
         return sprintf('%s/organizations', $this->getApiEndpoint());
     }
 
-    public function getPointByName(string $name, int $attempts = 0): ?array
+    /**
+     * @psalm-return array<array-key, mixed|null>|null|string
+     */
+    public function getPointByName(string $name, int $attempts = 0)
     {
         $url = $this->getApiEndpointForPointByName($name);
 
         try {
-            return $this->request('GET', $url);
+            $request = $this->request('GET', $url);
+
+            return \json_decode($request, true);
         } catch (\Exception $exception) {
             if ($attempts < 3) {
                 sleep(1);
@@ -72,11 +80,17 @@ final class WebClient implements WebClientInterface
     {
         $url = $this->getApiEndpointForOrganizations();
 
-        return $this->request('GET', $url);
+        $request = $this->request('GET', $url);
+
+        return \json_decode($request, true);
     }
 
     public function getApiEndpointForLabels(): string
     {
+        if (!$this->organizationId) {
+            throw new \Exception('Organization id was not found');
+        }
+
         return sprintf('%s/organizations/%s/shipments/labels', $this->getApiEndpoint(), $this->organizationId);
     }
 
@@ -89,7 +103,9 @@ final class WebClient implements WebClientInterface
     {
         $url = $this->getApiEndpointForShipmentById($id);
 
-        return $this->request('GET', $url);
+        $request = $this->request('GET', $url);
+
+        return \json_decode($request, true);
     }
 
     public function getLabels(array $shipmentIds): ?string
@@ -101,28 +117,31 @@ final class WebClient implements WebClientInterface
             'shipment_ids' => $shipmentIds,
         ];
 
-        return $this->request('POST', $url, $data, false);
+        return $this->request('POST', $url, $data);
     }
 
     public function getShipments(): ?array
     {
         $url = $this->getApiEndpointForShipment();
 
-        return $this->request('GET', $url);
+        $request = $this->request('GET', $url);
+
+        return \json_decode($request, true);
     }
 
     public function getAuthorizedHeaderWithContentType(): array
     {
+        if (!$this->accessToken) {
+            throw new \Exception('Access token was not found');
+        }
+
         return [
             'Content-Type' => 'application/json',
             'Authorization' => sprintf('Bearer %s', $this->accessToken),
         ];
     }
 
-    /**
-     * @return string|array
-     */
-    public function request(string $method, string $url, array $data = [], bool $returnJson = true)
+    public function request(string $method, string $url, array $data = []): string
     {
         $options = [
             'json' => $data,
@@ -132,27 +151,23 @@ final class WebClient implements WebClientInterface
         try {
             $result = $this->apiClient->request($method, $url, $options);
         } catch (ClientException $exception) {
-            /** @var ?ResponseInterface $result */
+            /** @var ResponseInterface $result */
             $result = $exception->getResponse();
 
             throw new ClientException(
-                null !== $result ? (string) $result->getBody() : 'Request failed for url' . $url,
+                (string) $result->getBody(),
                 $exception->getRequest(),
                 $result
             );
         }
 
-        if (false === $returnJson) {
-            return (string) $result->getBody();
-        }
-
-        return Utils::jsonDecode((string) $result->getBody(), true);
+        return (string) $result->getBody();
     }
 
     public function getLabelByShipmentId(string $shipmentId): Response
     {
         $url = $this->getApiEndpoint() . "/shipments/${shipmentId}/label";
-        $label = $this->request('GET', $url, [], false);
+        $label = $this->request('GET', $url, []);
 
         $filename = sprintf('filename="label_%s.pdf"', $shipmentId);
 
