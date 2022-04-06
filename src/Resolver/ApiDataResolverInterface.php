@@ -6,5 +6,11 @@ namespace BitBag\ShopwareInPostPlugin\Resolver;
 
 interface ApiDataResolverInterface
 {
-    public function getData(): array;
+    public const SYSTEM_CONFIG_PREFIX = 'BitBagShopwareInPostPlugin.config';
+
+    public function getOrganizationId(): ?string;
+
+    public function getAccessToken(): ?string;
+
+    public function getEnvironment(): ?string;
 }
