@@ -8,8 +8,6 @@ use Shopware\Core\System\SystemConfig\SystemConfigService;
 
 final class ApiDataResolver implements ApiDataResolverInterface
 {
-    private const SYSTEM_CONFIG_PREFIX = 'BitBagShopwareInPostPlugin.config';
-
     private SystemConfigService $systemConfigService;
 
     public function __construct(SystemConfigService $systemConfigService)

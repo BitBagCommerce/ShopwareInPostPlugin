@@ -28,43 +28,14 @@ final class WebClient implements WebClientInterface
         $this->environment = $apiDataResolver->getEnvironment();
     }
 
-    public function getApiEndpoint(): string
-    {
-        $apiEndpoint = self::SANDBOX_ENVIRONMENT === $this->environment ? self::SANDBOX_API_ENDPOINT : self::PRODUCTION_API_ENDPOINT;
-
-        return sprintf('%s/%s', $apiEndpoint, self::API_VERSION);
-    }
-
-    public function getApiEndpointForShipment(): string
-    {
-        if (!$this->organizationId) {
-            throw new \Exception('Organization id was not found');
-        }
-
-        return sprintf('%s/organizations/%s/shipments', $this->getApiEndpoint(), $this->organizationId);
-    }
-
-    public function getApiEndpointForPointByName(string $name): string
-    {
-        return sprintf('%s/points/%s', $this->getApiEndpoint(), $name);
-    }
-
-    public function getApiEndpointForOrganizations(): string
-    {
-        return sprintf('%s/organizations', $this->getApiEndpoint());
-    }
-
-    /**
-     * @psalm-return array<array-key, mixed|null>|null|string
-     */
-    public function getPointByName(string $name, int $attempts = 0)
+    public function getPointByName(string $name, int $attempts = 0): ?array
     {
         $url = $this->getApiEndpointForPointByName($name);
 
         try {
             $request = $this->request('GET', $url);
 
-            return \json_decode($request, true);
+            return json_decode($request, true, 512, \JSON_THROW_ON_ERROR);
         } catch (\Exception $exception) {
             if ($attempts < 3) {
                 sleep(1);
@@ -82,21 +53,7 @@ final class WebClient implements WebClientInterface
 
         $request = $this->request('GET', $url);
 
-        return \json_decode($request, true);
-    }
-
-    public function getApiEndpointForLabels(): string
-    {
-        if (!$this->organizationId) {
-            throw new \Exception('Organization id was not found');
-        }
-
-        return sprintf('%s/organizations/%s/shipments/labels', $this->getApiEndpoint(), $this->organizationId);
-    }
-
-    public function getApiEndpointForShipmentById(int $id): string
-    {
-        return sprintf('%s/shipments/%s', $this->getApiEndpoint(), $id);
+        return json_decode($request, true, 512, \JSON_THROW_ON_ERROR);
     }
 
     public function getShipmentById(int $id): ?array
@@ -105,7 +62,7 @@ final class WebClient implements WebClientInterface
 
         $request = $this->request('GET', $url);
 
-        return \json_decode($request, true);
+        return json_decode($request, true, 512, \JSON_THROW_ON_ERROR);
     }
 
     public function getLabels(array $shipmentIds): ?string
@@ -126,19 +83,14 @@ final class WebClient implements WebClientInterface
 
         $request = $this->request('GET', $url);
 
-        return \json_decode($request, true);
+        return json_decode($request, true, 512, \JSON_THROW_ON_ERROR);
     }
 
-    public function getAuthorizedHeaderWithContentType(): array
+    public function createShipment(array $data): array
     {
-        if (!$this->accessToken) {
-            throw new \Exception('Access token was not found');
-        }
+        $package = $this->request('POST', $this->getApiEndpointForShipment(), $data);
 
-        return [
-            'Content-Type' => 'application/json',
-            'Authorization' => sprintf('Bearer %s', $this->accessToken),
-        ];
+        return json_decode($package, true, 512, \JSON_THROW_ON_ERROR);
     }
 
     public function request(string $method, string $url, array $data = []): string
@@ -166,7 +118,7 @@ final class WebClient implements WebClientInterface
 
     public function getLabelByShipmentId(string $shipmentId): Response
     {
-        $url = $this->getApiEndpoint() . "/shipments/${shipmentId}/label";
+        $url = sprintf('%s/shipments/%s/label', $this->getApiEndpoint(), $shipmentId);
         $label = $this->request('GET', $url, []);
 
         $filename = sprintf('filename="label_%s.pdf"', $shipmentId);
@@ -177,5 +129,57 @@ final class WebClient implements WebClientInterface
         $response->headers->set('Content-Disposition', $filename);
 
         return $response;
+    }
+
+    private function getAuthorizedHeaderWithContentType(): array
+    {
+        if (!$this->accessToken) {
+            throw new \Exception('Access token was not found');
+        }
+
+        return [
+            'Content-Type' => 'application/json',
+            'Authorization' => sprintf('Bearer %s', $this->accessToken),
+        ];
+    }
+
+    private function getApiEndpoint(): string
+    {
+        $apiEndpoint = self::SANDBOX_ENVIRONMENT === $this->environment ? self::SANDBOX_API_ENDPOINT : self::PRODUCTION_API_ENDPOINT;
+
+        return sprintf('%s/%s', $apiEndpoint, self::API_VERSION);
+    }
+
+    private function getApiEndpointForShipment(): string
+    {
+        if (null === $this->organizationId) {
+            throw new \Exception('Organization id was not found');
+        }
+
+        return sprintf('%s/organizations/%s/shipments', $this->getApiEndpoint(), $this->organizationId);
+    }
+
+    private function getApiEndpointForPointByName(string $name): string
+    {
+        return sprintf('%s/points/%s', $this->getApiEndpoint(), $name);
+    }
+
+    private function getApiEndpointForOrganizations(): string
+    {
+        return sprintf('%s/organizations', $this->getApiEndpoint());
+    }
+
+    private function getApiEndpointForLabels(): string
+    {
+        if (null === $this->organizationId) {
+            throw new \Exception('Organization id was not found');
+        }
+
+        return sprintf('%s/organizations/%s/shipments/labels', $this->getApiEndpoint(), $this->organizationId);
+    }
+
+    private function getApiEndpointForShipmentById(int $id): string
+    {
+        return sprintf('%s/shipments/%s', $this->getApiEndpoint(), $id);
     }
 }
