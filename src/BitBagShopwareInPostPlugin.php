@@ -6,13 +6,11 @@ namespace BitBag\ShopwareInPostPlugin;
 
 use BitBag\ShopwareInPostPlugin\Factory\CustomFieldsForPackageDetailsPayloadFactory;
 use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodPayloadFactoryInterface;
+use BitBag\ShopwareInPostPlugin\Finder\PackageDetailsCustomFieldSetFinderInterface;
 use BitBag\ShopwareInPostPlugin\Finder\ShippingMethodFinderInterface;
 use Shopware\Core\Checkout\Shipping\ShippingMethodEntity;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\IdSearchResult;
 use Shopware\Core\Framework\Plugin;
 use Shopware\Core\Framework\Plugin\Context\ActivateContext;
 use Shopware\Core\Framework\Plugin\Context\DeactivateContext;
@@ -28,6 +26,8 @@ final class BitBagShopwareInPostPlugin extends Plugin
     private EntityRepositoryInterface $customFieldSetRepository;
 
     private CustomFieldsForPackageDetailsPayloadFactory $customFieldsForPackageDetailsPayloadFactory;
+
+    private PackageDetailsCustomFieldSetFinderInterface $packageDetailsCustomFieldSetFinder;
 
     public function setShippingMethodRepository(EntityRepositoryInterface $shippingMethodRepository): void
     {
@@ -55,18 +55,26 @@ final class BitBagShopwareInPostPlugin extends Plugin
         $this->customFieldsForPackageDetailsPayloadFactory = $customFieldsForPackageDetailsPayloadFactory;
     }
 
+    public function setPackageDetailsCustomFieldSetFinder(
+        PackageDetailsCustomFieldSetFinderInterface $packageDetailsCustomFieldSetFinder
+    ): void {
+        $this->packageDetailsCustomFieldSetFinder = $packageDetailsCustomFieldSetFinder;
+    }
+
     public function activate(ActivateContext $activateContext): void
     {
-        $this->createShippingMethod($activateContext->getContext());
-        $this->toggleActiveShippingMethod(true, $activateContext->getContext());
-        $this->createCustomFieldSetForPackageDetails($activateContext->getContext());
-        $this->setActiveCustomFieldsSetForPackageDetails(true, $activateContext->getContext());
+        $context = $activateContext->getContext();
+
+        $this->createShippingMethod($context);
+        $this->toggleActiveShippingMethod(true, $context);
+        $this->createCustomFieldSetForPackageDetails($context);
+        $this->setActiveCustomFieldSetForPackageDetails(true, $context);
     }
 
     public function deactivate(DeactivateContext $deactivateContext): void
     {
         $this->toggleActiveShippingMethod(false, $deactivateContext->getContext());
-        $this->setActiveCustomFieldsSetForPackageDetails(false, $deactivateContext->getContext());
+        $this->setActiveCustomFieldSetForPackageDetails(false, $deactivateContext->getContext());
     }
 
     private function createShippingMethod(Context $context): void
@@ -102,10 +110,8 @@ final class BitBagShopwareInPostPlugin extends Plugin
 
     private function createCustomFieldSetForPackageDetails(Context $context): void
     {
-        $customFieldsCriteria = (new Criteria())->addFilter(new EqualsFilter('name', 'Package details'));
-        /** @var IdSearchResult $customFields */
-        $customFields = $this->customFieldSetRepository->searchIds($customFieldsCriteria, $context);
-        if ($customFields->getTotal()) {
+        $customFields = $this->packageDetailsCustomFieldSetFinder->search($context);
+        if (0 < $customFields->getTotal()) {
             return;
         }
 
@@ -114,12 +120,10 @@ final class BitBagShopwareInPostPlugin extends Plugin
         $this->customFieldSetRepository->upsert([$data], $context);
     }
 
-    private function setActiveCustomFieldsSetForPackageDetails(bool $active, Context $context): void
+    private function setActiveCustomFieldSetForPackageDetails(bool $active, Context $context): void
     {
-        $customFieldsCriteria = (new Criteria())->addFilter(new EqualsFilter('name', 'Package details'));
-        /** @var IdSearchResult $customFields */
-        $customFields = $this->customFieldSetRepository->searchIds($customFieldsCriteria, $context);
-        if (!$customFields->getTotal()) {
+        $customFields = $this->packageDetailsCustomFieldSetFinder->search($context);
+        if (0 === $customFields->getTotal()) {
             return;
         }
 

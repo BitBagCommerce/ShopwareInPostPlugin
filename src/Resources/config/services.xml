@@ -30,6 +30,10 @@
             <call method="setCustomFieldsForPackageDetailsPayloadFactory">
                 <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\CustomFieldsForPackageDetailsPayloadFactory" />
             </call>
+
+            <call method="setPackageDetailsCustomFieldSetFinder">
+                <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\PackageDetailsCustomFieldSetFinder" />
+            </call>
         </service>
     </services>
 </container>

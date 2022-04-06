@@ -22,5 +22,10 @@
         >
             <argument type="service" id="shipping_method.repository" />
         </service>
+
+        <service id="BitBag\ShopwareInPostPlugin\Finder\PackageDetailsCustomFieldSetFinder"
+        >
+            <argument type="service" id="custom_field_set.repository" />
+        </service>
     </services>
 </container>

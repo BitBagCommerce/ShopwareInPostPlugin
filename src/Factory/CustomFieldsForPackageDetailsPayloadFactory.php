@@ -30,11 +30,11 @@ final class CustomFieldsForPackageDetailsPayloadFactory implements CustomFieldsF
             'customFields' => [
                 [
                     'name' => $customFieldPrefix . '_insurance',
-                    'label' => 'Insurance value (you can leave empty)',
+                    'label' => 'Insurance value (can be left empty)',
                     'type' => CustomFieldTypes::INT,
                     'config' => [
                         'label' => [
-                            'en-GB' => 'Insurance value (you can leave empty)',
+                            'en-GB' => 'Insurance value (can be left empty)',
                         ],
                     ],
                 ],
