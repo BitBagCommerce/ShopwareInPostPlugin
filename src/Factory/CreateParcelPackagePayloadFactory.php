@@ -38,6 +38,9 @@ final class CreateParcelPackagePayloadFactory implements CreateParcelPackagePayl
         }
 
         $weight = $this->orderWeightCalculator->calculate($orderLineItems);
+        if (!$weight) {
+            throw new \Exception('package.nullWeight');
+        }
 
         return [
             'dimensions' => [
