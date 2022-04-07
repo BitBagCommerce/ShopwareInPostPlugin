@@ -25,9 +25,9 @@ final class CreateParcelPackagePayloadFactory implements CreateParcelPackagePayl
          */
         $orderCustomFields = $order->getCustomFields();
 
-        $depthKey = CustomFieldsForPackageDetailsPayloadFactoryInterface::PACKAGE_DETAILS_KEY . '_depth';
-        $heightKey = CustomFieldsForPackageDetailsPayloadFactoryInterface::PACKAGE_DETAILS_KEY . '_height';
-        $widthKey = CustomFieldsForPackageDetailsPayloadFactoryInterface::PACKAGE_DETAILS_KEY . '_width';
+        $depthKey = $packageDetailsKey . '_depth';
+        $heightKey = $packageDetailsKey . '_height';
+        $widthKey = $packageDetailsKey . '_width';
 
         if (!isset($orderCustomFields[$depthKey], $orderCustomFields[$heightKey], $orderCustomFields[$widthKey])) {
             throw new \Exception('package.fillRequiredCustomFields');
