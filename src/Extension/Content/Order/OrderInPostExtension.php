@@ -14,7 +14,13 @@ final class OrderInPostExtension extends EntityExtension
     public function extendFields(FieldCollection $collection): void
     {
         $collection->add(
-            new OneToOneAssociationField('inPost', 'id', 'order_id', OrderInPostExtensionDefinition::class, true)
+            new OneToOneAssociationField(
+                OrderInPostExtensionInterface::PROPERTY_KEY,
+                'id',
+                'order_id',
+                OrderInPostExtensionDefinition::class,
+                true
+            )
         );
     }
 
