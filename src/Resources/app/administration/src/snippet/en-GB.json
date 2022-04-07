@@ -1,0 +1,23 @@
+{
+    "order": {
+        "notFound": "Order was not found",
+        "extension": {
+            "notFoundInPost": "InPost extension was not found"
+        },
+        "nullPhoneNumber": "Phone number cannot be null",
+        "notFoundShippingMethod": "Shipping method was not found"
+    },
+    "package": {
+        "notFoundPointName": "Point name was not found",
+        "alreadyCreated": "This order have already created package",
+        "fillRequiredCustomFields": "Fill all required package details before create package",
+        "nullWeight": "Package weight cannot be 0",
+        "created": "Package was created"
+    },
+    "shippingMethod": {
+        "notEquals": "Selected shipping method is not equals %shippingMethod%"
+    },
+    "error": {
+        "wentWrong": "Something went wrong. Try again"
+    }
+}
