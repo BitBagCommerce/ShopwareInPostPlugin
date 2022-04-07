@@ -21,5 +21,16 @@
         >
             <argument type="service" id="custom_field_set.repository" />
         </service>
+
+        <service id="BitBag\ShopwareInPostPlugin\Factory\CreateReceiverPackagePayloadFactory" />
+
+        <service id="BitBag\ShopwareInPostPlugin\Factory\CreateParcelPackagePayloadFactory">
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Calculator\OrderWeightCalculator" />
+        </service>
+
+        <service id="BitBag\ShopwareInPostPlugin\Factory\CreatePackagePayloadFactory">
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\CreateReceiverPackagePayloadFactory" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\CreateParcelPackagePayloadFactory" />
+        </service>
     </services>
 </container>
