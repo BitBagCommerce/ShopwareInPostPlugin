@@ -2,20 +2,20 @@
     "order": {
         "notFound": "Order was not found",
         "extension": {
-            "notFoundInPost": "InPost extension was not found"
+            "notFoundInPost": "InPost plugin is not installed"
         },
-        "nullPhoneNumber": "Phone number cannot be null",
+        "nullPhoneNumber": "Phone number cannot be empty",
         "notFoundShippingMethod": "Shipping method was not found"
     },
     "package": {
         "notFoundPointName": "Point name was not found",
-        "alreadyCreated": "This order have already created package",
-        "fillRequiredCustomFields": "Fill all required package details before create package",
+        "alreadyCreated": "A package has already been created for this order",
+        "fillRequiredCustomFields": "Fill in all required package details before creating the package",
         "nullWeight": "Package weight cannot be 0",
-        "created": "Package was created"
+        "created": "Package has been created"
     },
     "shippingMethod": {
-        "notEquals": "Selected shipping method is not equals %shippingMethod%"
+        "notEquals": "%shippingMethod% is needed to complete this operation"
     },
     "error": {
         "wentWrong": "Something went wrong. Try again"
