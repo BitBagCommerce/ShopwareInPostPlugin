@@ -22,15 +22,20 @@
             <argument type="service" id="custom_field_set.repository" />
         </service>
 
-        <service id="BitBag\ShopwareInPostPlugin\Factory\CreateReceiverPackagePayloadFactory" />
-
-        <service id="BitBag\ShopwareInPostPlugin\Factory\CreateParcelPackagePayloadFactory">
-            <argument type="service" id="BitBag\ShopwareInPostPlugin\Calculator\OrderWeightCalculator" />
+        <service id="BitBag\ShopwareInPostPlugin\Factory\Package\ReceiverPayloadFactory">
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Resolver\OrderShippingAddressResolver" />
         </service>
 
-        <service id="BitBag\ShopwareInPostPlugin\Factory\CreatePackagePayloadFactory">
-            <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\CreateReceiverPackagePayloadFactory" />
-            <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\CreateParcelPackagePayloadFactory" />
+        <service id="BitBag\ShopwareInPostPlugin\Factory\Package\ParcelPayloadFactory">
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Calculator\OrderWeightCalculator" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Resolver\OrderCustomFieldsResolver" />
+        </service>
+
+        <service id="BitBag\ShopwareInPostPlugin\Factory\Package\PackagePayloadFactory">
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\Package\ReceiverPayloadFactory" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\Package\ParcelPayloadFactory" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Resolver\OrderCustomFieldsResolver" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Resolver\OrderPaymentMethodTypeResolver" />
         </service>
     </services>
 </container>

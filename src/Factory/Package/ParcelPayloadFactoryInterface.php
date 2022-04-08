@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace BitBag\ShopwareInPostPlugin\Factory;
+namespace BitBag\ShopwareInPostPlugin\Factory\Package;
 
 use Shopware\Core\Checkout\Order\OrderEntity;
 
-interface CreateParcelPackagePayloadFactoryInterface
+interface ParcelPayloadFactoryInterface
 {
     public function create(OrderEntity $order): array;
 }

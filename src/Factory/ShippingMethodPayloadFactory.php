@@ -56,6 +56,7 @@ class ShippingMethodPayloadFactory implements ShippingMethodPayloadFactoryInterf
         ];
 
         $deliveryId = $this->deliveryTimeFinder->getDeliveryTimeIds($context)->firstId();
+
         if (null === $deliveryId) {
             $this->deliveryTimeRepository->create([$this->createDeliveryTimeFactory->create()], $context);
 

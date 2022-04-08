@@ -4,16 +4,24 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Calculator;
 
-use Shopware\Core\Checkout\Order\Aggregate\OrderLineItem\OrderLineItemCollection;
+use BitBag\ShopwareInPostPlugin\Exception\OrderException;
+use Shopware\Core\Checkout\Order\OrderEntity;
 
 final class OrderWeightCalculator implements OrderWeightCalculatorInterface
 {
-    public function calculate(OrderLineItemCollection $lineItems): float
+    public function calculate(OrderEntity $order): float
     {
-        $totalWeight = 0;
+        $totalWeight = 0.0;
 
-        foreach ($lineItems->getElements() as $item) {
+        $orderLineItems = $order->getLineItems();
+
+        if (null === $orderLineItems) {
+            throw new OrderException('order.notFoundProducts');
+        }
+
+        foreach ($orderLineItems->getElements() as $item) {
             $product = $item->getProduct();
+
             if ($product) {
                 $weight = $item->getQuantity() * $product->getWeight();
                 $totalWeight += $weight;
