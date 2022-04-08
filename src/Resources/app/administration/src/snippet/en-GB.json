@@ -16,8 +16,5 @@
     },
     "shippingMethod": {
         "notEquals": "%shippingMethod% is needed to complete this operation"
-    },
-    "error": {
-        "wentWrong": "Something went wrong. Try again"
     }
 }
