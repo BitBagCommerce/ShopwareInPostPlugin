@@ -5,7 +5,11 @@
             "notFoundInPost": "InPost plugin is not installed"
         },
         "nullPhoneNumber": "Phone number cannot be empty",
-        "notFoundShippingMethod": "Shipping method was not found"
+        "notFoundShippingMethod": "Shipping method was not found",
+        "notFoundPaymentMethod": "Payment method cannot be null",
+        "notFoundShippingAddress": "Shipping address cannot be null",
+        "notFoundCustomerEmail": "Customer email cannot be null",
+        "notFoundProducts": "Not found products in order"
     },
     "package": {
         "notFoundPointName": "Point name was not found",
