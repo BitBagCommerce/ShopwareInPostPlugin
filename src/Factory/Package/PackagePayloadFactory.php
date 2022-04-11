@@ -46,9 +46,7 @@ final class PackagePayloadFactory implements PackagePayloadFactoryInterface
 
         $orderInPostExtensionData = $inPostExtension->getVars()['data'];
 
-        if (!isset($orderInPostExtensionData['pointName']) ||
-            (isset($orderInPostExtensionData['pointName']) && null === $orderInPostExtensionData['pointName'])
-        ) {
+        if (!isset($orderInPostExtensionData['pointName'])) {
             throw new PackageException('package.notFoundPointName');
         }
 
@@ -72,7 +70,7 @@ final class PackagePayloadFactory implements PackagePayloadFactoryInterface
 
     private function addInsurance(array $data, OrderEntity $order): array
     {
-        $customFieldInsurance = $this->orderCustomFieldsResolver->getPackageDetails($order)['insurance'];
+        $customFieldInsurance = $this->orderCustomFieldsResolver->resolve($order)['insurance'];
 
         if (null !== $customFieldInsurance) {
             $data['insurance'] = [
@@ -86,7 +84,7 @@ final class PackagePayloadFactory implements PackagePayloadFactoryInterface
 
     private function addCollectionAmount(array $data, OrderEntity $order): array
     {
-        $paymentMethodType = $this->orderPaymentMethodTypeResolver->get($order);
+        $paymentMethodType = $this->orderPaymentMethodTypeResolver->resolve($order);
 
         if ($paymentMethodType === CashPayment::class) {
             $data['cod'] = [

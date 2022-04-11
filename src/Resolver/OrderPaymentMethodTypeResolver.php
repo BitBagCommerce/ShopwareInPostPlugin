@@ -11,7 +11,7 @@ use Shopware\Core\Checkout\Payment\PaymentMethodEntity;
 
 final class OrderPaymentMethodTypeResolver implements OrderPaymentMethodTypeResolverInterface
 {
-    public function get(OrderEntity $order): string
+    public function resolve(OrderEntity $order): string
     {
         $orderTransactions = $order->getTransactions();
 
@@ -19,8 +19,12 @@ final class OrderPaymentMethodTypeResolver implements OrderPaymentMethodTypeReso
             throw new OrderException('order.notFoundPaymentMethod');
         }
 
-        /** @var OrderTransactionEntity $orderTransaction */
+        /** @var OrderTransactionEntity|null $orderTransaction */
         $orderTransaction = $orderTransactions->first();
+
+        if (null === $orderTransaction) {
+            throw new OrderException('order.notFoundPaymentMethod');
+        }
 
         /** @var PaymentMethodEntity $paymentMethod */
         $paymentMethod = $orderTransaction->getPaymentMethod();

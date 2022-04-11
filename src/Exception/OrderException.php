@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Exception;
 
-final class OrderException extends \LogicException
+use Shopware\Core\Framework\ShopwareHttpException;
+
+final class OrderException extends ShopwareHttpException
 {
+    public function getErrorCode(): string
+    {
+        return 'BITBAG_INPOST_PLUGIN__ORDER_DATA_FAILURE';
+    }
 }

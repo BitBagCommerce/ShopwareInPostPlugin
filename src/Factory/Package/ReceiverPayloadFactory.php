@@ -11,11 +11,11 @@ use Shopware\Core\Checkout\Order\OrderEntity;
 
 final class ReceiverPayloadFactory implements ReceiverPayloadFactoryInterface
 {
-    private OrderShippingAddressResolverInterface $orderShippingAddress;
+    private OrderShippingAddressResolverInterface $orderShippingAddressResolver;
 
-    public function __construct(OrderShippingAddressResolverInterface $orderShippingAddress)
+    public function __construct(OrderShippingAddressResolverInterface $orderShippingAddressResolver)
     {
-        $this->orderShippingAddress = $orderShippingAddress;
+        $this->orderShippingAddressResolver = $orderShippingAddressResolver;
     }
 
     public function create(OrderEntity $order): array
@@ -26,7 +26,7 @@ final class ReceiverPayloadFactory implements ReceiverPayloadFactoryInterface
             throw new OrderException('order.notFoundCustomerEmail');
         }
 
-        $orderShippingAddress = $this->orderShippingAddress->get($order);
+        $orderShippingAddress = $this->orderShippingAddressResolver->resolve($order);
 
         $phoneNumber = $orderShippingAddress->getPhoneNumber();
 

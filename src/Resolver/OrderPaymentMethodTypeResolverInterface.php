@@ -8,5 +8,5 @@ use Shopware\Core\Checkout\Order\OrderEntity;
 
 interface OrderPaymentMethodTypeResolverInterface
 {
-    public function get(OrderEntity $order): string;
+    public function resolve(OrderEntity $order): string;
 }

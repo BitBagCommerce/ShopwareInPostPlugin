@@ -9,5 +9,5 @@ use Shopware\Core\Checkout\Order\OrderEntity;
 
 interface OrderShippingAddressResolverInterface
 {
-    public function get(OrderEntity $order): OrderAddressEntity;
+    public function resolve(OrderEntity $order): OrderAddressEntity;
 }

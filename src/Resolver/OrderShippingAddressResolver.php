@@ -10,7 +10,7 @@ use Shopware\Core\Checkout\Order\OrderEntity;
 
 final class OrderShippingAddressResolver implements OrderShippingAddressResolverInterface
 {
-    public function get(OrderEntity $order): OrderAddressEntity
+    public function resolve(OrderEntity $order): OrderAddressEntity
     {
         $orderDelivery = $order->getDeliveries();
 

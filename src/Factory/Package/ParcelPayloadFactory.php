@@ -25,7 +25,7 @@ final class ParcelPayloadFactory implements ParcelPayloadFactoryInterface
 
     public function create(OrderEntity $order): array
     {
-        $orderCustomFields = $this->customFieldsResolver->getPackageDetails($order);
+        $orderCustomFields = $this->customFieldsResolver->resolve($order);
 
         $weight = $this->orderWeightCalculator->calculate($order);
 

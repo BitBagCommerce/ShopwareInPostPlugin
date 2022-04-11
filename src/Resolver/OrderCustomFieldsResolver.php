@@ -10,7 +10,7 @@ use Shopware\Core\Checkout\Order\OrderEntity;
 
 final class OrderCustomFieldsResolver implements OrderCustomFieldsResolverInterface
 {
-    public function getPackageDetails(OrderEntity $order): array
+    public function resolve(OrderEntity $order): array
     {
         $packageDetailsKey = CustomFieldsForPackageDetailsPayloadFactoryInterface::PACKAGE_DETAILS_KEY;
 
@@ -18,6 +18,10 @@ final class OrderCustomFieldsResolver implements OrderCustomFieldsResolverInterf
          * @psalm-return array<array-key, mixed>|null
          */
         $orderCustomFields = $order->getCustomFields();
+
+        if (null === $orderCustomFields) {
+            throw new PackageException('package.fillRequiredCustomFields');
+        }
 
         $depthKey = $packageDetailsKey . '_depth';
         $heightKey = $packageDetailsKey . '_height';

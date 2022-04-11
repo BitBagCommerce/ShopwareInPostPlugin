@@ -8,5 +8,5 @@ use Shopware\Core\Checkout\Order\OrderEntity;
 
 interface OrderCustomFieldsResolverInterface
 {
-    public function getPackageDetails(OrderEntity $order): array;
+    public function resolve(OrderEntity $order): array;
 }
