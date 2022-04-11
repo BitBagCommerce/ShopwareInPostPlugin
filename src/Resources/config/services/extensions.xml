@@ -5,11 +5,13 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
     <services>
-        <service id="BitBag\ShopwareInPostPlugin\Extension\Content\Order\OrderInPostExtension">
+        <service id="BitBag\ShopwareInPostPlugin\Extension\Content\Order\OrderInPostExtension"
+        >
             <tag name="shopware.entity.extension" />
         </service>
 
-        <service id="BitBag\ShopwareInPostPlugin\Extension\Content\Order\OrderInPostExtensionDefinition">
+        <service id="BitBag\ShopwareInPostPlugin\Extension\Content\Order\OrderInPostExtensionDefinition"
+        >
             <tag name="shopware.entity.definition" entity="order_inpost_extension" />
         </service>
     </services>
