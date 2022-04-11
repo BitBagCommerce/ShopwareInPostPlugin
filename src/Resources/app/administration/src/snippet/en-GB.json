@@ -9,7 +9,7 @@
         "paymentMethodNotFound": "Payment method cannot be empty",
         "shippingAddressNotFound": "Shipping address cannot be empty",
         "customerEmailNotFound": "Customer email cannot be empty",
-        "productsNotFound": "The order does not contain any products."
+        "productsNotFound": "The order does not contain any products"
     },
     "package": {
         "pointNameNotFound": "Point name was not found",
