@@ -1,0 +1,24 @@
+{
+    "order": {
+        "notFound": "Order was not found",
+        "extension": {
+            "inPostNotFound": "InPost plugin is not installed"
+        },
+        "nullPhoneNumber": "Phone number cannot be empty",
+        "shippingMethodNotFound": "Shipping method was not found",
+        "paymentMethodNotFound": "Payment method cannot be empty",
+        "shippingAddressNotFound": "Shipping address cannot be empty",
+        "customerEmailNotFound": "Customer email cannot be empty",
+        "productsNotFound": "The order does not contain any products"
+    },
+    "package": {
+        "pointNameNotFound": "Point name was not found",
+        "alreadyCreated": "A package has already been created for this order",
+        "fillRequiredCustomFields": "Fill in all required package details before creating the package",
+        "nullWeight": "Package weight cannot be 0",
+        "created": "Package has been created"
+    },
+    "shippingMethod": {
+        "notEquals": "%shippingMethod% is needed to complete this operation"
+    }
+}
