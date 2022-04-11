@@ -15,19 +15,19 @@ final class OrderShippingAddressResolver implements OrderShippingAddressResolver
         $orderDelivery = $order->getDeliveries();
 
         if (null === $orderDelivery) {
-            throw new OrderException('order.notFoundShippingAddress');
+            throw new OrderException('order.shippingAddressNotFound');
         }
 
         $firstOrderDelivery = $orderDelivery->first();
 
         if (null === $firstOrderDelivery) {
-            throw new OrderException('order.notFoundShippingAddress');
+            throw new OrderException('order.shippingAddressNotFound');
         }
 
         $shippingOrderAddress = $firstOrderDelivery->getShippingOrderAddress();
 
         if (null === $shippingOrderAddress) {
-            throw new OrderException('order.notFoundShippingAddress');
+            throw new OrderException('order.shippingAddressNotFound');
         }
 
         return $shippingOrderAddress;

@@ -23,7 +23,7 @@ final class ReceiverPayloadFactory implements ReceiverPayloadFactoryInterface
         $orderCustomer = $order->getOrderCustomer();
 
         if (null === $orderCustomer) {
-            throw new OrderException('order.notFoundCustomerEmail');
+            throw new OrderException('order.customerEmailNotFound');
         }
 
         $orderShippingAddress = $this->orderShippingAddressResolver->resolve($order);
