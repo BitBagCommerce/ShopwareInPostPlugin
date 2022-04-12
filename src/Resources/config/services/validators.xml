@@ -5,14 +5,11 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
     <services>
-        <service id="BitBag\ShopwareInPostPlugin\Validator\OrderValidator"
-        >
-            <argument type="service" id="BitBag\ShopwareInPostPlugin\Calculator\OrderWeightCalculator" />
-        </service>
+        <service id="BitBag\ShopwareInPostPlugin\Validator\OrderValidator" />
 
-        <service id="BitBag\ShopwareInPostPlugin\Validator\ApiDataValidator"
+        <service id="BitBag\ShopwareInPostPlugin\Validator\InpostShippingMethodValidator"
         >
-            <argument type="service" id="BitBag\ShopwareInPostPlugin\Resolver\ApiDataResolver" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Resolver\OrderDeliveryResolver" />
         </service>
     </services>
 </container>

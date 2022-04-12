@@ -38,7 +38,13 @@
 
         <service id="BitBag\ShopwareInPostPlugin\Api\WebClient">
             <argument type="service" id="shopware.app_system.guzzle" />
-            <argument type="service" id="BitBag\ShopwareInPostPlugin\Resolver\ApiDataResolver" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Config\InpostConfigService" />
+        </service>
+
+        <service id="BitBag\ShopwareInPostPlugin\Api\PackageApiService"
+        >
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\Package\PackagePayloadFactory" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Api\WebClient" />
         </service>
     </services>
 </container>

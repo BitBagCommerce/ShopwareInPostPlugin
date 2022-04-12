@@ -46,7 +46,7 @@ final class ReceiverPayloadFactory implements ReceiverPayloadFactoryInterface
                 'street' => $street,
                 'building_number' => $houseNumber,
                 'city' => $orderShippingAddress->getCity(),
-                'post_code' => $this->getValidPostCode($orderShippingAddress->getZipcode()),
+                'post_code' => $orderShippingAddress->getZipcode(),
                 'country_code' => Defaults::CURRENCY_CODE,
             ],
         ];
@@ -64,17 +64,5 @@ final class ReceiverPayloadFactory implements ReceiverPayloadFactoryInterface
     private function replaceString(string $value): string
     {
         return str_replace(['-', ' '], '', $value);
-    }
-
-    private function isValidPostCode(string $postCode): bool
-    {
-        return (bool) preg_match('/^(\d{2})(-\d{3})?$/i', $postCode);
-    }
-
-    private function getValidPostCode(string $postCode): string
-    {
-        return $this->isValidPostCode($postCode) ?
-            $postCode :
-            trim(substr_replace($postCode, '-', 2, 0));
     }
 }

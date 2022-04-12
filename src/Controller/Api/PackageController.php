@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace BitBag\ShopwareInPostPlugin\Api;
+namespace BitBag\ShopwareInPostPlugin\Controller\Api;
 
+use BitBag\ShopwareInPostPlugin\Api\PackageApiServiceInterface;
 use BitBag\ShopwareInPostPlugin\Exception\OrderException;
-use BitBag\ShopwareInPostPlugin\Exception\PackageException;
 use BitBag\ShopwareInPostPlugin\Extension\Content\Order\OrderInPostExtensionInterface;
-use BitBag\ShopwareInPostPlugin\Factory\Package\PackagePayloadFactoryInterface;
 use BitBag\ShopwareInPostPlugin\Finder\OrderFinderInterface;
-use BitBag\ShopwareInPostPlugin\Validator\ApiDataValidatorInterface;
+use BitBag\ShopwareInPostPlugin\Validator\InpostShippingMethodValidatorInterface;
 use BitBag\ShopwareInPostPlugin\Validator\OrderValidatorInterface;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -23,58 +23,40 @@ final class PackageController
 {
     private EntityRepositoryInterface $orderRepository;
 
-    private PackagePayloadFactoryInterface $packagePayloadFactory;
-
     private OrderValidatorInterface $orderValidator;
 
     private OrderFinderInterface $orderFinder;
 
-    private WebClientInterface $webClient;
+    private PackageApiServiceInterface $packageApiService;
 
-    private ApiDataValidatorInterface $apiDataValidator;
+    private InpostShippingMethodValidatorInterface $inpostShippingMethodValidator;
 
     public function __construct(
         EntityRepositoryInterface $orderRepository,
-        PackagePayloadFactoryInterface $packagePayloadFactory,
         OrderValidatorInterface $orderValidator,
         OrderFinderInterface $orderFinder,
-        WebClientInterface $webClient,
-        ApiDataValidatorInterface $apiDataValidator
+        PackageApiServiceInterface $packageApiService,
+        InpostShippingMethodValidatorInterface $inpostShippingMethodValidator
     ) {
         $this->orderRepository = $orderRepository;
-        $this->packagePayloadFactory = $packagePayloadFactory;
         $this->orderValidator = $orderValidator;
         $this->orderFinder = $orderFinder;
-        $this->webClient = $webClient;
-        $this->apiDataValidator = $apiDataValidator;
+        $this->packageApiService = $packageApiService;
+        $this->inpostShippingMethodValidator = $inpostShippingMethodValidator;
     }
 
     /**
-     * @Route("/api/order/{orderId}/inpost/create-package", name="custom.api.inpost.create_package", methods={"POST"})
+     * @Route("/api/_action/bitbag-inpost-plugin/create-package/{orderId}", name="api.action.bitbag_inpost_plugin.create_package", methods={"GET"}, defaults={"auth_required"=false})
      */
-    public function create(Context $context, string $orderId): Response
+    public function create(string $orderId, Context $context): JsonResponse
     {
         $order = $this->orderFinder->getWithAssociations($orderId, $context);
 
-        if (null === $order) {
-            throw new OrderException('order.notFound');
-        }
+        $this->inpostShippingMethodValidator->validate($order);
 
         $this->orderValidator->validate($order, $context);
 
-        $this->apiDataValidator->validate($context);
-
-        try {
-            $inPostPackageData = $this->packagePayloadFactory->create($order);
-
-            $package = $this->webClient->createShipment($inPostPackageData);
-        } catch (\Exception $e) {
-            throw new PackageException($e->getMessage());
-        }
-
-        if (!isset($package['id'])) {
-            throw new PackageException('package.createdPackageError');
-        }
+        $package = $this->packageApiService->createPackage($order);
 
         $orderExtension = $order->getExtension(OrderInPostExtensionInterface::PROPERTY_KEY);
 
@@ -92,6 +74,6 @@ final class PackageController
             ],
         ], $context);
 
-        return new Response('package.created', Response::HTTP_CREATED);
+        return new JsonResponse('package.created', Response::HTTP_CREATED);
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Finder;
 
+use BitBag\ShopwareInPostPlugin\Exception\OrderException;
 use BitBag\ShopwareInPostPlugin\Extension\Content\Order\OrderInPostExtensionInterface;
 use Shopware\Core\Checkout\Order\OrderEntity;
 use Shopware\Core\Framework\Context;
@@ -19,7 +20,7 @@ final class OrderFinder implements OrderFinderInterface
         $this->orderRepository = $orderRepository;
     }
 
-    public function getWithAssociations(string $orderId, Context $context): ?OrderEntity
+    public function getWithAssociations(string $orderId, Context $context): OrderEntity
     {
         $orderCriteria = new Criteria([$orderId]);
         $orderCriteria->addAssociations([
@@ -33,6 +34,12 @@ final class OrderFinder implements OrderFinderInterface
             OrderInPostExtensionInterface::PROPERTY_KEY,
         ]);
 
-        return $this->orderRepository->search($orderCriteria, $context)->first();
+        $order = $this->orderRepository->search($orderCriteria, $context)->first();
+
+        if (null === $order) {
+            throw new OrderException('order.notFound');
+        }
+
+        return $order;
     }
 }

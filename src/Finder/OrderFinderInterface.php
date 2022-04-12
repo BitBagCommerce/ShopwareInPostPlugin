@@ -9,5 +9,5 @@ use Shopware\Core\Framework\Context;
 
 interface OrderFinderInterface
 {
-    public function getWithAssociations(string $orderId, Context $context): ?OrderEntity;
+    public function getWithAssociations(string $orderId, Context $context): OrderEntity;
 }

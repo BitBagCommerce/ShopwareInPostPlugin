@@ -80,7 +80,6 @@ final class BitBagShopwareInPostPlugin extends Plugin
     private function createShippingMethod(Context $context): void
     {
         $shippingMethod = $this->shippingMethodFinder->searchIdsByShippingKey($context);
-
         if (0 !== $shippingMethod->getTotal()) {
             return;
         }
@@ -96,7 +95,6 @@ final class BitBagShopwareInPostPlugin extends Plugin
     private function toggleActiveShippingMethod(bool $active, Context $context): void
     {
         $shippingMethod = $this->shippingMethodFinder->searchByShippingKey($context);
-
         if (0 !== $shippingMethod->getTotal()) {
             /** @var ShippingMethodEntity $firstShippingMethod */
             $firstShippingMethod = $shippingMethod->first();
@@ -113,8 +111,7 @@ final class BitBagShopwareInPostPlugin extends Plugin
     private function createCustomFieldSetForPackageDetails(Context $context): void
     {
         $customFields = $this->packageDetailsCustomFieldSetFinder->search($context);
-
-        if (0 !== $customFields->getTotal()) {
+        if (0 < $customFields->getTotal()) {
             return;
         }
 
@@ -126,7 +123,6 @@ final class BitBagShopwareInPostPlugin extends Plugin
     private function setActiveCustomFieldSetForPackageDetails(bool $active, Context $context): void
     {
         $customFields = $this->packageDetailsCustomFieldSetFinder->search($context);
-
         if (0 === $customFields->getTotal()) {
             return;
         }
