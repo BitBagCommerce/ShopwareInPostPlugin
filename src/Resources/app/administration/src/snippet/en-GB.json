@@ -19,6 +19,12 @@
         "created": "Package has been created"
     },
     "shippingMethod": {
-        "notEquals": "%shippingMethod% is needed to complete this operation"
+        "notInpost": "InPost is needed to complete this operation"
+    },
+    "api": {
+        "credentialsDataNotFound": "Fill in API credentials before creating the package",
+        "providedDataNotValid": "Provided data is not valid",
+        "resourceNotFound": "You cannot create a shipment for this organization",
+        "noCarriers": "No carrier is assigned to your InPost account"
     }
 }

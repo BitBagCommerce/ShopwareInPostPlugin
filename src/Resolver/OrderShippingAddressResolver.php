@@ -10,21 +10,18 @@ use Shopware\Core\Checkout\Order\OrderEntity;
 
 final class OrderShippingAddressResolver implements OrderShippingAddressResolverInterface
 {
+    private OrderDeliveryResolverInterface $orderDeliveryResolver;
+
+    public function __construct(OrderDeliveryResolverInterface $orderDeliveryResolver)
+    {
+        $this->orderDeliveryResolver = $orderDeliveryResolver;
+    }
+
     public function resolve(OrderEntity $order): OrderAddressEntity
     {
-        $orderDelivery = $order->getDeliveries();
+        $orderDelivery = $this->orderDeliveryResolver->resolve($order);
 
-        if (null === $orderDelivery) {
-            throw new OrderException('order.shippingAddressNotFound');
-        }
-
-        $firstOrderDelivery = $orderDelivery->first();
-
-        if (null === $firstOrderDelivery) {
-            throw new OrderException('order.shippingAddressNotFound');
-        }
-
-        $shippingOrderAddress = $firstOrderDelivery->getShippingOrderAddress();
+        $shippingOrderAddress = $orderDelivery->getShippingOrderAddress();
 
         if (null === $shippingOrderAddress) {
             throw new OrderException('order.shippingAddressNotFound');

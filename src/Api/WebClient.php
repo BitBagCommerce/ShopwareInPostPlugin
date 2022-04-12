@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Api;
 
-use BitBag\ShopwareInPostPlugin\Resolver\ApiDataResolver;
+use BitBag\ShopwareInPostPlugin\Config\InpostConfigServiceInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Psr\Http\Message\ResponseInterface;
@@ -14,18 +14,20 @@ final class WebClient implements WebClientInterface
 {
     private Client $apiClient;
 
-    private ?string $organizationId;
+    private string $organizationId;
 
-    private ?string $accessToken;
+    private string $accessToken;
 
-    private ?string $environment;
+    private string $environment;
 
-    public function __construct(Client $client, ApiDataResolver $apiDataResolver)
+    public function __construct(Client $client, InpostConfigServiceInterface $inpostConfigService)
     {
+        $inpostApiConfig = $inpostConfigService->getInpostApiConfig();
+
         $this->apiClient = $client;
-        $this->accessToken = $apiDataResolver->getAccessToken();
-        $this->organizationId = $apiDataResolver->getOrganizationId();
-        $this->environment = $apiDataResolver->getEnvironment();
+        $this->accessToken = $inpostApiConfig->getAccessToken();
+        $this->organizationId = $inpostApiConfig->getOrganizationId();
+        $this->environment = $inpostApiConfig->getEnvironment();
     }
 
     public function getPointByName(string $name, int $attempts = 0): ?array
@@ -133,10 +135,6 @@ final class WebClient implements WebClientInterface
 
     private function getAuthorizedHeaderWithContentType(): array
     {
-        if (!$this->accessToken) {
-            throw new \Exception('Access token was not found');
-        }
-
         return [
             'Content-Type' => 'application/json',
             'Authorization' => sprintf('Bearer %s', $this->accessToken),
@@ -152,10 +150,6 @@ final class WebClient implements WebClientInterface
 
     private function getApiEndpointForShipment(): string
     {
-        if (null === $this->organizationId) {
-            throw new \Exception('Organization id was not found');
-        }
-
         return sprintf('%s/organizations/%s/shipments', $this->getApiEndpoint(), $this->organizationId);
     }
 
@@ -171,10 +165,6 @@ final class WebClient implements WebClientInterface
 
     private function getApiEndpointForLabels(): string
     {
-        if (null === $this->organizationId) {
-            throw new \Exception('Organization id was not found');
-        }
-
         return sprintf('%s/organizations/%s/shipments/labels', $this->getApiEndpoint(), $this->organizationId);
     }
 
