@@ -26,15 +26,11 @@ final class InpostShippingMethodValidator implements InpostShippingMethodValidat
         $shippingMethod = $orderDelivery->getShippingMethod();
 
         if (null === $shippingMethod) {
-            throw new PackageException('order.notFoundShippingMethod');
+            throw new PackageException('order.shippingMethodNotFound');
         }
 
         if (ShippingMethodPayloadFactoryInterface::SHIPPING_KEY !== $shippingMethod->getName()) {
-            throw new ShippingMethodException(str_replace(
-                '%shippingMethod%',
-                ShippingMethodPayloadFactoryInterface::SHIPPING_KEY,
-                'shippingMethod.notEquals'
-            ));
+            throw new ShippingMethodException('shippingMethod.notInpost');
         }
 
         return true;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BitBag\ShopwareInPostPlugin\Config;
+namespace BitBag\ShopwareInPostPlugin\Model;
 
 final class InpostApiConfig
 {

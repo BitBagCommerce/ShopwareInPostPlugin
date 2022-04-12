@@ -19,7 +19,7 @@
         "created": "Package has been created"
     },
     "shippingMethod": {
-        "notEquals": "%shippingMethod% is needed to complete this operation"
+        "notInpost": "InPost is needed to complete this operation"
     },
     "api": {
         "credentialsDataNotFound": "Fill in API credentials before creating the package",
