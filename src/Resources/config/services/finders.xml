@@ -27,5 +27,10 @@
         >
             <argument type="service" id="custom_field_set.repository" />
         </service>
+
+        <service id="BitBag\ShopwareInPostPlugin\Finder\OrderFinder"
+        >
+            <argument type="service" id="order.repository" />
+        </service>
     </services>
 </container>
