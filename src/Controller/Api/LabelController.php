@@ -6,7 +6,7 @@ namespace BitBag\ShopwareInPostPlugin\Controller\Api;
 
 use BitBag\ShopwareInPostPlugin\Api\WebClientInterface;
 use BitBag\ShopwareInPostPlugin\Exception\OrderException;
-use BitBag\ShopwareInPostPlugin\Exception\PackageException;
+use BitBag\ShopwareInPostPlugin\Exception\PackageNotFoundException;
 use BitBag\ShopwareInPostPlugin\Extension\Content\Order\OrderInPostExtensionInterface;
 use BitBag\ShopwareInPostPlugin\Finder\OrderFinderInterface;
 use BitBag\ShopwareInPostPlugin\Validator\InpostShippingMethodValidatorInterface;
@@ -39,8 +39,7 @@ final class LabelController
     /**
      * @OA\GET(
      *     path="/api/_action/bitbag-inpost-plugin/label/{orderId}",
-     *     summary="Get InPost package label",
-     *     description="Getting an InPost package label for an order",
+     *     summary="Gets an InPost package label for an order",
      *     operationId="show",
      *     tags={"Admin API", "InPost"},
      *     @OA\Parameter(
@@ -52,15 +51,22 @@ final class LabelController
      *     ),
      *     @OA\Response(
      *         response="200",
-     *         description="Render InPost package label as PDF"
+     *         description="InPost package formatted as PDF",
+     *         @OA\MediaType(
+     *             mediaType="application/pdf",
+     *             @OA\Schema(
+     *                type="string",
+     *                format="binary"
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
-     *         response="500",
-     *         description="Error while render InPost package label as PDF",
-     *         @OA\JsonContent(
-     *             type="json",
-     *             example={"errors": { {"status": "500", "code": "string", "title": "Internal Server Error", "detail": "string", "meta": {"parameters": {}}} }}
-     *         )
+     *         response="400",
+     *         description="Error while render InPost package label as PDF"
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Not found"
      *     )
      * )
      * @Route("/api/_action/bitbag-inpost-plugin/label/{orderId}", name="api.action.bitbag_inpost_plugin.label", methods={"GET"})
@@ -81,7 +87,7 @@ final class LabelController
         $orderInPostExtensionData = $orderExtension->getVars()['data'];
 
         if (null === $orderInPostExtensionData['packageId']) {
-            throw new PackageException('package.packageIdNotFound');
+            throw new PackageNotFoundException('package.packageIdNotFound');
         }
 
         $packageId = $orderInPostExtensionData['packageId'];

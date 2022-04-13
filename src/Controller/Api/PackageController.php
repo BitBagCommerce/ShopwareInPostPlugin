@@ -45,8 +45,7 @@ final class PackageController
     /**
      * @OA\Post(
      *     path="/api/_action/bitbag-inpost-plugin/package/{orderId}",
-     *     summary="Creates an InPost package",
-     *     description="Creates an InPost package for an order",
+     *     summary="Creates an InPost package for an order",
      *     operationId="create",
      *     tags={"Admin API", "InPost"},
      *     @OA\Parameter(
@@ -58,19 +57,16 @@ final class PackageController
      *     ),
      *     @OA\Response(
      *         response="201",
-     *         description="Package created successfully. The `/api/_action/bitbag-inpost-plugin/get-label/{orderId}` route can be used to download the label.",
-     *         @OA\JsonContent(
-     *             type="string",
-     *             example="package.created"
-     *         )
+     *         description="Package created successfully.",
+     *         @OA\JsonContent(ref="#/components/schemas/Order")
      *     ),
      *     @OA\Response(
-     *         response="500",
-     *         description="Error while create InPost package",
-     *         @OA\JsonContent(
-     *             type="json",
-     *             example={"errors": { {"status": "500", "code": "string", "title": "Internal Server Error", "detail": "string", "meta": {"parameters": {}}} }}
-     *         )
+     *         response="400",
+     *         description="Error while create InPost package"
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Not found"
      *     )
      * )
      * @Route("/api/_action/bitbag-inpost-plugin/package/{orderId}", name="api.action.bitbag_inpost_plugin.package", methods={"POST"})

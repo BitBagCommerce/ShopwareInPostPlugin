@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Validator;
 
-use BitBag\ShopwareInPostPlugin\Exception\PackageException;
 use BitBag\ShopwareInPostPlugin\Exception\ShippingMethodException;
+use BitBag\ShopwareInPostPlugin\Exception\ShippingMethodNotFoundException;
 use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodPayloadFactoryInterface;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderDeliveryResolverInterface;
 use Shopware\Core\Checkout\Order\OrderEntity;
@@ -26,7 +26,7 @@ final class InpostShippingMethodValidator implements InpostShippingMethodValidat
         $shippingMethod = $orderDelivery->getShippingMethod();
 
         if (null === $shippingMethod) {
-            throw new PackageException('order.shippingMethodNotFound');
+            throw new ShippingMethodNotFoundException('order.shippingMethodNotFound');
         }
 
         if (ShippingMethodPayloadFactoryInterface::SHIPPING_KEY !== $shippingMethod->getName()) {

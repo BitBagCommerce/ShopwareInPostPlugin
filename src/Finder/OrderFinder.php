@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Finder;
 
-use BitBag\ShopwareInPostPlugin\Exception\OrderException;
+use BitBag\ShopwareInPostPlugin\Exception\OrderNotFoundException;
 use BitBag\ShopwareInPostPlugin\Extension\Content\Order\OrderInPostExtensionInterface;
 use Shopware\Core\Checkout\Order\OrderEntity;
 use Shopware\Core\Framework\Context;
@@ -37,7 +37,7 @@ final class OrderFinder implements OrderFinderInterface
         $order = $this->orderRepository->search($orderCriteria, $context)->first();
 
         if (null === $order) {
-            throw new OrderException('order.notFound');
+            throw new OrderNotFoundException('order.notFound');
         }
 
         return $order;
