@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace BitBag\ShopwareInPostPlugin\Factory\Package;
 
 use BitBag\ShopwareInPostPlugin\Api\WebClientInterface;
-use BitBag\ShopwareInPostPlugin\Exception\OrderException;
 use BitBag\ShopwareInPostPlugin\Exception\PackageException;
-use BitBag\ShopwareInPostPlugin\Extension\Content\Order\OrderInPostExtensionInterface;
 use BitBag\ShopwareInPostPlugin\Provider\Defaults;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderCustomFieldsResolverInterface;
+use BitBag\ShopwareInPostPlugin\Resolver\OrderExtensionDataResolverInterface;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderPaymentMethodTypeResolverInterface;
 use Shopware\Core\Checkout\Order\OrderEntity;
 use Shopware\Core\Checkout\Payment\Cart\PaymentHandler\CashPayment;
@@ -24,27 +23,25 @@ final class PackagePayloadFactory implements PackagePayloadFactoryInterface
 
     private OrderPaymentMethodTypeResolverInterface $orderPaymentMethodTypeResolver;
 
+    private OrderExtensionDataResolverInterface $orderExtensionDataResolver;
+
     public function __construct(
         ReceiverPayloadFactoryInterface $createReceiverPayloadFactory,
         ParcelPayloadFactoryInterface $parcelPayloadFactory,
         OrderCustomFieldsResolverInterface $orderCustomFieldsResolver,
-        OrderPaymentMethodTypeResolverInterface $orderPaymentMethodTypeResolver
+        OrderPaymentMethodTypeResolverInterface $orderPaymentMethodTypeResolver,
+        OrderExtensionDataResolverInterface $orderExtensionDataResolver
     ) {
         $this->createReceiverPayloadFactory = $createReceiverPayloadFactory;
         $this->createParcelPayloadFactory = $parcelPayloadFactory;
         $this->orderCustomFieldsResolver = $orderCustomFieldsResolver;
         $this->orderPaymentMethodTypeResolver = $orderPaymentMethodTypeResolver;
+        $this->orderExtensionDataResolver = $orderExtensionDataResolver;
     }
 
     public function create(OrderEntity $order): array
     {
-        $inPostExtension = $order->getExtension(OrderInPostExtensionInterface::PROPERTY_KEY);
-
-        if (null === $inPostExtension) {
-            throw new OrderException('order.extension.inPostNotFound');
-        }
-
-        $orderInPostExtensionData = $inPostExtension->getVars()['data'];
+        $orderInPostExtensionData = $this->orderExtensionDataResolver->resolve($order);
 
         if (!isset($orderInPostExtensionData['pointName'])) {
             throw new PackageException('package.pointNameNotFound');

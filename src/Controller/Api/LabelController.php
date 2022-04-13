@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace BitBag\ShopwareInPostPlugin\Controller\Api;
 
 use BitBag\ShopwareInPostPlugin\Api\WebClientInterface;
-use BitBag\ShopwareInPostPlugin\Exception\OrderException;
 use BitBag\ShopwareInPostPlugin\Exception\PackageNotFoundException;
-use BitBag\ShopwareInPostPlugin\Extension\Content\Order\OrderInPostExtensionInterface;
 use BitBag\ShopwareInPostPlugin\Finder\OrderFinderInterface;
+use BitBag\ShopwareInPostPlugin\Resolver\OrderExtensionDataResolverInterface;
 use BitBag\ShopwareInPostPlugin\Validator\InpostShippingMethodValidatorInterface;
 use OpenApi\Annotations as OA;
 use Shopware\Core\Framework\Context;
@@ -26,14 +25,18 @@ final class LabelController
 
     private InpostShippingMethodValidatorInterface $inpostShippingMethodValidator;
 
+    private OrderExtensionDataResolverInterface $orderExtensionDataResolver;
+
     public function __construct(
         OrderFinderInterface $orderFinder,
         WebClientInterface $webClient,
-        InpostShippingMethodValidatorInterface $inpostShippingMethodValidator
+        InpostShippingMethodValidatorInterface $inpostShippingMethodValidator,
+        OrderExtensionDataResolverInterface $orderExtensionDataResolver
     ) {
         $this->orderFinder = $orderFinder;
         $this->webClient = $webClient;
         $this->inpostShippingMethodValidator = $inpostShippingMethodValidator;
+        $this->orderExtensionDataResolver = $orderExtensionDataResolver;
     }
 
     /**
@@ -77,14 +80,7 @@ final class LabelController
 
         $this->inpostShippingMethodValidator->validate($order);
 
-        $orderExtension = $order->getExtension(OrderInPostExtensionInterface::PROPERTY_KEY);
-
-        if (null === $orderExtension) {
-            throw new OrderException('order.extension.notFoundInPost');
-        }
-
-        /** @var array $orderInPostExtensionData = ['pointName' => 'string', 'packageId' => 'integer'] */
-        $orderInPostExtensionData = $orderExtension->getVars()['data'];
+        $orderInPostExtensionData = $this->orderExtensionDataResolver->resolve($order);
 
         if (null === $orderInPostExtensionData['packageId']) {
             throw new PackageNotFoundException('package.packageIdNotFound');

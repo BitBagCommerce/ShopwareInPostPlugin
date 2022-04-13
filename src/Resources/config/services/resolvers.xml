@@ -14,6 +14,8 @@
         </service>
 
         <service id="BitBag\ShopwareInPostPlugin\Resolver\OrderDeliveryResolver" />
+
+        <service id="BitBag\ShopwareInPostPlugin\Resolver\OrderExtensionDataResolver" />
     </services>
 </container>
 

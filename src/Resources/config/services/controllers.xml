@@ -10,6 +10,7 @@
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\OrderFinder" />
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Api\PackageApiService" />
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Validator\InpostShippingMethodValidator" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Resolver\OrderExtensionDataResolver" />
 
             <tag name="controller.service_arguments"/>
         </service>
@@ -18,6 +19,7 @@
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\OrderFinder" />
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Api\WebClient" />
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Validator\InpostShippingMethodValidator" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Resolver\OrderExtensionDataResolver" />
 
             <tag name="controller.service_arguments"/>
         </service>
