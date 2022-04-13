@@ -62,7 +62,7 @@ final class PackageController
      *     ),
      *     @OA\Response(
      *         response="400",
-     *         description="Error while create InPost package"
+     *         description="Bad package data provided"
      *     ),
      *     @OA\Response(
      *         response="404",

@@ -62,7 +62,7 @@ final class LabelController
      *     ),
      *     @OA\Response(
      *         response="400",
-     *         description="Error while render InPost package label as PDF"
+     *         description="Error while rendering the package label"
      *     ),
      *     @OA\Response(
      *         response="404",
