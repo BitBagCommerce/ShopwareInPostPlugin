@@ -48,5 +48,5 @@ interface WebClientInterface
 
     public function request(string $method, string $url, array $data = []): string;
 
-    public function getLabelByShipmentId(string $shipmentId): Response;
+    public function getLabelByShipmentId(int $shipmentId): Response;
 }

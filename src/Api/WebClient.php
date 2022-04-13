@@ -118,7 +118,7 @@ final class WebClient implements WebClientInterface
         return (string) $result->getBody();
     }
 
-    public function getLabelByShipmentId(string $shipmentId): Response
+    public function getLabelByShipmentId(int $shipmentId): Response
     {
         $url = sprintf('%s/shipments/%s/label', $this->getApiEndpoint(), $shipmentId);
         $label = $this->request('GET', $url, []);
