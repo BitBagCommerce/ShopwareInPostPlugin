@@ -1,0 +1,13 @@
+{% sw_extends '@Storefront/storefront/component/shipping/shipping-method.html.twig' %}
+
+{% block component_shipping_method_label %}
+    {{ parent() }}
+
+    {% if (shipping.id is same as(context.shippingMethod.id)) and
+        shipping.name === constant('BitBag\\ShopwareInPostPlugin\\Factory\\ShippingMethodPayloadFactoryInterface::SHIPPING_KEY')
+    %}
+        <div id="easypack-map"></div>
+
+        <input type="hidden" id="inpost-parcel-locker" name="customParcelLockerField" form="confirmOrderForm">
+    {% endif %}
+{% endblock %}
