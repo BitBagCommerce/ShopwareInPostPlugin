@@ -10,6 +10,7 @@ use BitBag\ShopwareInPostPlugin\Exception\PackageException;
 use BitBag\ShopwareInPostPlugin\Extension\Content\Order\OrderInPostExtensionInterface;
 use BitBag\ShopwareInPostPlugin\Finder\OrderFinderInterface;
 use BitBag\ShopwareInPostPlugin\Validator\InpostShippingMethodValidatorInterface;
+use OpenApi\Annotations as OA;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -42,7 +43,37 @@ final class PackageController
     }
 
     /**
-     * @Route("/api/_action/bitbag-inpost-plugin/create-package/{orderId}", name="api.action.bitbag_inpost_plugin.create_package", methods={"POST"})
+     * @OA\Post(
+     *     path="/api/_action/bitbag-inpost-plugin/package/{orderId}",
+     *     summary="Creates an InPost package",
+     *     description="Creates an InPost package for an order",
+     *     operationId="create",
+     *     tags={"Admin API", "InPost"},
+     *     @OA\Parameter(
+     *         name="orderId",
+     *         description="Identifier of the order the package should be generated for",
+     *         @OA\Schema(type="string", pattern="^[0-9a-f]{32}$"),
+     *         in="path",
+     *         required=true
+     *     ),
+     *     @OA\Response(
+     *         response="201",
+     *         description="Package created successfully. The `/api/_action/bitbag-inpost-plugin/get-label/{orderId}` route can be used to download the label.",
+     *         @OA\JsonContent(
+     *             type="string",
+     *             example="package.created"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="500",
+     *         description="Error while create InPost package",
+     *         @OA\JsonContent(
+     *             type="json",
+     *             example={"errors": { {"status": "500", "code": "string", "title": "Internal Server Error", "detail": "string", "meta": {"parameters": {}}} }}
+     *         )
+     *     )
+     * )
+     * @Route("/api/_action/bitbag-inpost-plugin/package/{orderId}", name="api.action.bitbag_inpost_plugin.package", methods={"POST"})
      */
     public function create(string $orderId, Context $context): JsonResponse
     {

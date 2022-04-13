@@ -10,6 +10,7 @@ use BitBag\ShopwareInPostPlugin\Exception\PackageException;
 use BitBag\ShopwareInPostPlugin\Extension\Content\Order\OrderInPostExtensionInterface;
 use BitBag\ShopwareInPostPlugin\Finder\OrderFinderInterface;
 use BitBag\ShopwareInPostPlugin\Validator\InpostShippingMethodValidatorInterface;
+use OpenApi\Annotations as OA;
 use Shopware\Core\Framework\Context;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,9 +37,35 @@ final class LabelController
     }
 
     /**
-     * @Route("/api/_action/bitbag-inpost-plugin/get-label/{orderId}", name="api.action.bitbag_inpost_plugin.get_label", methods={"GET"}, defaults={"auth_required"=false})
+     * @OA\GET(
+     *     path="/api/_action/bitbag-inpost-plugin/label/{orderId}",
+     *     summary="Get InPost package label",
+     *     description="Getting an InPost package label for an order",
+     *     operationId="show",
+     *     tags={"Admin API", "InPost"},
+     *     @OA\Parameter(
+     *         name="orderId",
+     *         description="Identifier of the order the package should be generated for",
+     *         @OA\Schema(type="string", pattern="^[0-9a-f]{32}$"),
+     *         in="path",
+     *         required=true
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Render InPost package label as PDF"
+     *     ),
+     *     @OA\Response(
+     *         response="500",
+     *         description="Error while render InPost package label as PDF",
+     *         @OA\JsonContent(
+     *             type="json",
+     *             example={"errors": { {"status": "500", "code": "string", "title": "Internal Server Error", "detail": "string", "meta": {"parameters": {}}} }}
+     *         )
+     *     )
+     * )
+     * @Route("/api/_action/bitbag-inpost-plugin/label/{orderId}", name="api.action.bitbag_inpost_plugin.label", methods={"GET"})
      */
-    public function getLabel(string $orderId, Context $context): Response
+    public function show(string $orderId, Context $context): Response
     {
         $order = $this->orderFinder->getWithAssociations($orderId, $context);
 
