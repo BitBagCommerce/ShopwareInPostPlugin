@@ -8,5 +8,5 @@ use Shopware\Core\Checkout\Order\OrderEntity;
 
 interface InpostShippingMethodValidatorInterface
 {
-    public function validate(OrderEntity $order): bool;
+    public function validate(OrderEntity $order): void;
 }
