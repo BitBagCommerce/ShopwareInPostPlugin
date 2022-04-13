@@ -17,7 +17,7 @@
         "fillRequiredCustomFields": "Fill in all required package details before creating the package",
         "nullWeight": "Package weight cannot be 0",
         "created": "Package has been created",
-        "packageIdNotFound": "Create package before get label"
+        "packageIdNotFound": "Create a package before fetching get label"
     },
     "shippingMethod": {
         "notInpost": "InPost is needed to complete this operation"

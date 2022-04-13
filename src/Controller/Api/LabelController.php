@@ -36,7 +36,7 @@ final class LabelController
     }
 
     /**
-     * @Route("/api/_action/bitbag-inpost-plugin/get-label/{orderId}", name="api.action.bitbag_inpost_plugin.get_label", methods={"GET"})
+     * @Route("/api/_action/bitbag-inpost-plugin/get-label/{orderId}", name="api.action.bitbag_inpost_plugin.get_label", methods={"GET"}, defaults={"auth_required"=false})
      */
     public function getLabel(string $orderId, Context $context): Response
     {
@@ -57,6 +57,17 @@ final class LabelController
             throw new PackageException('package.packageIdNotFound');
         }
 
-        return $this->webClient->getLabelByShipmentId($orderInPostExtensionData['packageId']);
+        $packageId = $orderInPostExtensionData['packageId'];
+
+        $label = $this->webClient->getLabelByShipmentId($packageId);
+
+        $filename = sprintf('filename="label_%s.pdf"', $packageId);
+
+        $response = new Response($label);
+        $response->headers->set('Content-Type', 'application/pdf');
+        $response->headers->set('Content-Transfer-Encoding', 'binary');
+        $response->headers->set('Content-Disposition', $filename);
+
+        return $response;
     }
 }
