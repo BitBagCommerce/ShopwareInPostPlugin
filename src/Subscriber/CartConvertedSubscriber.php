@@ -54,7 +54,13 @@ class CartConvertedSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $customParcelLocker = $this->requestStack->getCurrentRequest()->request->get('customParcelLockerField');
+        $request = $this->requestStack->getCurrentRequest();
+
+        if (null === $request) {
+            return;
+        }
+
+        $customParcelLocker = $request->request->get('customParcelLockerField', null);
 
         if (null === $customParcelLocker) {
             return;
