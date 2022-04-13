@@ -41,7 +41,7 @@ final class PackagePayloadFactory implements PackagePayloadFactoryInterface
         $inPostExtension = $order->getExtension(OrderInPostExtensionInterface::PROPERTY_KEY);
 
         if (null === $inPostExtension) {
-            throw new OrderException('order.extension.inPostNotFound');
+            throw new OrderException('order.extension.notFound');
         }
 
         $orderInPostExtensionData = $inPostExtension->getVars()['data'];
