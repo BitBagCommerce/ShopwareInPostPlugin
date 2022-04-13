@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace BitBag\ShopwareInPostPlugin\Controller\Api;
 
 use BitBag\ShopwareInPostPlugin\Api\PackageApiServiceInterface;
-use BitBag\ShopwareInPostPlugin\Exception\OrderException;
 use BitBag\ShopwareInPostPlugin\Exception\PackageException;
-use BitBag\ShopwareInPostPlugin\Extension\Content\Order\OrderInPostExtensionInterface;
 use BitBag\ShopwareInPostPlugin\Finder\OrderFinderInterface;
+use BitBag\ShopwareInPostPlugin\Resolver\OrderExtensionDataResolverInterface;
 use BitBag\ShopwareInPostPlugin\Validator\InpostShippingMethodValidatorInterface;
 use OpenApi\Annotations as OA;
 use Shopware\Core\Framework\Context;
@@ -30,16 +29,20 @@ final class PackageController
 
     private InpostShippingMethodValidatorInterface $inpostShippingMethodValidator;
 
+    private OrderExtensionDataResolverInterface $orderExtensionDataResolver;
+
     public function __construct(
         EntityRepositoryInterface $orderRepository,
         OrderFinderInterface $orderFinder,
         PackageApiServiceInterface $packageApiService,
-        InpostShippingMethodValidatorInterface $inpostShippingMethodValidator
+        InpostShippingMethodValidatorInterface $inpostShippingMethodValidator,
+        OrderExtensionDataResolverInterface $orderExtensionDataResolver
     ) {
         $this->orderRepository = $orderRepository;
         $this->orderFinder = $orderFinder;
         $this->packageApiService = $packageApiService;
         $this->inpostShippingMethodValidator = $inpostShippingMethodValidator;
+        $this->orderExtensionDataResolver = $orderExtensionDataResolver;
     }
 
     /**
@@ -79,14 +82,7 @@ final class PackageController
 
         $package = $this->packageApiService->createPackage($order);
 
-        $orderExtension = $order->getExtension(OrderInPostExtensionInterface::PROPERTY_KEY);
-
-        if (null === $orderExtension) {
-            throw new OrderException('order.extension.notFoundInPost');
-        }
-
-        /** @var array $orderInPostExtensionData = ['pointName' => 'string', 'packageId' => 'integer'] */
-        $orderInPostExtensionData = $orderExtension->getVars()['data'];
+        $orderInPostExtensionData = $this->orderExtensionDataResolver->resolve($order);
 
         if (null !== $orderInPostExtensionData['packageId']) {
             throw new PackageException('package.alreadyCreated');
@@ -96,7 +92,7 @@ final class PackageController
             [
                 'id' => $order->getId(),
                 'inPost' => [
-                    'id' => $orderExtension->getVars()['data']['id'],
+                    'id' => $orderInPostExtensionData['id'],
                     'packageId' => $package['id'],
                 ],
             ],
