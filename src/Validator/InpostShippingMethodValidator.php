@@ -19,7 +19,7 @@ final class InpostShippingMethodValidator implements InpostShippingMethodValidat
         $this->orderDeliveryResolver = $orderDeliveryResolver;
     }
 
-    public function validate(OrderEntity $order): bool
+    public function validate(OrderEntity $order): void
     {
         $orderDelivery = $this->orderDeliveryResolver->resolve($order);
 
@@ -32,7 +32,5 @@ final class InpostShippingMethodValidator implements InpostShippingMethodValidat
         if (ShippingMethodPayloadFactoryInterface::SHIPPING_KEY !== $shippingMethod->getName()) {
             throw new ShippingMethodException('shippingMethod.notInpost');
         }
-
-        return true;
     }
 }
