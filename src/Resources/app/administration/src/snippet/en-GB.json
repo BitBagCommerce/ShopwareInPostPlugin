@@ -16,7 +16,8 @@
         "alreadyCreated": "A package has already been created for this order",
         "fillRequiredCustomFields": "Fill in all required package details before creating the package",
         "nullWeight": "Package weight cannot be 0",
-        "created": "Package has been created"
+        "created": "Package has been created",
+        "packageIdNotFound": "Create a package before fetching the label"
     },
     "shippingMethod": {
         "notInpost": "InPost is needed to complete this operation"

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Api;
 
-use Symfony\Component\HttpFoundation\Response;
-
 interface WebClientInterface
 {
     public const PRODUCTION_API_ENDPOINT = 'https://api-shipx-pl.easypack24.net';
@@ -48,5 +46,5 @@ interface WebClientInterface
 
     public function request(string $method, string $url, array $data = []): string;
 
-    public function getLabelByShipmentId(string $shipmentId): Response;
+    public function getLabelByShipmentId(int $shipmentId): string;
 }

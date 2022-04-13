@@ -8,7 +8,6 @@ use BitBag\ShopwareInPostPlugin\Config\InpostConfigServiceInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Psr\Http\Message\ResponseInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 final class WebClient implements WebClientInterface
 {
@@ -118,19 +117,11 @@ final class WebClient implements WebClientInterface
         return (string) $result->getBody();
     }
 
-    public function getLabelByShipmentId(string $shipmentId): Response
+    public function getLabelByShipmentId(int $shipmentId): string
     {
         $url = sprintf('%s/shipments/%s/label', $this->getApiEndpoint(), $shipmentId);
-        $label = $this->request('GET', $url, []);
 
-        $filename = sprintf('filename="label_%s.pdf"', $shipmentId);
-
-        $response = new Response($label);
-        $response->headers->set('Content-Type', 'application/pdf');
-        $response->headers->set('Content-Transfer-Encoding', 'binary');
-        $response->headers->set('Content-Disposition', $filename);
-
-        return $response;
+        return $this->request('GET', $url, []);
     }
 
     private function getAuthorizedHeaderWithContentType(): array
