@@ -2,7 +2,7 @@
     "order": {
         "notFound": "Order was not found",
         "extension": {
-            "notFound": "InPost plugin is not installed"
+            "notFound": "InPost data cannot be empty"
         },
         "nullPhoneNumber": "Phone number cannot be empty",
         "shippingMethodNotFound": "Shipping method was not found",
