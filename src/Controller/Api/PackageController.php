@@ -8,7 +8,6 @@ use BitBag\ShopwareInPostPlugin\Api\PackageApiServiceInterface;
 use BitBag\ShopwareInPostPlugin\Exception\PackageException;
 use BitBag\ShopwareInPostPlugin\Finder\OrderFinderInterface;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderExtensionDataResolverInterface;
-use BitBag\ShopwareInPostPlugin\Validator\InpostShippingMethodValidatorInterface;
 use OpenApi\Annotations as OA;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
@@ -27,21 +26,17 @@ final class PackageController
 
     private PackageApiServiceInterface $packageApiService;
 
-    private InpostShippingMethodValidatorInterface $inpostShippingMethodValidator;
-
     private OrderExtensionDataResolverInterface $orderExtensionDataResolver;
 
     public function __construct(
         EntityRepositoryInterface $orderRepository,
         OrderFinderInterface $orderFinder,
         PackageApiServiceInterface $packageApiService,
-        InpostShippingMethodValidatorInterface $inpostShippingMethodValidator,
         OrderExtensionDataResolverInterface $orderExtensionDataResolver
     ) {
         $this->orderRepository = $orderRepository;
         $this->orderFinder = $orderFinder;
         $this->packageApiService = $packageApiService;
-        $this->inpostShippingMethodValidator = $inpostShippingMethodValidator;
         $this->orderExtensionDataResolver = $orderExtensionDataResolver;
     }
 
@@ -78,8 +73,6 @@ final class PackageController
     {
         $order = $this->orderFinder->getWithAssociations($orderId, $context);
 
-        $this->inpostShippingMethodValidator->validate($order);
-
         $package = $this->packageApiService->createPackage($order);
 
         $orderInPostExtensionData = $this->orderExtensionDataResolver->resolve($order);
@@ -98,6 +91,6 @@ final class PackageController
             ],
         ], $context);
 
-        return new JsonResponse('package.created', Response::HTTP_CREATED);
+        return new JsonResponse($order, Response::HTTP_CREATED);
     }
 }

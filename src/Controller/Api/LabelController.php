@@ -8,7 +8,6 @@ use BitBag\ShopwareInPostPlugin\Api\WebClientInterface;
 use BitBag\ShopwareInPostPlugin\Exception\PackageNotFoundException;
 use BitBag\ShopwareInPostPlugin\Finder\OrderFinderInterface;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderExtensionDataResolverInterface;
-use BitBag\ShopwareInPostPlugin\Validator\InpostShippingMethodValidatorInterface;
 use OpenApi\Annotations as OA;
 use Shopware\Core\Framework\Context;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,19 +22,15 @@ final class LabelController
 
     private WebClientInterface $webClient;
 
-    private InpostShippingMethodValidatorInterface $inpostShippingMethodValidator;
-
     private OrderExtensionDataResolverInterface $orderExtensionDataResolver;
 
     public function __construct(
         OrderFinderInterface $orderFinder,
         WebClientInterface $webClient,
-        InpostShippingMethodValidatorInterface $inpostShippingMethodValidator,
         OrderExtensionDataResolverInterface $orderExtensionDataResolver
     ) {
         $this->orderFinder = $orderFinder;
         $this->webClient = $webClient;
-        $this->inpostShippingMethodValidator = $inpostShippingMethodValidator;
         $this->orderExtensionDataResolver = $orderExtensionDataResolver;
     }
 
@@ -77,8 +72,6 @@ final class LabelController
     public function show(string $orderId, Context $context): Response
     {
         $order = $this->orderFinder->getWithAssociations($orderId, $context);
-
-        $this->inpostShippingMethodValidator->validate($order);
 
         $orderInPostExtensionData = $this->orderExtensionDataResolver->resolve($order);
 
