@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Calculator;
 
-use BitBag\ShopwareInPostPlugin\Exception\OrderException;
+use BitBag\ShopwareInPostPlugin\Exception\Order\OrderException;
 use Shopware\Core\Checkout\Order\OrderEntity;
 
 final class OrderWeightCalculator implements OrderWeightCalculatorInterface

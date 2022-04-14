@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Validator;
 
-use BitBag\ShopwareInPostPlugin\Exception\ShippingMethodException;
-use BitBag\ShopwareInPostPlugin\Exception\ShippingMethodNotFoundException;
+use BitBag\ShopwareInPostPlugin\Exception\Order\ShippingMethodException;
+use BitBag\ShopwareInPostPlugin\Exception\Order\ShippingMethodNotFoundException;
 use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodPayloadFactoryInterface;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderDeliveryResolverInterface;
 use Shopware\Core\Checkout\Order\OrderEntity;
