@@ -27,6 +27,10 @@ final class PackageApiService implements PackageApiServiceInterface
 
         $package = $this->webClient->createShipment($inPostPackageData);
 
+        if (!isset($package['error'])) {
+            return $package;
+        }
+
         switch ($package['error']) {
             case 'validation_failed':
                 throw new InpostApiException('api.providedDataNotValid');
