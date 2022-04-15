@@ -9,11 +9,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class OrderException extends ShopwareHttpException
 {
-    public function __construct(string $message, string $orderId, array $parameters = [], ?\Throwable $e = null)
+    public function __construct(string $message, string $orderId)
     {
         $message = sprintf($message, $orderId);
 
-        parent::__construct($message, $parameters, $e);
+        parent::__construct($message);
     }
 
     public function getErrorCode(): string
