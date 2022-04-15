@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Resolver;
 
-use BitBag\ShopwareInPostPlugin\Exception\OrderExtensionNotFoundException;
+use BitBag\ShopwareInPostPlugin\Exception\Order\OrderExtensionNotFoundException;
 use BitBag\ShopwareInPostPlugin\Extension\Content\Order\OrderInPostExtensionInterface;
 use Shopware\Core\Checkout\Order\OrderEntity;
 

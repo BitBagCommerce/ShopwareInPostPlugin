@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Factory\Package;
 
-use BitBag\ShopwareInPostPlugin\Exception\OrderException;
+use BitBag\ShopwareInPostPlugin\Exception\Order\OrderException;
+use BitBag\ShopwareInPostPlugin\Exception\ShippingAddress\ShippingAddressException;
 use BitBag\ShopwareInPostPlugin\Provider\Defaults;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderShippingAddressResolverInterface;
 use Shopware\Core\Checkout\Order\OrderEntity;
@@ -23,7 +24,7 @@ final class ReceiverPayloadFactory implements ReceiverPayloadFactoryInterface
         $orderCustomer = $order->getOrderCustomer();
 
         if (null === $orderCustomer) {
-            throw new OrderException('order.customerEmailNotFound');
+            throw new OrderException('order.customerEmailNotFound', $order->getId());
         }
 
         $orderShippingAddress = $this->orderShippingAddressResolver->resolve($order);
@@ -31,7 +32,7 @@ final class ReceiverPayloadFactory implements ReceiverPayloadFactoryInterface
         $phoneNumber = $orderShippingAddress->getPhoneNumber();
 
         if (null === $phoneNumber) {
-            throw new OrderException('order.nullPhoneNumber');
+            throw new OrderException('order.nullPhoneNumber', $order->getId());
         }
 
         [, $street, $houseNumber] = $this->splitStreet($orderShippingAddress->getStreet());
@@ -55,7 +56,7 @@ final class ReceiverPayloadFactory implements ReceiverPayloadFactoryInterface
     private function splitStreet(string $street): array
     {
         if (!preg_match('/^([^\d]*[^\d\s]) *(\d.*)$/', $street, $streetAddress)) {
-            throw new OrderException('Street cannot be split');
+            throw new ShippingAddressException('Street cannot be split');
         }
 
         return $streetAddress;

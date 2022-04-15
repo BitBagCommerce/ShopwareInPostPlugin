@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BitBag\ShopwareInPostPlugin\Factory\Package;
 
 use BitBag\ShopwareInPostPlugin\Api\WebClientInterface;
-use BitBag\ShopwareInPostPlugin\Exception\PackageException;
+use BitBag\ShopwareInPostPlugin\Exception\PackageNotFoundException;
 use BitBag\ShopwareInPostPlugin\Provider\Defaults;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderCustomFieldsResolverInterface;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderExtensionDataResolverInterface;
@@ -44,7 +44,7 @@ final class PackagePayloadFactory implements PackagePayloadFactoryInterface
         $orderInPostExtensionData = $this->orderExtensionDataResolver->resolve($order);
 
         if (!isset($orderInPostExtensionData['pointName'])) {
-            throw new PackageException('package.pointNameNotFound');
+            throw new PackageNotFoundException(sprintf('package.pointNameNotFound', $order->getId()));
         }
 
         $data = [

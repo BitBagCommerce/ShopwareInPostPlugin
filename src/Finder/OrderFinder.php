@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Finder;
 
-use BitBag\ShopwareInPostPlugin\Exception\OrderNotFoundException;
+use BitBag\ShopwareInPostPlugin\Exception\Order\OrderNotFoundException;
 use BitBag\ShopwareInPostPlugin\Extension\Content\Order\OrderInPostExtensionInterface;
 use Shopware\Core\Checkout\Order\OrderEntity;
 use Shopware\Core\Framework\Context;

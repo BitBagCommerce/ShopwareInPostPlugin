@@ -20,7 +20,7 @@ final class OrderCustomFieldsResolver implements OrderCustomFieldsResolverInterf
         $orderCustomFields = $order->getCustomFields();
 
         if (null === $orderCustomFields) {
-            throw new PackageException('package.fillRequiredCustomFields');
+            throw new PackageException(sprintf('package.fillRequiredCustomFields', $order->getId()));
         }
 
         $depthKey = $packageDetailsKey . '_depth';
@@ -29,7 +29,7 @@ final class OrderCustomFieldsResolver implements OrderCustomFieldsResolverInterf
         $insuranceKey = $packageDetailsKey . '_insurance';
 
         if (!isset($orderCustomFields[$depthKey], $orderCustomFields[$heightKey], $orderCustomFields[$widthKey])) {
-            throw new PackageException('package.fillRequiredCustomFields');
+            throw new PackageException(sprintf('package.fillRequiredCustomFields', $order->getId()));
         }
 
         return [
