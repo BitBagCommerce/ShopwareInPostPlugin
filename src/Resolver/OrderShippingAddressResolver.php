@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Resolver;
 
-use BitBag\ShopwareInPostPlugin\Exception\Order\ShippingAddressNotFoundException;
+use BitBag\ShopwareInPostPlugin\Exception\ShippingAddress\ShippingAddressNotFoundException;
 use Shopware\Core\Checkout\Order\Aggregate\OrderAddress\OrderAddressEntity;
 use Shopware\Core\Checkout\Order\OrderEntity;
 
@@ -24,7 +24,7 @@ final class OrderShippingAddressResolver implements OrderShippingAddressResolver
         $shippingOrderAddress = $orderDelivery->getShippingOrderAddress();
 
         if (null === $shippingOrderAddress) {
-            throw new ShippingAddressNotFoundException('order.shippingAddressNotFound');
+            throw new ShippingAddressNotFoundException('order.shippingAddressNotFound', $order->getId());
         }
 
         return $shippingOrderAddress;

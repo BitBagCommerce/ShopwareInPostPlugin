@@ -7,7 +7,7 @@ namespace BitBag\ShopwareInPostPlugin\Exception\Order;
 use Shopware\Core\Framework\ShopwareHttpException;
 use Symfony\Component\HttpFoundation\Response;
 
-final class ExtensionNotFoundException extends ShopwareHttpException
+final class OrderExtensionNotFoundException extends ShopwareHttpException
 {
     public function getErrorCode(): string
     {

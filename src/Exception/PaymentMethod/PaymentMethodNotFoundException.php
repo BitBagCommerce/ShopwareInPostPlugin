@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace BitBag\ShopwareInPostPlugin\Exception\Order;
+namespace BitBag\ShopwareInPostPlugin\Exception\PaymentMethod;
 
 use Shopware\Core\Framework\ShopwareHttpException;
 use Symfony\Component\HttpFoundation\Response;
 
-final class ShippingMethodException extends ShopwareHttpException
+final class PaymentMethodNotFoundException extends ShopwareHttpException
 {
     public function getErrorCode(): string
     {
-        return 'BITBAG_INPOST_PLUGIN__SHIPPING_METHOD_EXCEPTION';
+        return 'BITBAG_INPOST_PLUGIN__PAYMENT_METHOD_NOT_FOUND';
     }
 
     public function getStatusCode(): int
     {
-        return Response::HTTP_BAD_REQUEST;
+        return Response::HTTP_NOT_FOUND;
     }
 }

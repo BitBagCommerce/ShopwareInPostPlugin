@@ -4,16 +4,16 @@
         "extension": {
             "notFound": "InPost data cannot be empty"
         },
-        "nullPhoneNumber": "Phone number cannot be empty",
-        "shippingMethodNotFound": "Shipping method was not found",
-        "paymentMethodNotFound": "Payment method cannot be empty",
-        "shippingAddressNotFound": "Shipping address cannot be empty",
-        "customerEmailNotFound": "Customer email cannot be empty",
-        "productsNotFound": "The order does not contain any products"
+        "nullPhoneNumber": "Phone number for order %s cannot be empty",
+        "shippingMethodNotFound": "Shipping method for order %s was not found",
+        "paymentMethodNotFound": "Payment method for order %s cannot be empty",
+        "shippingAddressNotFound": "Shipping address for order %s cannot be empty",
+        "customerEmailNotFound": "Customer email for order %s cannot be empty",
+        "productsNotFound": "The order %s does not contain any products"
     },
     "package": {
-        "pointNameNotFound": "Point name was not found",
-        "alreadyCreated": "A package has already been created for this order",
+        "pointNameNotFound": "Point name for order %s was not found",
+        "alreadyCreated": "A package has already been created for order %s",
         "fillRequiredCustomFields": "Fill in all required package details before creating the package",
         "nullWeight": "Package weight cannot be 0",
         "created": "Package has been created",

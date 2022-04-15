@@ -7,22 +7,21 @@ namespace BitBag\ShopwareInPostPlugin\Exception\Order;
 use Shopware\Core\Framework\ShopwareHttpException;
 use Symfony\Component\HttpFoundation\Response;
 
-final class OrderException extends ShopwareHttpException
+final class OrderDeliveryNotFoundException extends ShopwareHttpException
 {
-    public function __construct(string $message, string $orderId, array $parameters = [], ?\Throwable $e = null)
+    public function __construct(string $orderId, array $parameters = [], ?\Throwable $e = null)
     {
-        $message = sprintf($message, $orderId);
-
+        $message = sprintf('order.shippingAddressNotFound', $orderId);
         parent::__construct($message, $parameters, $e);
     }
 
     public function getErrorCode(): string
     {
-        return 'BITBAG_INPOST_PLUGIN__ORDER_DATA_FAILURE';
+        return 'BITBAG_INPOST_PLUGIN__ORDER_DELIVERY_NOT_FOUND';
     }
 
     public function getStatusCode(): int
     {
-        return Response::HTTP_BAD_REQUEST;
+        return Response::HTTP_NOT_FOUND;
     }
 }

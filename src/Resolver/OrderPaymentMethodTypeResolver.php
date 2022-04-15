@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Resolver;
 
-use BitBag\ShopwareInPostPlugin\Exception\Order\PaymentMethodNotFoundException;
+use BitBag\ShopwareInPostPlugin\Exception\Order\OrderException;
 use Shopware\Core\Checkout\Order\Aggregate\OrderTransaction\OrderTransactionEntity;
 use Shopware\Core\Checkout\Order\OrderEntity;
 use Shopware\Core\Checkout\Payment\PaymentMethodEntity;
@@ -16,14 +16,14 @@ final class OrderPaymentMethodTypeResolver implements OrderPaymentMethodTypeReso
         $orderTransactions = $order->getTransactions();
 
         if (null === $orderTransactions) {
-            throw new PaymentMethodNotFoundException('order.paymentMethodNotFound');
+            throw new OrderException('order.paymentMethodNotFound', $order->getId());
         }
 
         /** @var OrderTransactionEntity|null $orderTransaction */
         $orderTransaction = $orderTransactions->first();
 
         if (null === $orderTransaction) {
-            throw new PaymentMethodNotFoundException('order.paymentMethodNotFound');
+            throw new OrderException('order.paymentMethodNotFound', $order->getId());
         }
 
         /** @var PaymentMethodEntity $paymentMethod */

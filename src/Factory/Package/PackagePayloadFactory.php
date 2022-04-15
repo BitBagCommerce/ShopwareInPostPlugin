@@ -44,7 +44,9 @@ final class PackagePayloadFactory implements PackagePayloadFactoryInterface
         $orderInPostExtensionData = $this->orderExtensionDataResolver->resolve($order);
 
         if (!isset($orderInPostExtensionData['pointName'])) {
-            throw new PackageNotFoundException('package.pointNameNotFound');
+            $message = sprintf('package.pointNameNotFound', $order->getId());
+
+            throw new PackageNotFoundException($message);
         }
 
         $data = [
