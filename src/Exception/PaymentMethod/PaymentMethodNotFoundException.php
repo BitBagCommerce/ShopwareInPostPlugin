@@ -11,7 +11,7 @@ final class PaymentMethodNotFoundException extends ShopwareHttpException
 {
     public function getErrorCode(): string
     {
-        return 'BITBAG_INPOST_PLUGIN__PAYMENT_METHOD_NOT_FOUND';
+        return 'BITBAG_INPOST_PLUGIN__PAYMENT_METHOD_NOT_FOUND_EXCEPTION';
     }
 
     public function getStatusCode(): int

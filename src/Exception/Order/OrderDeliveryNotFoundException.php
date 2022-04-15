@@ -9,15 +9,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class OrderDeliveryNotFoundException extends ShopwareHttpException
 {
-    public function __construct(string $orderId, array $parameters = [], ?\Throwable $e = null)
+    public function __construct(string $orderId)
     {
         $message = sprintf('order.shippingAddressNotFound', $orderId);
-        parent::__construct($message, $parameters, $e);
+
+        parent::__construct($message);
     }
 
     public function getErrorCode(): string
     {
-        return 'BITBAG_INPOST_PLUGIN__ORDER_DELIVERY_NOT_FOUND';
+        return 'BITBAG_INPOST_PLUGIN__ORDER_DELIVERY_NOT_FOUND_EXCEPTION';
     }
 
     public function getStatusCode(): int
