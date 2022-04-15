@@ -1,0 +1,50 @@
+.hide {
+    display: none !important;
+}
+
+.container {
+    text-align: center;
+
+    .inpost-point-detail {
+        display: inline-block;
+        width: 49%;
+
+        .image {
+            display: inline-block;
+            width: 49%;
+            vertical-align: middle;
+
+            img {
+                width: 200px;
+            }
+        }
+
+        .information {
+            display: inline-block;
+            width: 49%;
+            vertical-align: middle;
+            text-align: left;
+
+            .text-bold {
+                font-weight: bold;
+            }
+        }
+    }
+
+    .actions {
+        display: inline-block;
+        width: 49%;
+        vertical-align: middle;
+
+        button {
+            &.get-label {
+                display: block;
+                background-color: limegreen;
+                color: #ffffff;
+                margin: 0 auto;
+                margin-bottom: 30px;
+            }
+        }
+    }
+}
+

@@ -1,0 +1,27 @@
+<sw-card title="InPost details" class="inpost-details-card hide">
+    <div class="container">
+        <div class="inpost-point-detail">
+            <div id="pointImageDiv" class="image">
+                <img src="" alt="paczkomat" id="pointImage" />
+            </div>
+
+            <div class="information">
+                <p class="text-bold" id="pointName"></p>
+                <p id="street"></p>
+                <p id="postCode"></p>
+                <p id="city"></p>
+                <p id="province"></p>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button @click="this.getLabel" class="sw-button get-label">
+                {{ $tc('administration.order.inpost.getLabel') }}
+            </button>
+
+            <button @click="this.createPackage" class="sw-button sw-button--primary">
+                {{ $tc('administration.order.inpost.createPackage') }}
+            </button>
+        </div>
+    </div>
+</sw-card>

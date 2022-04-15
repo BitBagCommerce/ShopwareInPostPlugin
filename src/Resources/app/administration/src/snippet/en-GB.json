@@ -27,5 +27,13 @@
         "providedDataNotValid": "Provided data is not valid",
         "resourceNotFound": "You cannot create a shipment for this organization",
         "noCarriers": "No carrier is assigned to your InPost account"
+    },
+    "administration": {
+        "order": {
+            "inpost": {
+                "getLabel": "Get label",
+                "createPackage": "Create package"
+            }
+        }
     }
 }
