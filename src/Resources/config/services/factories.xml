@@ -13,6 +13,7 @@
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\DeliveryTimePayloadFactory" />
             <argument type="service" id="rule.repository" />
             <argument type="service" id="delivery_time.repository" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\RulePayloadFactory" />
         </service>
 
         <service id="BitBag\ShopwareInPostPlugin\Factory\DeliveryTimePayloadFactory" />
@@ -41,5 +42,7 @@
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Resolver\OrderPaymentMethodTypeResolver" />
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Resolver\OrderExtensionDataResolver" />
         </service>
+
+        <service id="BitBag\ShopwareInPostPlugin\Factory\RulePayloadFactory" />
     </services>
 </container>
