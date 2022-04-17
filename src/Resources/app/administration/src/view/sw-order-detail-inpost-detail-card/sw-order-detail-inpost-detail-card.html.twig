@@ -1,27 +1,29 @@
-<sw-card title="InPost details" class="inpost-details-card hide">
-    <div class="container">
-        <div class="inpost-point-detail">
-            <div id="pointImageDiv" class="image">
-                <img src="" alt="paczkomat" id="pointImage" />
+<div class="hide" ref="inpostDetailsCard">
+    <sw-card title="InPost details">
+        <div class="container">
+            <div class="inpost-point-detail">
+                <div class="image" ref="pointImageDiv">
+                    <img src="" alt="paczkomat" ref="pointImage" />
+                </div>
+
+                <div class="information">
+                    <p class="text-bold" ref="pointName"></p>
+                    <p ref="street"></p>
+                    <p ref="postCode"></p>
+                    <p ref="city"></p>
+                    <p ref="province"></p>
+                </div>
             </div>
 
-            <div class="information">
-                <p class="text-bold" id="pointName"></p>
-                <p id="street"></p>
-                <p id="postCode"></p>
-                <p id="city"></p>
-                <p id="province"></p>
+            <div class="actions">
+                <button @click="this.getLabel" class="sw-button get-label" ref="getLabel">
+                    {{ $tc('administration.order.inpost.getLabel') }}
+                </button>
+
+                <button @click="this.createPackage" class="sw-button sw-button--primary">
+                    {{ $tc('administration.order.inpost.createPackage') }}
+                </button>
             </div>
         </div>
-
-        <div class="actions">
-            <button @click="this.getLabel" class="sw-button get-label">
-                {{ $tc('administration.order.inpost.getLabel') }}
-            </button>
-
-            <button @click="this.createPackage" class="sw-button sw-button--primary">
-                {{ $tc('administration.order.inpost.createPackage') }}
-            </button>
-        </div>
-    </div>
-</sw-card>
+    </sw-card>
+</div>

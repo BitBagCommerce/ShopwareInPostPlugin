@@ -20,12 +20,7 @@ Component.register('sw-order-detail-inpost-detail-card', {
                         this.setInPostDetailsData(inPostResponse);
                     });
 
-                if (!order || !order.extensions || !order.extensions.inPost || !order.extensions.inPost.packageId) {
-                    const getLabelButtonEl = document.querySelector('.get-label');
-                    if (getLabelButtonEl) {
-                        getLabelButtonEl.classList.add('hide');
-                    }
-                }
+                this.hideGetLabelButtonIfNotFoundPackageId(order);
             });
     },
 
@@ -35,7 +30,7 @@ Component.register('sw-order-detail-inpost-detail-card', {
                 .then(() => {
                     this.createNotificationSuccess({message: this.$tc('package.created')});
 
-                    const getLabelButtonEl = document.querySelector('.get-label.hide');
+                    const getLabelButtonEl = this.$refs.getLabel;
                     if (getLabelButtonEl) {
                         getLabelButtonEl.classList.remove('hide');
                     }
@@ -100,38 +95,38 @@ Component.register('sw-order-detail-inpost-detail-card', {
 
             const addressDetails = inPostResponseData.address_details;
 
-            const inpostDetailCardEl = document.querySelector('.inpost-details-card');
+            const inpostDetailCardEl = this.$refs.inpostDetailsCard;
             if (inpostDetailCardEl) {
                 inpostDetailCardEl.classList.remove('hide');
 
-                const pointImageDivEl = document.getElementById('pointImageDiv');
-                const pointImageEl = document.getElementById('pointImage');
+                const pointImageDivEl = this.$refs.pointImageDiv;
+                const pointImageEl = this.$refs.pointImage;
                 if (pointImageDivEl && pointImageEl) {
                     pointImageEl.src = inPostResponseData.image_url;
                     pointImageEl.alt = inPostResponseData.name;
                 }
 
-                const pointNameEl = document.getElementById('pointName');
+                const pointNameEl = this.$refs.pointName;
                 if (pointNameEl) {
                     pointNameEl.textContent = inPostResponseData.name;
                 }
 
-                const streetEl = document.getElementById('street');
+                const streetEl = this.$refs.street;
                 if (streetEl) {
                     streetEl.textContent = addressDetails.street;
                 }
 
-                const postCodeEl = document.getElementById('postCode');
+                const postCodeEl = this.$refs.postCode;
                 if (postCodeEl) {
                     postCodeEl.textContent = addressDetails.post_code;
                 }
 
-                const cityEl = document.getElementById('city');
+                const cityEl = this.$refs.city;
                 if (cityEl) {
                     cityEl.textContent = addressDetails.city;
                 }
 
-                const provinceEl = document.getElementById('province');
+                const provinceEl = this.$refs.province;
                 if (provinceEl) {
                     provinceEl.textContent = addressDetails.province;
                 }
@@ -149,7 +144,7 @@ Component.register('sw-order-detail-inpost-detail-card', {
                     return this.CustomApiService.getInpostDataByPointName(pointName)
                         .then((inPostResponse) => {
                             if (inPostResponse.data && inPostResponse.data.error) {
-                                const inpostDetailCardEl = document.querySelector('.inpost-details-card');
+                                const inpostDetailCardEl = this.$refs.inpostDetailsCard;
                                 if (inpostDetailCardEl) {
                                     inpostDetailCardEl.remove();
                                 }
@@ -165,9 +160,18 @@ Component.register('sw-order-detail-inpost-detail-card', {
 
         async removeInPostDetailCardIfNotFoundInPost(order) {
             if (!order || !order.extensions.inPost || !order.extensions.inPost.pointName) {
-                const inpostDetailCardEl = document.querySelector('.inpost-details-card');
+                const inpostDetailCardEl = this.$refs.inpostDetailsCard;
                 if (inpostDetailCardEl) {
                     inpostDetailCardEl.remove();
+                }
+            }
+        },
+
+        async hideGetLabelButtonIfNotFoundPackageId(order) {
+            if (!order || !order.extensions || !order.extensions.inPost || !order.extensions.inPost.packageId) {
+                const getLabelButtonEl = this.$refs.getLabel;
+                if (getLabelButtonEl) {
+                    getLabelButtonEl.classList.add('hide');
                 }
             }
         }
