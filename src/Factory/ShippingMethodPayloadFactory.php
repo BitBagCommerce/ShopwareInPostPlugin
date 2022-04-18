@@ -11,31 +11,23 @@ use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 
 class ShippingMethodPayloadFactory implements ShippingMethodPayloadFactoryInterface
 {
-    private EntityRepositoryInterface $shippingMethodRepository;
-
     private DeliveryTimeFinderInterface $deliveryTimeFinder;
 
     private RuleFinderInterface $ruleFinder;
 
     private DeliveryTimePayloadFactoryInterface $createDeliveryTimeFactory;
 
-    private EntityRepositoryInterface $ruleRepository;
-
     private EntityRepositoryInterface $deliveryTimeRepository;
 
     public function __construct(
-        EntityRepositoryInterface $shippingMethodRepository,
         DeliveryTimeFinderInterface $deliveryTimeFinder,
         RuleFinderInterface $ruleFinder,
         DeliveryTimePayloadFactoryInterface $createDeliveryTimeFactory,
-        EntityRepositoryInterface $ruleRepository,
         EntityRepositoryInterface $deliveryTimeRepository
     ) {
-        $this->shippingMethodRepository = $shippingMethodRepository;
         $this->deliveryTimeFinder = $deliveryTimeFinder;
         $this->ruleFinder = $ruleFinder;
         $this->createDeliveryTimeFactory = $createDeliveryTimeFactory;
-        $this->ruleRepository = $ruleRepository;
         $this->deliveryTimeRepository = $deliveryTimeRepository;
     }
 
