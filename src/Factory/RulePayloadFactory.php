@@ -20,7 +20,6 @@ final class RulePayloadFactory implements RulePayloadFactoryInterface
                     ],
                 ],
             ],
-            'createdAt' => new \DateTime(),
         ];
     }
 }

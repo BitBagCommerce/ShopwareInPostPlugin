@@ -52,10 +52,8 @@ class ShippingMethodPayloadFactory implements ShippingMethodPayloadFactoryInterf
                             'currencyId' => $currencyId,
                         ],
                     ],
-                    'createdAt' => new \DateTime(),
                 ],
             ],
-            'createdAt' => new \DateTime(),
         ];
 
         $deliveryId = $this->deliveryTimeFinder->getDeliveryTimeIds($context)->firstId();
