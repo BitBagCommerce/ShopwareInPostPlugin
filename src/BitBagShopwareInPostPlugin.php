@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin;
 
+use BitBag\ShopwareInPostPlugin\Exception\RuleNotFoundException;
 use BitBag\ShopwareInPostPlugin\Factory\CustomFieldsForPackageDetailsPayloadFactory;
+use BitBag\ShopwareInPostPlugin\Factory\RulePayloadFactoryInterface;
 use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodPayloadFactoryInterface;
 use BitBag\ShopwareInPostPlugin\Finder\PackageDetailsCustomFieldSetFinderInterface;
+use BitBag\ShopwareInPostPlugin\Finder\RuleFinderInterface;
 use BitBag\ShopwareInPostPlugin\Finder\ShippingMethodFinderInterface;
 use Shopware\Core\Checkout\Shipping\ShippingMethodEntity;
 use Shopware\Core\Framework\Context;
@@ -28,6 +31,12 @@ final class BitBagShopwareInPostPlugin extends Plugin
     private CustomFieldsForPackageDetailsPayloadFactory $customFieldsForPackageDetailsPayloadFactory;
 
     private PackageDetailsCustomFieldSetFinderInterface $packageDetailsCustomFieldSetFinder;
+
+    private RuleFinderInterface $ruleFinder;
+
+    private RulePayloadFactoryInterface $rulePayloadFactory;
+
+    private EntityRepositoryInterface $ruleRepository;
 
     public function setShippingMethodRepository(EntityRepositoryInterface $shippingMethodRepository): void
     {
@@ -61,6 +70,21 @@ final class BitBagShopwareInPostPlugin extends Plugin
         $this->packageDetailsCustomFieldSetFinder = $packageDetailsCustomFieldSetFinder;
     }
 
+    public function setRuleFinder(RuleFinderInterface $ruleFinder): void
+    {
+        $this->ruleFinder = $ruleFinder;
+    }
+
+    public function setRulePayloadFactory(RulePayloadFactoryInterface $rulePayloadFactory): void
+    {
+        $this->rulePayloadFactory = $rulePayloadFactory;
+    }
+
+    public function setRuleRepository(EntityRepositoryInterface $ruleRepository): void
+    {
+        $this->ruleRepository = $ruleRepository;
+    }
+
     public function activate(ActivateContext $activateContext): void
     {
         $context = $activateContext->getContext();
@@ -87,6 +111,7 @@ final class BitBagShopwareInPostPlugin extends Plugin
 
         $inPostShippingMethod = $this->shippingMethodFactory->create(
             ShippingMethodPayloadFactoryInterface::SHIPPING_KEY,
+            $this->getRuleId($context),
             $context
         );
 
@@ -137,5 +162,30 @@ final class BitBagShopwareInPostPlugin extends Plugin
                 'active' => $active,
             ],
         ], $context);
+    }
+
+    private function getRuleId(Context $context): string
+    {
+        $ruleName = 'Cart >= 0';
+        $rule = $this->ruleFinder->getRuleIdsByName($ruleName, $context);
+        if (0 === $rule->getTotal()) {
+            $rule = $this->rulePayloadFactory->create($ruleName);
+
+            $this->ruleRepository->create([$rule], $context);
+
+            $rule = $this->ruleFinder->getRuleIdsByName($ruleName, $context);
+        }
+
+        if (0 === $rule->getTotal()) {
+            throw new RuleNotFoundException('rule.notFound');
+        }
+
+        $ruleId = $rule->firstId();
+
+        if (null === $ruleId) {
+            throw new RuleNotFoundException('rule.notFound');
+        }
+
+        return $ruleId;
     }
 }

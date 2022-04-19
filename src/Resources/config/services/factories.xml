@@ -7,13 +7,9 @@
     <services>
         <service id="BitBag\ShopwareInPostPlugin\Factory\ShippingMethodPayloadFactory"
         >
-            <argument type="service" id="shipping_method.repository" />
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\DeliveryTimeFinder" />
-            <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\RuleFinder" />
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\DeliveryTimePayloadFactory" />
-            <argument type="service" id="rule.repository" />
             <argument type="service" id="delivery_time.repository" />
-            <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\RulePayloadFactory" />
         </service>
 
         <service id="BitBag\ShopwareInPostPlugin\Factory\DeliveryTimePayloadFactory" />

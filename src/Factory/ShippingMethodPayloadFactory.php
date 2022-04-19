@@ -4,50 +4,30 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Factory;
 
-use BitBag\ShopwareInPostPlugin\Exception\RuleNotFoundException;
 use BitBag\ShopwareInPostPlugin\Finder\DeliveryTimeFinderInterface;
-use BitBag\ShopwareInPostPlugin\Finder\RuleFinderInterface;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 
 class ShippingMethodPayloadFactory implements ShippingMethodPayloadFactoryInterface
 {
-    private EntityRepositoryInterface $shippingMethodRepository;
-
     private DeliveryTimeFinderInterface $deliveryTimeFinder;
-
-    private RuleFinderInterface $ruleFinder;
 
     private DeliveryTimePayloadFactoryInterface $createDeliveryTimeFactory;
 
-    private EntityRepositoryInterface $ruleRepository;
-
     private EntityRepositoryInterface $deliveryTimeRepository;
 
-    private RulePayloadFactoryInterface $rulePayloadFactory;
-
     public function __construct(
-        EntityRepositoryInterface $shippingMethodRepository,
         DeliveryTimeFinderInterface $deliveryTimeFinder,
-        RuleFinderInterface $ruleFinder,
         DeliveryTimePayloadFactoryInterface $createDeliveryTimeFactory,
-        EntityRepositoryInterface $ruleRepository,
-        EntityRepositoryInterface $deliveryTimeRepository,
-        RulePayloadFactoryInterface $rulePayloadFactory
+        EntityRepositoryInterface $deliveryTimeRepository
     ) {
-        $this->shippingMethodRepository = $shippingMethodRepository;
         $this->deliveryTimeFinder = $deliveryTimeFinder;
-        $this->ruleFinder = $ruleFinder;
         $this->createDeliveryTimeFactory = $createDeliveryTimeFactory;
-        $this->ruleRepository = $ruleRepository;
         $this->deliveryTimeRepository = $deliveryTimeRepository;
-        $this->rulePayloadFactory = $rulePayloadFactory;
     }
 
-    public function create(string $name, Context $context): array
+    public function create(string $name, string $ruleId, Context $context): array
     {
-        $ruleId = $this->getRuleId($context);
-
         $currencyId = $context->getCurrencyId();
 
         $inPostShippingMethod = [
@@ -86,35 +66,8 @@ class ShippingMethodPayloadFactory implements ShippingMethodPayloadFactoryInterf
             $deliveryId = $this->deliveryTimeFinder->getDeliveryTimeIds($context)->firstId();
         }
 
-        $inPostShippingMethod = array_merge($inPostShippingMethod, [
-            'deliveryTimeId' => $deliveryId,
-        ]);
+        $inPostShippingMethod['deliveryTimeId'] = $deliveryId;
 
         return $inPostShippingMethod;
-    }
-
-    private function getRuleId(Context $context): string
-    {
-        $ruleName = 'Cart >= 0';
-        $rule = $this->ruleFinder->getRuleIdsByName($ruleName, $context);
-        if (0 === $rule->getTotal()) {
-            $rule = $this->rulePayloadFactory->create($ruleName);
-
-            $this->ruleRepository->create([$rule], $context);
-
-            $rule = $this->ruleFinder->getRuleIdsByName($ruleName, $context);
-        }
-
-        if (0 === $rule->getTotal()) {
-            throw new RuleNotFoundException('rule.notFound');
-        }
-
-        $ruleId = $rule->firstId();
-
-        if (null === $ruleId) {
-            throw new RuleNotFoundException('rule.notFound');
-        }
-
-        return $ruleId;
     }
 }
