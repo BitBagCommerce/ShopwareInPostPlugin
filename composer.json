@@ -31,6 +31,11 @@
             "BitBag\\ShopwareInPostPlugin\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "BitBag\\ShopwareInPostPlugin\\Tests\\": "tests/"
+        }
+    },
     "config": {
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true

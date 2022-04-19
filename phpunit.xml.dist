@@ -5,7 +5,8 @@
     xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
     backupGlobals="false"
     colors="true"
-    bootstrap="vendor/autoload.php">
+    bootstrap="vendor/autoload.php"
+    cacheResult="false">
     <coverage processUncoveredFiles="true">
         <include>
             <directory suffix=".php">src</directory>
@@ -14,6 +15,9 @@
     <php>
         <ini name="error_reporting" value="-1"/>
         <server name="APP_ENV" value="test" force="true"/>
+        <env name="APP_DEBUG" value="1"/>
+        <env name="APP_SECRET" value="s$cretf0rt3st"/>
+        <env name="SHELL_VERBOSITY" value="-1"/>
     </php>
     <testsuites>
         <testsuite name="BitBagShopwareInPostPlugin">
