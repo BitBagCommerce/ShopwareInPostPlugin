@@ -44,7 +44,6 @@ class ShippingMethodPayloadFactory implements ShippingMethodPayloadFactoryInterf
                 'name' => $name,
             ],
             'availabilityRuleId' => $ruleId,
-            'createdAt' => new \DateTime(),
         ];
 
         $deliveryId = $this->deliveryTimeFinder->getDeliveryTimeIds($context)->firstId();
