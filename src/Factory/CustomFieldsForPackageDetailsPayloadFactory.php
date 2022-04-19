@@ -4,18 +4,10 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Factory;
 
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\System\CustomField\CustomFieldTypes;
 
 final class CustomFieldsForPackageDetailsPayloadFactory implements CustomFieldsForPackageDetailsPayloadFactoryInterface
 {
-    private EntityRepositoryInterface $customFieldSetRepository;
-
-    public function __construct(EntityRepositoryInterface $customFieldSetRepository)
-    {
-        $this->customFieldSetRepository = $customFieldSetRepository;
-    }
-
     public function create(): array
     {
         $customFieldPrefix = CustomFieldsForPackageDetailsPayloadFactoryInterface::PACKAGE_DETAILS_KEY;
