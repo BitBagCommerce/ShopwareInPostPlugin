@@ -10,5 +10,5 @@ interface ShippingMethodPayloadFactoryInterface
 {
     public const SHIPPING_KEY = 'InPost';
 
-    public function create(string $name, Context $context): array;
+    public function create(string $name, string $ruleId, Context $context): array;
 }

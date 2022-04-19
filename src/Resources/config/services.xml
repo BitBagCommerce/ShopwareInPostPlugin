@@ -34,6 +34,18 @@
             <call method="setPackageDetailsCustomFieldSetFinder">
                 <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\PackageDetailsCustomFieldSetFinder" />
             </call>
+
+            <call method="setRuleFinder">
+                <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\RuleFinder" />
+            </call>
+
+            <call method="setRulePayloadFactory">
+                <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\RulePayloadFactory" />
+            </call>
+
+            <call method="setRuleRepository">
+                <argument type="service" id="rule.repository" />
+            </call>
         </service>
 
         <service id="BitBag\ShopwareInPostPlugin\Api\WebClient">

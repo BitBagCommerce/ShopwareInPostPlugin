@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace BitBag\ShopwareInPostPlugin\Factory;
 
 use BitBag\ShopwareInPostPlugin\Finder\DeliveryTimeFinderInterface;
-use BitBag\ShopwareInPostPlugin\Finder\RuleFinderInterface;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 
@@ -13,27 +12,23 @@ class ShippingMethodPayloadFactory implements ShippingMethodPayloadFactoryInterf
 {
     private DeliveryTimeFinderInterface $deliveryTimeFinder;
 
-    private RuleFinderInterface $ruleFinder;
-
     private DeliveryTimePayloadFactoryInterface $createDeliveryTimeFactory;
 
     private EntityRepositoryInterface $deliveryTimeRepository;
 
     public function __construct(
         DeliveryTimeFinderInterface $deliveryTimeFinder,
-        RuleFinderInterface $ruleFinder,
         DeliveryTimePayloadFactoryInterface $createDeliveryTimeFactory,
         EntityRepositoryInterface $deliveryTimeRepository
     ) {
         $this->deliveryTimeFinder = $deliveryTimeFinder;
-        $this->ruleFinder = $ruleFinder;
         $this->createDeliveryTimeFactory = $createDeliveryTimeFactory;
         $this->deliveryTimeRepository = $deliveryTimeRepository;
     }
 
-    public function create(string $name, Context $context): array
+    public function create(string $name, string $ruleId, Context $context): array
     {
-        $ruleId = $this->ruleFinder->getRuleIdsByName('Cart >= 0', $context)->firstId();
+        $currencyId = $context->getCurrencyId();
 
         $inPostShippingMethod = [
             'name' => $name,
@@ -44,6 +39,21 @@ class ShippingMethodPayloadFactory implements ShippingMethodPayloadFactoryInterf
                 'name' => $name,
             ],
             'availabilityRuleId' => $ruleId,
+            'prices' => [
+                [
+                    'ruleId' => $ruleId,
+                    'calculation' => 1,
+                    'quantityStart' => 1,
+                    'currencyPrice' => [
+                        $currencyId => [
+                            'net' => 0.0,
+                            'gross' => 0.0,
+                            'linked' => false,
+                            'currencyId' => $currencyId,
+                        ],
+                    ],
+                ],
+            ],
         ];
 
         $deliveryId = $this->deliveryTimeFinder->getDeliveryTimeIds($context)->firstId();
@@ -54,9 +64,7 @@ class ShippingMethodPayloadFactory implements ShippingMethodPayloadFactoryInterf
             $deliveryId = $this->deliveryTimeFinder->getDeliveryTimeIds($context)->firstId();
         }
 
-        $inPostShippingMethod = array_merge($inPostShippingMethod, [
-            'deliveryTimeId' => $deliveryId,
-        ]);
+        $inPostShippingMethod['deliveryTimeId'] = $deliveryId;
 
         return $inPostShippingMethod;
     }
