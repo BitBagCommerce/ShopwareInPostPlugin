@@ -36,31 +36,31 @@ final class ShippingMethodPayloadFactoryTest extends TestCase
             $deliveryTimeRepository
         );
 
-        $ruleFinder->expects($this->exactly(2))
+        $ruleId = Uuid::randomHex();
+
+        $ruleFinder->expects(self::once())
                    ->method('getRuleIdsByName')
                    ->willReturn(
                        new IdSearchResult(
                            1,
-                           ['data' => ['primaryKey' => Uuid::randomHex(), 'data' => ['id' => Uuid::randomHex()]]],
+                           ['data' => ['primaryKey' => $ruleId, 'data' => ['id' => $ruleId]]],
                            new Criteria(),
                            $context
                        )
                    );
 
-        $ruleId = $ruleFinder->getRuleIdsByName('Cart >= 0', $context)->firstId();
+        $deliveryTimeId = Uuid::randomHex();
 
-        $deliveryTimeFinder->expects($this->exactly(2))
+        $deliveryTimeFinder->expects(self::once())
                            ->method('getDeliveryTimeIds')
                            ->willReturn(
                                new IdSearchResult(
                                    1,
-                                   ['data' => ['primaryKey' => Uuid::randomHex(), 'data' => ['id' => Uuid::randomHex()]]],
+                                   ['data' => ['primaryKey' => $deliveryTimeId, 'data' => ['id' => $deliveryTimeId]]],
                                    new Criteria(),
                                    $context
                                )
                            );
-
-        $deliveryId = $deliveryTimeFinder->getDeliveryTimeIds($context)->firstId();
 
         $shippingMethodName = 'shipping-method';
 
@@ -74,7 +74,7 @@ final class ShippingMethodPayloadFactoryTest extends TestCase
                     'name' => $shippingMethodName,
                 ],
                 'availabilityRuleId' => $ruleId,
-                'deliveryTimeId' => $deliveryId,
+                'deliveryTimeId' => $deliveryTimeId,
             ],
             $factory->create($shippingMethodName, $context)
         );
