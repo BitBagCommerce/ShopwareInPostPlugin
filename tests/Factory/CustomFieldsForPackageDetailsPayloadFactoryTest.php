@@ -16,12 +16,12 @@ class CustomFieldsForPackageDetailsPayloadFactoryTest extends TestCase
         $factory = new CustomFieldsForPackageDetailsPayloadFactory();
 
         self::assertEquals(
-            $this->customFieldsData(),
+            $this->getCustomFieldsData(),
             $factory->create()
         );
     }
 
-    private function customFieldsData(): array
+    private function getCustomFieldsData(): array
     {
         $customFieldPrefix = CustomFieldsForPackageDetailsPayloadFactoryInterface::PACKAGE_DETAILS_KEY;
 

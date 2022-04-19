@@ -11,6 +11,9 @@ use BitBag\ShopwareInPostPlugin\Finder\RuleFinderInterface;
 use PHPUnit\Framework\TestCase;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\IdSearchResult;
+use Shopware\Core\Framework\Uuid\Uuid;
 
 final class ShippingMethodPayloadFactoryTest extends TestCase
 {
@@ -24,6 +27,8 @@ final class ShippingMethodPayloadFactoryTest extends TestCase
 
         $deliveryTimeRepository = $this->createMock(EntityRepositoryInterface::class);
 
+        $context = $this->createMock(Context::class);
+
         $factory = new ShippingMethodPayloadFactory(
             $deliveryTimeFinder,
             $ruleFinder,
@@ -31,9 +36,29 @@ final class ShippingMethodPayloadFactoryTest extends TestCase
             $deliveryTimeRepository
         );
 
-        $context = Context::createDefaultContext();
+        $ruleFinder->expects($this->exactly(2))
+                   ->method('getRuleIdsByName')
+                   ->willReturn(
+                       new IdSearchResult(
+                           1,
+                           ['data' => ['primaryKey' => Uuid::randomHex(), 'data' => ['id' => Uuid::randomHex()]]],
+                           new Criteria(),
+                           $context
+                       )
+                   );
 
         $ruleId = $ruleFinder->getRuleIdsByName('Cart >= 0', $context)->firstId();
+
+        $deliveryTimeFinder->expects($this->exactly(2))
+                           ->method('getDeliveryTimeIds')
+                           ->willReturn(
+                               new IdSearchResult(
+                                   1,
+                                   ['data' => ['primaryKey' => Uuid::randomHex(), 'data' => ['id' => Uuid::randomHex()]]],
+                                   new Criteria(),
+                                   $context
+                               )
+                           );
 
         $deliveryId = $deliveryTimeFinder->getDeliveryTimeIds($context)->firstId();
 
