@@ -52,7 +52,6 @@ Component.register('sw-order-detail-inpost-detail-card', {
             await this.CustomApiService.getLabel(this.$route.params.id)
                 .then((data) => {
                     const file = new Blob([data.data], {type: 'application/pdf'});
-
                     const blob = URL.createObjectURL(file);
 
                     window.open(blob, '_blank');

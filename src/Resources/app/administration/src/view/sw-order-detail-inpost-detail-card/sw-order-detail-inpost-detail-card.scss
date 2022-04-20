@@ -3,27 +3,24 @@
 }
 
 .container {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1em;
 
     .inpost-point-detail {
-        display: inline-block;
-        width: 49%;
+        display: flex;
+        align-items: center;
+        gap: 1em;
 
-        .image {
-            display: inline-block;
-            width: 49%;
-            vertical-align: middle;
-
-            img {
-                width: 200px;
-            }
+        .image img {
+            width: 200px;
         }
 
         .information {
-            display: inline-block;
-            width: 49%;
-            vertical-align: middle;
-            text-align: left;
+            display: flex;
+            flex-direction: column;
 
             .text-bold {
                 font-weight: bold;
@@ -32,19 +29,9 @@
     }
 
     .actions {
-        display: inline-block;
-        width: 49%;
-        vertical-align: middle;
-
-        button {
-            &.get-label {
-                display: block;
-                background-color: limegreen;
-                color: #ffffff;
-                margin: 0 auto;
-                margin-bottom: 30px;
-            }
-        }
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.4em;
     }
 }
-
