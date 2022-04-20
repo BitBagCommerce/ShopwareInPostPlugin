@@ -7,21 +7,6 @@
         context.shippingMethod.name === constant('BitBag\\ShopwareInPostPlugin\\Factory\\ShippingMethodPayloadFactoryInterface::SHIPPING_KEY')
     %}
         <link rel="stylesheet" href="https://geowidget.easypack24.net/css/easypack.css"/>
-
         <script async src="https://geowidget.easypack24.net/js/sdk-for-javascript.js"></script>
-        <script type="text/javascript">
-            window.easyPackAsyncInit = function () {
-                const inpostParcelLockerEl = document.getElementById('inpost-parcel-locker');
-                easyPack.init({});
-                easyPack.mapWidget('easypack-map', function(point, modal) {
-                    console.log(point);
-                    console.log('modal', modal)
-
-                    if (inpostParcelLockerEl) {
-                        inpostParcelLockerEl.value = point.name;
-                    }
-                });
-            }
-        </script>
     {% endif %}
 {% endblock %}

@@ -6,7 +6,19 @@
     {% if (shipping.id is same as(context.shippingMethod.id)) and
         shipping.name === constant('BitBag\\ShopwareInPostPlugin\\Factory\\ShippingMethodPayloadFactoryInterface::SHIPPING_KEY')
     %}
-        <div id="easypack-map"></div>
+        <div class="inpostPoint hide" data-inpost-plugin-selectedPoint>
+            <div class="inpostDetails">
+                <img class="image" data-inpost-plugin-thumbnail/> 
+                <div class="detailsContainer">
+                    <b class="item" data-inpost-plugin-name></b>
+                    <p class="item" data-inpost-plugin-addressOne></p>
+                    <p class="item" data-inpost-plugin-addressTwo></p>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" data-inpost-plugin-changePoint>Change point</button>
+        </div>
+        <div id="easypack-map" class="inpostMap" data-inpost-plugin-map></div>
 
         <input type="hidden" id="inpost-parcel-locker" name="customParcelLockerField" form="confirmOrderForm">
     {% endif %}
