@@ -8,12 +8,13 @@ use BitBag\ShopwareInPostPlugin\Factory\Package\ReceiverPayloadFactory;
 use BitBag\ShopwareInPostPlugin\Provider\Defaults;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderShippingAddressResolverInterface;
 use PHPUnit\Framework\TestCase;
-use Shopware\Core\Checkout\Order\Aggregate\OrderAddress\OrderAddressEntity;
 use Shopware\Core\Checkout\Order\Aggregate\OrderCustomer\OrderCustomerEntity;
 use Shopware\Core\Checkout\Order\OrderEntity;
 
 final class ReceiverPayloadFactoryTest extends TestCase
 {
+    use CreateOrderShippingAddressTrait;
+
     public function testCreate(): void
     {
         $orderShippingAddress = $this->getOrderShippingAddress();
@@ -54,18 +55,5 @@ final class ReceiverPayloadFactoryTest extends TestCase
         $order->setOrderCustomer($orderCustomer);
 
         return $order;
-    }
-
-    private function getOrderShippingAddress(): OrderAddressEntity
-    {
-        $orderShippingAddress = new OrderAddressEntity();
-        $orderShippingAddress->setPhoneNumber('123-456-789');
-        $orderShippingAddress->setStreet('Polna 11');
-        $orderShippingAddress->setFirstName('Jan');
-        $orderShippingAddress->setLastName('Kowalski');
-        $orderShippingAddress->setCity('Warszawa');
-        $orderShippingAddress->setZipcode('00-001');
-
-        return $orderShippingAddress;
     }
 }
