@@ -7,7 +7,6 @@ namespace BitBag\ShopwareInPostPlugin\Tests\Factory;
 use BitBag\ShopwareInPostPlugin\Factory\DeliveryTimePayloadFactoryInterface;
 use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodPayloadFactory;
 use BitBag\ShopwareInPostPlugin\Finder\DeliveryTimeFinderInterface;
-use BitBag\ShopwareInPostPlugin\Finder\RuleFinderInterface;
 use PHPUnit\Framework\TestCase;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
@@ -21,8 +20,6 @@ final class ShippingMethodPayloadFactoryTest extends TestCase
     {
         $deliveryTimeFinder = $this->createMock(DeliveryTimeFinderInterface::class);
 
-        $ruleFinder = $this->createMock(RuleFinderInterface::class);
-
         $deliveryTimePayloadFactory = $this->createMock(DeliveryTimePayloadFactoryInterface::class);
 
         $deliveryTimeRepository = $this->createMock(EntityRepositoryInterface::class);
@@ -31,23 +28,11 @@ final class ShippingMethodPayloadFactoryTest extends TestCase
 
         $factory = new ShippingMethodPayloadFactory(
             $deliveryTimeFinder,
-            $ruleFinder,
             $deliveryTimePayloadFactory,
             $deliveryTimeRepository
         );
 
         $ruleId = Uuid::randomHex();
-
-        $ruleFinder->expects(self::once())
-                   ->method('getRuleIdsByName')
-                   ->willReturn(
-                       new IdSearchResult(
-                           1,
-                           ['data' => ['primaryKey' => $ruleId, 'data' => ['id' => $ruleId]]],
-                           new Criteria(),
-                           $context
-                       )
-                   );
 
         $deliveryTimeId = Uuid::randomHex();
 
@@ -64,6 +49,8 @@ final class ShippingMethodPayloadFactoryTest extends TestCase
 
         $shippingMethodName = 'shipping-method';
 
+        $currencyId = $context->getCurrencyId();
+
         self::assertEquals(
             [
                 'name' => $shippingMethodName,
@@ -75,8 +62,23 @@ final class ShippingMethodPayloadFactoryTest extends TestCase
                 ],
                 'availabilityRuleId' => $ruleId,
                 'deliveryTimeId' => $deliveryTimeId,
+                'prices' => [
+                    [
+                        'ruleId' => $ruleId,
+                        'calculation' => 1,
+                        'quantityStart' => 1,
+                        'currencyPrice' => [
+                            $currencyId => [
+                                'net' => 0.0,
+                                'gross' => 0.0,
+                                'linked' => false,
+                                'currencyId' => $currencyId,
+                            ],
+                        ],
+                    ],
+                ],
             ],
-            $factory->create($shippingMethodName, $context)
+            $factory->create($shippingMethodName, $ruleId, $context)
         );
     }
 }
