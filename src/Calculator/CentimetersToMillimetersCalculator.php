@@ -6,8 +6,8 @@ namespace BitBag\ShopwareInPostPlugin\Calculator;
 
 final class CentimetersToMillimetersCalculator implements CentimetersToMillimetersCalculatorInterface
 {
-    public function calculate(int $value): int
+    public function calculate(float $value): float
     {
-        return $value * 10;
+        return round($value * 10);
     }
 }
