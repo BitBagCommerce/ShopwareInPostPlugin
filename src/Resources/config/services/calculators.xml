@@ -5,5 +5,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <service id="BitBag\ShopwareInPostPlugin\Calculator\OrderWeightCalculator" />
+
+        <service id="BitBag\ShopwareInPostPlugin\Calculator\CentimetersToMillimetersCalculator" />
     </services>
 </container>

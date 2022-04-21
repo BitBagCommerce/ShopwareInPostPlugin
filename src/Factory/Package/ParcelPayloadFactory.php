@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Factory\Package;
 
+use BitBag\ShopwareInPostPlugin\Calculator\CentimetersToMillimetersCalculatorInterface;
 use BitBag\ShopwareInPostPlugin\Calculator\OrderWeightCalculatorInterface;
 use BitBag\ShopwareInPostPlugin\Exception\PackageException;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderCustomFieldsResolverInterface;
@@ -15,12 +16,16 @@ final class ParcelPayloadFactory implements ParcelPayloadFactoryInterface
 
     private OrderCustomFieldsResolverInterface $customFieldsResolver;
 
+    private CentimetersToMillimetersCalculatorInterface $centimetersToMillimetersCalculator;
+
     public function __construct(
         OrderWeightCalculatorInterface $orderWeightCalculator,
-        OrderCustomFieldsResolverInterface $customFieldsResolver
+        OrderCustomFieldsResolverInterface $customFieldsResolver,
+        CentimetersToMillimetersCalculatorInterface $centimetersToMillimetersCalculator
     ) {
         $this->orderWeightCalculator = $orderWeightCalculator;
         $this->customFieldsResolver = $customFieldsResolver;
+        $this->centimetersToMillimetersCalculator = $centimetersToMillimetersCalculator;
     }
 
     public function create(OrderEntity $order): array
@@ -35,9 +40,9 @@ final class ParcelPayloadFactory implements ParcelPayloadFactoryInterface
 
         return [
             'dimensions' => [
-                'length' => $orderCustomFields['depth'],
-                'width' => $orderCustomFields['width'],
-                'height' => $orderCustomFields['height'],
+                'length' => $this->centimetersToMillimetersCalculator->calculate($orderCustomFields['depth']),
+                'width' => $this->centimetersToMillimetersCalculator->calculate($orderCustomFields['width']),
+                'height' => $this->centimetersToMillimetersCalculator->calculate($orderCustomFields['height']),
                 'unit' => 'mm',
             ],
             'weight' => [
