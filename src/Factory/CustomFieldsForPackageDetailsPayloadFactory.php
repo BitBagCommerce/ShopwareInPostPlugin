@@ -33,31 +33,31 @@ final class CustomFieldsForPackageDetailsPayloadFactory implements CustomFieldsF
                 ],
                 [
                     'name' => $customFieldPrefix . '_height',
-                    'label' => 'Height',
+                    'label' => 'Height (cm)',
                     'type' => CustomFieldTypes::INT,
                     'config' => [
                         'label' => [
-                            'en-GB' => 'Height',
+                            'en-GB' => 'Height (cm)',
                         ],
                     ],
                 ],
                 [
                     'name' => $customFieldPrefix . '_width',
-                    'label' => 'Width',
+                    'label' => 'Width (cm)',
                     'type' => CustomFieldTypes::INT,
                     'config' => [
                         'label' => [
-                            'en-GB' => 'Width',
+                            'en-GB' => 'Width (cm)',
                         ],
                     ],
                 ],
                 [
                     'name' => $customFieldPrefix . '_depth',
-                    'label' => 'Depth',
+                    'label' => 'Depth (cm)',
                     'type' => CustomFieldTypes::INT,
                     'config' => [
                         'label' => [
-                            'en-GB' => 'Depth',
+                            'en-GB' => 'Depth (cm)',
                         ],
                     ],
                 ],
