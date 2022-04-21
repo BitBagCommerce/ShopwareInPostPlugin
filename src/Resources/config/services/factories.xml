@@ -28,6 +28,7 @@
         >
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Calculator\OrderWeightCalculator" />
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Resolver\OrderCustomFieldsResolver" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Calculator\CentimetersToMillimetersCalculator" />
         </service>
 
         <service id="BitBag\ShopwareInPostPlugin\Factory\Package\PackagePayloadFactory"

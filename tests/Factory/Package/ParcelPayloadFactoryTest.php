@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Tests\Factory\Package;
 
+use BitBag\ShopwareInPostPlugin\Calculator\CentimetersToMillimetersCalculatorInterface;
 use BitBag\ShopwareInPostPlugin\Calculator\OrderWeightCalculatorInterface;
 use BitBag\ShopwareInPostPlugin\Factory\CustomFieldsForPackageDetailsPayloadFactoryInterface;
 use BitBag\ShopwareInPostPlugin\Factory\Package\ParcelPayloadFactory;
@@ -21,7 +22,7 @@ final class ParcelPayloadFactoryTest extends TestCase
 
     public const PACKAGE_WIDTH = 30;
 
-    public const PACKAGE_HEIGHT = 45;
+    public const PACKAGE_HEIGHT = 45.5;
 
     public function testCreate(): void
     {
@@ -43,17 +44,25 @@ final class ParcelPayloadFactoryTest extends TestCase
                                   ->method('resolve')
                                   ->willReturn($orderCustomFieldsValues);
 
+        $centimetersToMillimetersCalculator = $this->createMock(CentimetersToMillimetersCalculatorInterface::class);
+
+        $centimetersToMillimetersCalculator->expects(self::exactly(3))
+                                           ->method('calculate')
+                                           ->withConsecutive([20], [30], [45.5])
+                                           ->willReturnOnConsecutiveCalls(200, 300, 455);
+
         $parcelPayloadFactory = new ParcelPayloadFactory(
             $orderWeightCalculator,
-            $orderCustomFieldsResolver
+            $orderCustomFieldsResolver,
+            $centimetersToMillimetersCalculator
         );
 
         self::assertEquals(
             [
                 'dimensions' => [
-                    'length' => $orderCustomFieldsValues['depth'],
-                    'width' => $orderCustomFieldsValues['width'],
-                    'height' => $orderCustomFieldsValues['height'],
+                    'length' => 200,
+                    'width' => 300,
+                    'height' => 455,
                     'unit' => 'mm',
                 ],
                 'weight' => [
