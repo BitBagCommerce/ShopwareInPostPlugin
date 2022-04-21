@@ -19,6 +19,7 @@
 
         <input-field type="single-select">
             <name>inPostEnvironment</name>
+            <label>Environment</label>
             <placeholder>Choose environment</placeholder>
             <options>
                 <option>
