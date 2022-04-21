@@ -1,0 +1,12 @@
+{% extends '@Storefront/storefront/base.html.twig' %}
+
+{% block base_head %}
+    {{ parent() }}
+
+    {% if page is defined and page.shippingMethods is defined and
+        context.shippingMethod.name === constant('BitBag\\ShopwareInPostPlugin\\Factory\\ShippingMethodPayloadFactoryInterface::SHIPPING_KEY')
+    %}
+        <link rel="stylesheet" href="https://geowidget.easypack24.net/css/easypack.css"/>
+        <script async src="https://geowidget.easypack24.net/js/sdk-for-javascript.js"></script>
+    {% endif %}
+{% endblock %}
