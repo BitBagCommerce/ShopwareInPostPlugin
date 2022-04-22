@@ -60,6 +60,9 @@ final class ShippingMethodPayloadFactoryTest extends TestCase
                 'translated' => [
                     'name' => $shippingMethodName,
                 ],
+                'customFields' => [
+                    'technical_name' => $shippingMethodName,
+                ],
                 'availabilityRuleId' => $ruleId,
                 'deliveryTimeId' => $deliveryTimeId,
                 'prices' => [

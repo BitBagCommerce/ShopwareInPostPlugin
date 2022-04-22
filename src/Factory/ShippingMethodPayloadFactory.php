@@ -38,6 +38,9 @@ class ShippingMethodPayloadFactory implements ShippingMethodPayloadFactoryInterf
             'translated' => [
                 'name' => $name,
             ],
+            'customFields' => [
+                'technical_name' => $name,
+            ],
             'availabilityRuleId' => $ruleId,
             'prices' => [
                 [
