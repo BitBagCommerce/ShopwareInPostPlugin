@@ -32,3 +32,11 @@
 .inpostPoint.hide, .easypack-widget.hide{
     display: none;
 }
+
+.error-message {
+    color: red;
+
+    &.hide {
+        display: none;
+    }
+}

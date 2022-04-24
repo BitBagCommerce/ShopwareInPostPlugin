@@ -17,6 +17,32 @@ export default class InpostPluginPlugin extends Plugin {
             e.preventDefault();
             this.changePoint();
         });
+
+        const confirmFormSubmitButtonEl = document.getElementById('confirmFormSubmit');
+
+        if (confirmFormSubmitButtonEl) {
+            confirmFormSubmitButtonEl.addEventListener('click', (e) => {
+                const pointNameNotSelectedMessageEl = document.getElementById('pointNameNotSelectedMessage');
+
+                const inpostParcelLockerEl = document.getElementById('inpost-parcel-locker');
+
+                if (!inpostParcelLockerEl || (inpostParcelLockerEl && !inpostParcelLockerEl.value)) {
+                    e.preventDefault();
+
+                    document.querySelector('.shipping-methods').scrollIntoView({
+                        behavior: 'smooth'
+                    });
+
+                    if (pointNameNotSelectedMessageEl) {
+                        pointNameNotSelectedMessageEl.classList.remove('hide');
+                    }
+                } else {
+                    if (pointNameNotSelectedMessageEl) {
+                        pointNameNotSelectedMessageEl.classList.add('hide');
+                    }
+                }
+            });
+        }
     }
 
     updateSelected(point) {
@@ -27,6 +53,7 @@ export default class InpostPluginPlugin extends Plugin {
         const pointName = document.querySelector('[data-inpost-plugin-name]');
         const pointAddressOne = document.querySelector('[data-inpost-plugin-addressOne]');
         const pointAddressTwo = document.querySelector('[data-inpost-plugin-addressTwo]');
+        const pointNameNotSelectedMessageEl = document.getElementById('pointNameNotSelectedMessage');
 
         selectedPoint.classList.remove('hide');
         InpostGeoMap.classList.add('hide');
@@ -35,6 +62,10 @@ export default class InpostPluginPlugin extends Plugin {
         pointName.innerText = point.name;
         pointAddressOne.innerText = point.address.line1;
         pointAddressTwo.innerText = point.address.line2;
+
+        if (pointNameNotSelectedMessageEl) {
+            pointNameNotSelectedMessageEl.classList.add('hide');
+        }
     }
 
     changePoint() {
