@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Subscriber;
 
+use BitBag\ShopwareInPostPlugin\Extension\Content\Order\OrderInPostExtensionInterface;
 use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodPayloadFactoryInterface;
 use Shopware\Core\Checkout\Cart\Order\CartConvertedEvent;
 use Shopware\Core\Checkout\Shipping\Aggregate\ShippingMethodTranslation\ShippingMethodTranslationEntity;
@@ -39,7 +40,7 @@ class CartConvertedSubscriber implements EventSubscriberInterface
     {
         $orderData = $event->getConvertedCart();
 
-        $criteria = (new Criteria())->addFilter(new EqualsFilter('name', ShippingMethodPayloadFactoryInterface::SHIPPING_KEY));
+        $criteria = (new Criteria())->addFilter(new EqualsFilter('customFields.technical_name', ShippingMethodPayloadFactoryInterface::SHIPPING_KEY));
 
         $shippingMethodTranslations = $this->shippingMethodTranslationRepository->search($criteria, $event->getContext());
 
@@ -49,9 +50,6 @@ class CartConvertedSubscriber implements EventSubscriberInterface
 
         /** @var ShippingMethodTranslationEntity $shippingMethodTranslation */
         $shippingMethodTranslation = $shippingMethodTranslations->first();
-
-        dump($orderData['deliveries'][0]['shippingMethodId']);
-        exit;
 
         if ($orderData['deliveries'][0]['shippingMethodId'] !== $shippingMethodTranslation->getShippingMethodId()) {
             return;
@@ -69,7 +67,7 @@ class CartConvertedSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $orderData['extensions']['inPost'] = [
+        $orderData['extensions'][OrderInPostExtensionInterface::PROPERTY_KEY] = [
             'id' => Uuid::randomHex(),
             'pointName' => $customParcelLocker,
         ];
