@@ -50,6 +50,9 @@ class CartConvertedSubscriber implements EventSubscriberInterface
         /** @var ShippingMethodTranslationEntity $shippingMethodTranslation */
         $shippingMethodTranslation = $shippingMethodTranslations->first();
 
+        dump($orderData['deliveries'][0]['shippingMethodId']);
+        exit;
+
         if ($orderData['deliveries'][0]['shippingMethodId'] !== $shippingMethodTranslation->getShippingMethodId()) {
             return;
         }

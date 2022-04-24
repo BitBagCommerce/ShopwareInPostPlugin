@@ -1,15 +1,18 @@
 import Plugin from 'src/plugin-system/plugin.class';
 
-export default class ExamplePlugin extends Plugin {
+export default class InpostPluginPlugin extends Plugin {
     init() {
         const main = this;
-        window.easyPackAsyncInit = function () {
+
+        window.easyPackAsyncInit = () => {
             easyPack.init({});
-            easyPack.mapWidget('easypack-map', function(point) {
+            easyPack.mapWidget('easypack-map', (point) => {
                 main.updateSelected(point);
             });
         }
+
         const changePointButton = document.querySelector('[data-inpost-plugin-changePoint]');
+
         changePointButton.addEventListener('click', (e) => {
             e.preventDefault();
             this.changePoint();
@@ -17,7 +20,7 @@ export default class ExamplePlugin extends Plugin {
     }
 
     updateSelected(point) {
-        const inpostParcelLockerEl = document.querySelector('#inpost-parcel-locker');;
+        const inpostParcelLockerEl = document.querySelector('#inpost-parcel-locker');
         const selectedPoint = document.querySelector('[data-inpost-plugin-selectedPoint]');
         const InpostGeoMap = document.querySelector('[data-inpost-plugin-map]');
         const pointThumbnail = document.querySelector('[data-inpost-plugin-thumbnail]');
