@@ -30,5 +30,13 @@
     },
     "rule": {
         "notFound": "Rule was not found"
+    },
+    "administration": {
+        "order": {
+            "inpost": {
+                "getLabel": "Get label",
+                "createPackage": "Create package"
+            }
+        }
     }
 }
