@@ -48,7 +48,7 @@ Component.register('sw-order-detail-inpost-detail-card', {
                             if (error) {
                                 this.createNotificationError({
                                     title: error.title,
-                                    message: this.$tc(error.detail)
+                                    message: this.$tc(error.detail).replace('%s', this.$route.params.id)
                                 });
                             }
                         }
@@ -57,7 +57,9 @@ Component.register('sw-order-detail-inpost-detail-card', {
         },
 
         getLabel() {
-            this.CustomApiService.getLabel(this.$route.params.id)
+            const orderId = this.$route.params.id;
+
+            this.CustomApiService.getLabel(orderId)
                 .then((data) => {
                     const file = new Blob([data.data], {type: 'application/pdf'});
                     const blob = URL.createObjectURL(file);
@@ -78,7 +80,7 @@ Component.register('sw-order-detail-inpost-detail-card', {
                                     if (error) {
                                         this.createNotificationError({
                                             title: error.title,
-                                            message: this.$tc(error.detail)
+                                            message: this.$tc(error.detail).replace('%s', orderId)
                                         });
                                     }
                                 }
