@@ -5,7 +5,7 @@ class CustomApiService extends ApiService {
         super(httpClient, loginService, apiEndpoint);
     }
 
-    async createPackage(orderId) {
+    createPackage(orderId) {
         const apiRoute = `${this.getApiBasePath()}/_action/bitbag-inpost-plugin/package/${orderId}`;
 
         return this.httpClient
@@ -19,7 +19,7 @@ class CustomApiService extends ApiService {
             });
     }
 
-    async getLabel(orderId) {
+    getLabel(orderId) {
         const apiRoute = `${this.getApiBasePath()}/_action/bitbag-inpost-plugin/label/${orderId}`;
 
         return this.httpClient
@@ -28,7 +28,7 @@ class CustomApiService extends ApiService {
             });
     }
 
-    async getOrder(orderId) {
+    getOrder(orderId) {
         const apiRoute = `${this.getApiBasePath()}/order/${orderId}`;
 
         return this.httpClient
@@ -37,7 +37,7 @@ class CustomApiService extends ApiService {
             });
     }
 
-    async getInpostDataByPointName(pointName) {
+    getInpostDataByPointName(pointName) {
         const apiRoute = `https://api-pl-points.easypack24.net/v1/points/${pointName}`;
 
         return this.httpClient.get(apiRoute);
