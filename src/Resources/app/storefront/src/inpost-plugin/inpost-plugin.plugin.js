@@ -1,6 +1,6 @@
 import Plugin from 'src/plugin-system/plugin.class';
 
-export default class InpostPluginPlugin extends Plugin {
+export default class InpostPlugin extends Plugin {
     init() {
         const main = this;
 
@@ -53,7 +53,7 @@ export default class InpostPluginPlugin extends Plugin {
         const pointName = document.querySelector('[data-inpost-plugin-name]');
         const pointAddressOne = document.querySelector('[data-inpost-plugin-addressOne]');
         const pointAddressTwo = document.querySelector('[data-inpost-plugin-addressTwo]');
-        const pointNameNotSelectedMessageEl = document.getElementById('pointNameNotSelectedMessage');
+        const pointNameNotSelectedMessageEl = document.querySelector('.point-name-not-selected-message');
 
         selectedPoint.classList.remove('hide');
         InpostGeoMap.classList.add('hide');
