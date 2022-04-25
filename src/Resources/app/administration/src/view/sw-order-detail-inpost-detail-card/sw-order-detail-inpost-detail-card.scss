@@ -1,0 +1,37 @@
+.hide {
+    display: none !important;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1em;
+
+    .inpost-point-detail {
+        display: flex;
+        align-items: center;
+        gap: 1em;
+
+        .image img {
+            width: 200px;
+        }
+
+        .information {
+            display: flex;
+            flex-direction: column;
+
+            .text-bold {
+                font-weight: 900;
+            }
+        }
+    }
+
+    .actions {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.4em;
+    }
+}
