@@ -12,10 +12,10 @@ Component.register('sw-order-detail-inpost-detail-card', {
 
     async created() {
         await this.getOrder()
-            .then((order) => {
+            .then(async(order) => {
                 this.removeInPostDetailCardIfNotFoundInPost(order);
 
-                this.getInPostResponseData(order)
+                await this.getInPostResponseData(order)
                     .then((inPostResponse) => {
                         this.setInPostDetailsData(inPostResponse);
                     });
@@ -100,7 +100,7 @@ Component.register('sw-order-detail-inpost-detail-card', {
                 });
         },
 
-        async setInPostDetailsData(inPostResponseData) {
+        setInPostDetailsData(inPostResponseData) {
             if (!inPostResponseData) {
                 return;
             }
@@ -180,7 +180,7 @@ Component.register('sw-order-detail-inpost-detail-card', {
             }
         },
 
-        async removeInPostDetailCardIfNotFoundInPost(order) {
+        removeInPostDetailCardIfNotFoundInPost(order) {
             if (!order || !order.extensions.inPost || !order.extensions.inPost.pointName) {
                 const inpostDetailCardEl = this.$refs.inpostDetailsCard;
 
@@ -190,7 +190,7 @@ Component.register('sw-order-detail-inpost-detail-card', {
             }
         },
 
-        async hideGetLabelButtonIfNotFoundPackageId(order) {
+        hideGetLabelButtonIfNotFoundPackageId(order) {
             if (!order || !order.extensions || !order.extensions.inPost || !order.extensions.inPost.packageId) {
                 const getLabelButtonEl = this.$refs.getLabel;
 
@@ -200,7 +200,7 @@ Component.register('sw-order-detail-inpost-detail-card', {
             }
         },
 
-        async hideCreatePackageButtonIfFoundPackage(order) {
+        hideCreatePackageButtonIfFoundPackage(order) {
             if (order && order.extensions && order.extensions.inPost && order.extensions.inPost.packageId) {
                 const createPackageButtonEl = this.$refs.createPackage;
 
