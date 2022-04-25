@@ -37,7 +37,7 @@ class CustomFieldsForPackageDetailsPayloadFactoryTest extends TestCase
                 [
                     'name' => $customFieldPrefix . '_insurance',
                     'label' => 'Insurance value (can be left empty)',
-                    'type' => CustomFieldTypes::INT,
+                    'type' => CustomFieldTypes::FLOAT,
                     'config' => [
                         'label' => [
                             'en-GB' => 'Insurance value (can be left empty)',
@@ -47,7 +47,7 @@ class CustomFieldsForPackageDetailsPayloadFactoryTest extends TestCase
                 [
                     'name' => $customFieldPrefix . '_height',
                     'label' => 'Height (cm)',
-                    'type' => CustomFieldTypes::INT,
+                    'type' => CustomFieldTypes::FLOAT,
                     'config' => [
                         'label' => [
                             'en-GB' => 'Height (cm)',
@@ -57,7 +57,7 @@ class CustomFieldsForPackageDetailsPayloadFactoryTest extends TestCase
                 [
                     'name' => $customFieldPrefix . '_width',
                     'label' => 'Width (cm)',
-                    'type' => CustomFieldTypes::INT,
+                    'type' => CustomFieldTypes::FLOAT,
                     'config' => [
                         'label' => [
                             'en-GB' => 'Width (cm)',
@@ -67,7 +67,7 @@ class CustomFieldsForPackageDetailsPayloadFactoryTest extends TestCase
                 [
                     'name' => $customFieldPrefix . '_depth',
                     'label' => 'Depth (cm)',
-                    'type' => CustomFieldTypes::INT,
+                    'type' => CustomFieldTypes::FLOAT,
                     'config' => [
                         'label' => [
                             'en-GB' => 'Depth (cm)',

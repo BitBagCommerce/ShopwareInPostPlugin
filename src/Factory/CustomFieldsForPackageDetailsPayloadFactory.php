@@ -24,7 +24,7 @@ final class CustomFieldsForPackageDetailsPayloadFactory implements CustomFieldsF
                 [
                     'name' => $customFieldPrefix . '_insurance',
                     'label' => 'Insurance value (can be left empty)',
-                    'type' => CustomFieldTypes::INT,
+                    'type' => CustomFieldTypes::FLOAT,
                     'config' => [
                         'label' => [
                             'en-GB' => 'Insurance value (can be left empty)',
@@ -34,7 +34,7 @@ final class CustomFieldsForPackageDetailsPayloadFactory implements CustomFieldsF
                 [
                     'name' => $customFieldPrefix . '_height',
                     'label' => 'Height (cm)',
-                    'type' => CustomFieldTypes::INT,
+                    'type' => CustomFieldTypes::FLOAT,
                     'config' => [
                         'label' => [
                             'en-GB' => 'Height (cm)',
@@ -44,7 +44,7 @@ final class CustomFieldsForPackageDetailsPayloadFactory implements CustomFieldsF
                 [
                     'name' => $customFieldPrefix . '_width',
                     'label' => 'Width (cm)',
-                    'type' => CustomFieldTypes::INT,
+                    'type' => CustomFieldTypes::FLOAT,
                     'config' => [
                         'label' => [
                             'en-GB' => 'Width (cm)',
@@ -54,7 +54,7 @@ final class CustomFieldsForPackageDetailsPayloadFactory implements CustomFieldsF
                 [
                     'name' => $customFieldPrefix . '_depth',
                     'label' => 'Depth (cm)',
-                    'type' => CustomFieldTypes::INT,
+                    'type' => CustomFieldTypes::FLOAT,
                     'config' => [
                         'label' => [
                             'en-GB' => 'Depth (cm)',
