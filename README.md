@@ -6,7 +6,7 @@
 
 At BitBag we do believe in open source. However, we are able to do it just because of our awesome clients, who are kind enough to share some parts of our work with the community. Therefore, if you feel like there is a possibility for us working together, feel free to reach us out. You will find out more about our professional services, technologies and contact details at [https://bitbag.io/](https://bitbag.io/?utm_source=github&utm_medium=referral&utm_campaign=plugins_in_post_shopware).
 
-## Table of Content
+## Table of Contents
 
 ***
 
@@ -30,11 +30,11 @@ At BitBag we do believe in open source. However, we are able to do it just becau
 ![InPost widget selected point](./doc/images/in_post_point_widget_selected_point_storefront.png)
 ![InPost details administration](./doc/images/in_post_details_administration.png)
 
-This plugin allows to client choice shipping method InPost when place an order, this allows to client can pick up his package at any time.
+This plugin allows customers to choose InPost parcel lockers during the checkout process and pick up their orders wherever they want.
 
 
 ## We are here to help
-This **open-source plugin was developed to help the Shopware community** and make InPost shipping method available to any Shopware store. If you have any additional questions, would like help with installing or configuring the plugin or need any assistance with your Shopware project - let us know!
+This **open-source plugin was developed to help the Shopware community** and make InPost shipments method available to any Shopware store. If you have any additional questions, would like help with installing or configuring the plugin or need any assistance with your Shopware project - let us know!
 
 [![](https://bitbag.io/wp-content/uploads/2020/10/button-contact.png)](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_in_post_shopware)
 
@@ -47,17 +47,17 @@ This **open-source plugin was developed to help the Shopware community** and mak
 
 We work on stable, supported and up-to-date versions of packages. We recommend you to do the same.
 
-| Package                | Version            |
-|------------------------|--------------------|
-| PHP                    | ^7.4.3 or ^8.0     |
-| shopware/platform      | ^6.4               |
+| Package                | Version |
+|------------------------|---------|
+| PHP                    | ^7.4.3  |
+| shopware/platform      | ^6.4    |
 
 
 For the full installation guide please go to [installation](doc/installation.md)
 
 --- 
 
-### Testing
+### Testing (on the plugin level)
 
 ```
 $ composer install
@@ -70,12 +70,21 @@ $ ./vendor/bin/ecs check tests/ src/ --config ecs.php
 
 ---
 
-### You need to add required API data
-  ![Config button](./doc/images/configuration_button_admin_panel.png)
-  ![Required API data](./doc/images/api_configuration_admin_panel.png)
+### API credentials
+You need to add the required API credentials.
 
-### Add shipping method in storefront
-   ![InPost shipping method in Storefront](./doc/images/add_shipping_method_storefront_admin_panel.png)
+![Config button](./doc/images/configuration_button_admin_panel.png)
+![Required API data](./doc/images/api_configuration_admin_panel.png)
+
+### Shipping method
+You need to add the InPost shipping method in the back office so your customers can use it.
+
+![InPost shipping method in Storefront](./doc/images/add_shipping_method_storefront_admin_panel.png)
+
+### Required phone number
+You need to add phone numer as field required in the back office settings
+
+![Required phone number in settings](./doc/images/phone_numer_required_admin_panel.png)
 
 # About us
 
@@ -92,7 +101,7 @@ The scope of our services related to Shopware includes:
 
 ---
 
-If you need some help with Shopware development, don't be hesitated to contact us directly. You can fill the form on [this site](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_in_post_shopware) or send us an e-mail to hello@bitbag.io!
+If you need some help with Shopware development, don't hesitate to contact us directly. You can fill the form on [this site](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_in_post_shopware) or send us an e-mail to hello@bitbag.io!
 
 ---
 
