@@ -4,5 +4,6 @@ const Application = Shopware.Application;
 
 Application.addServiceProvider('CustomApiService', (container) => {
     const initContainer = Application.getContainer('init');
+
     return new CustomApiService(initContainer.httpClient, container.loginService);
 });

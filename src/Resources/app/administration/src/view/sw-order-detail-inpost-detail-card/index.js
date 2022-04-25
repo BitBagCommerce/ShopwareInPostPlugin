@@ -27,8 +27,8 @@ Component.register('sw-order-detail-inpost-detail-card', {
     },
 
     methods: {
-        async createPackage() {
-            await this.CustomApiService.createPackage(this.$route.params.id)
+        createPackage() {
+            this.CustomApiService.createPackage(this.$route.params.id)
                 .then(() => {
                     this.createNotificationSuccess({message: this.$tc('package.created')});
 
@@ -41,6 +41,7 @@ Component.register('sw-order-detail-inpost-detail-card', {
                 .catch((err) => {
                     if (err.response && err.response.data) {
                         const responseData = err.response.data;
+
                         if (responseData && responseData.errors && responseData.errors.length > 0) {
                             const error = responseData.errors[0];
 
@@ -55,8 +56,8 @@ Component.register('sw-order-detail-inpost-detail-card', {
                 });
         },
 
-        async getLabel() {
-            await this.CustomApiService.getLabel(this.$route.params.id)
+        getLabel() {
+            this.CustomApiService.getLabel(this.$route.params.id)
                 .then((data) => {
                     const file = new Blob([data.data], {type: 'application/pdf'});
                     const blob = URL.createObjectURL(file);
@@ -159,6 +160,7 @@ Component.register('sw-order-detail-inpost-detail-card', {
 
             if (order.extensions && order.extensions.inPost) {
                 const pointName = order.extensions.inPost.pointName;
+
                 if (pointName) {
                     return this.CustomApiService.getInpostDataByPointName(pointName)
                         .then((inPostResponse) => {
