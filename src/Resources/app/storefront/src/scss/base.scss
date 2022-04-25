@@ -1,0 +1,42 @@
+.inpostPoint {
+    display: flex;
+    align-items: center;
+
+    .inpostDetails {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4em;
+    }
+
+    .image {
+        max-height: 80px;
+    }
+
+    .detailsContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2em;
+
+        .item {
+            margin: 0;
+        }
+    }
+
+    .btn {
+        margin-left: auto;
+        flex-shrink: 0;
+    }
+
+}
+
+.inpostPoint.hide, .easypack-widget.hide{
+    display: none;
+}
+
+.error-message {
+    color: #c24343;
+
+    &.hide {
+        display: none;
+    }
+}
