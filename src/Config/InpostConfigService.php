@@ -6,7 +6,6 @@ namespace BitBag\ShopwareInPostPlugin\Config;
 
 use BitBag\ShopwareInPostPlugin\Exception\ApiDataException;
 use BitBag\ShopwareInPostPlugin\Model\InpostApiConfig;
-use Shopware\Core\System\SystemConfig\Exception\InvalidSettingValueException;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
 
 final class InpostConfigService implements InpostConfigServiceInterface
@@ -20,14 +19,14 @@ final class InpostConfigService implements InpostConfigServiceInterface
 
     public function getInpostApiConfig(): InpostApiConfig
     {
-        try {
-            $organizationId = $this->systemConfigService->getString(self:: SYSTEM_CONFIG_PREFIX . '.inPostOrganizationId');
-            $accessToken = $this->systemConfigService->getString(self:: SYSTEM_CONFIG_PREFIX . '.inPostAccessToken');
-            $environment = $this->systemConfigService->getString(self:: SYSTEM_CONFIG_PREFIX . '.inPostEnvironment');
+        $organizationId = $this->systemConfigService->getString(self:: SYSTEM_CONFIG_PREFIX . '.inPostOrganizationId') ?: null;
+        $accessToken = $this->systemConfigService->getString(self:: SYSTEM_CONFIG_PREFIX . '.inPostAccessToken') ?: null;
+        $environment = $this->systemConfigService->getString(self:: SYSTEM_CONFIG_PREFIX . '.inPostEnvironment') ?: null;
 
-            return new InpostApiConfig($organizationId, $accessToken, $environment);
-        } catch (InvalidSettingValueException $e) {
+        if (null === $organizationId || null === $accessToken || null === $environment) {
             throw new ApiDataException('api.credentialsDataNotFound');
         }
+
+        return new InpostApiConfig($organizationId, $accessToken, $environment);
     }
 }
