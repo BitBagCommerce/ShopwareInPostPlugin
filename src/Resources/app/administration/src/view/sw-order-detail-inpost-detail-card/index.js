@@ -10,12 +10,12 @@ Component.register('sw-order-detail-inpost-detail-card', {
         Mixin.getByName('notification')
     ],
 
-    async created() {
-        await this.getOrder()
-            .then(async(order) => {
+    created() {
+        this.getOrder()
+            .then((order) => {
                 this.removeInPostDetailCardIfNotFoundInPost(order);
 
-                await this.getInPostResponseData(order)
+                this.getInPostResponseData(order)
                     .then((inPostResponse) => {
                         this.setInPostDetailsData(inPostResponse);
                     });
@@ -88,7 +88,7 @@ Component.register('sw-order-detail-inpost-detail-card', {
                 });
         },
 
-        async getOrder() {
+        getOrder() {
             return this.CustomApiService.getOrder(this.$route.params.id)
                 .then((response) => {
                     if (response.data && response.data.data) {
@@ -153,7 +153,7 @@ Component.register('sw-order-detail-inpost-detail-card', {
             }
         },
 
-        async getInPostResponseData(order) {
+        getInPostResponseData(order) {
             if (!order) {
                 return;
             }
