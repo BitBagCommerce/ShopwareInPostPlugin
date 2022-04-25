@@ -57,15 +57,6 @@ For the full installation guide please go to [installation](doc/installation.md)
 
 --- 
 
-### Testing (on the plugin level)
-
-```
-$ composer install
-$ ./vendor/binn/phpunit
-$ ./vendor/bin/psalm
-$ ./vendor/bin/ecs check tests/ src/ --config ecs.php
-```
-
 # Configuration
 
 ---
