@@ -22,6 +22,9 @@
     "shippingMethod": {
         "notInpost": "InPost is needed to complete this operation"
     },
+    "shippingAddress": {
+        "postCodeInvalid": "Post code is not valid (valid format is XX-XXX)"
+    },
     "api": {
         "credentialsDataNotFound": "Fill in API credentials before creating the package",
         "providedDataNotValid": "Provided data is not valid",

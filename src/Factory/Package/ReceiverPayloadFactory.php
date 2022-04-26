@@ -42,7 +42,7 @@ final class ReceiverPayloadFactory implements ReceiverPayloadFactoryInterface
             'first_name' => $orderShippingAddress->getFirstName(),
             'last_name' => $orderShippingAddress->getLastName(),
             'email' => $orderCustomer->getEmail(),
-            'phone' => $this->replaceString($phoneNumber),
+            'phone' => $this->getValidPhoneNumber($phoneNumber),
             'address' => [
                 'street' => $street,
                 'building_number' => $houseNumber,
@@ -62,9 +62,9 @@ final class ReceiverPayloadFactory implements ReceiverPayloadFactoryInterface
         return $streetAddress;
     }
 
-    private function replaceString(string $value): string
+    private function getValidPhoneNumber(string $value): string
     {
-        return str_replace(['-', ' '], '', $value);
+        return str_replace(['-', ' ', '+48 ', '+48'], '', $value);
     }
 
     private function isValidPostCode(string $postCode): bool
@@ -74,8 +74,14 @@ final class ReceiverPayloadFactory implements ReceiverPayloadFactoryInterface
 
     private function getValidPostCode(string $postCode): string
     {
-        return $this->isValidPostCode($postCode) ?
-            $postCode :
-            trim(substr_replace($postCode, '-', 2, 0));
+        if (false === $this->isValidPostCode($postCode)) {
+            $postCode = trim(substr_replace($postCode, '-', 2, 0));
+
+            if (false === $this->isValidPostCode($postCode)) {
+                throw new ShippingAddressException('shippingAddress.postCodeInvalid');
+            }
+        }
+
+        return $postCode;
     }
 }
