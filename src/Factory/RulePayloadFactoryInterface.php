@@ -6,5 +6,5 @@ namespace BitBag\ShopwareInPostPlugin\Factory;
 
 interface RulePayloadFactoryInterface
 {
-    public function create(string $name): array;
+    public function create(string $name, string $paymentMethodId): array;
 }

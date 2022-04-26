@@ -46,6 +46,10 @@
             <call method="setRuleRepository">
                 <argument type="service" id="rule.repository" />
             </call>
+
+            <call method="setPaymentMethodCashOnDeliveryFinder">
+                <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\PaymentMethodCashOnDeliveryFinder" />
+            </call>
         </service>
 
         <service id="BitBag\ShopwareInPostPlugin\Api\WebClient">

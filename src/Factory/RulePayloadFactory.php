@@ -6,17 +6,17 @@ namespace BitBag\ShopwareInPostPlugin\Factory;
 
 final class RulePayloadFactory implements RulePayloadFactoryInterface
 {
-    public function create(string $name): array
+    public function create(string $name, string $paymentMethodId): array
     {
         return [
             'name' => $name,
-            'priority' => 100,
+            'priority' => 0,
             'conditions' => [
                 [
-                    'type' => 'cartCartAmount',
+                    'type' => 'paymentMethod',
                     'value' => [
-                        'amount' => 0,
-                        'operator' => '>=',
+                        'paymentMethodIds' => [$paymentMethodId],
+                        'operator' => '!=',
                     ],
                 ],
             ],
