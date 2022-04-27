@@ -16,7 +16,7 @@ final class OrderWeightCalculator implements OrderWeightCalculatorInterface
         $orderLineItems = $order->getLineItems();
 
         if (null === $orderLineItems) {
-            throw new OrderException('order.productsNotFound', $order->getId());
+            throw new OrderException('order.productsNotFound');
         }
 
         foreach ($orderLineItems->getElements() as $item) {

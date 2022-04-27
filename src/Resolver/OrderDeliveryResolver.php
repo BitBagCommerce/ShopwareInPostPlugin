@@ -16,13 +16,13 @@ final class OrderDeliveryResolver implements OrderDeliveryResolverInterface
         $orderDelivery = $order->getDeliveries();
 
         if (null === $orderDelivery) {
-            throw new OrderDeliveryNotFoundException($order->getId());
+            throw new OrderDeliveryNotFoundException();
         }
 
         $firstOrderDelivery = $orderDelivery->first();
 
         if (null === $firstOrderDelivery) {
-            throw new ShippingAddressNotFoundException('order.shippingAddressNotFound', $order->getId());
+            throw new ShippingAddressNotFoundException('order.shippingAddressNotFound');
         }
 
         return $firstOrderDelivery;

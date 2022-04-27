@@ -9,11 +9,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class OrderDeliveryNotFoundException extends ShopwareHttpException
 {
-    public function __construct(string $orderId)
+    public function __construct()
     {
-        $message = sprintf('order.shippingAddressNotFound', $orderId);
-
-        parent::__construct($message);
+        parent::__construct('order.shippingAddressNotFound');
     }
 
     public function getErrorCode(): string
