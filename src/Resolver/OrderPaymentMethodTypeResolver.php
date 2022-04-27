@@ -16,14 +16,14 @@ final class OrderPaymentMethodTypeResolver implements OrderPaymentMethodTypeReso
         $orderTransactions = $order->getTransactions();
 
         if (null === $orderTransactions) {
-            throw new OrderException('order.paymentMethodNotFound', $order->getId());
+            throw new OrderException('order.paymentMethodNotFound');
         }
 
         /** @var OrderTransactionEntity|null $orderTransaction */
         $orderTransaction = $orderTransactions->first();
 
         if (null === $orderTransaction) {
-            throw new OrderException('order.paymentMethodNotFound', $order->getId());
+            throw new OrderException('order.paymentMethodNotFound');
         }
 
         /** @var PaymentMethodEntity $paymentMethod */
