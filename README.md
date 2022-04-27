@@ -2,7 +2,7 @@
 
 ---
 
-[![](https://img.shields.io/packagist/l/bitbag/adyen-plugin.svg) ](https://packagist.org/packages/bitbag/adyen-plugin "License") [![Slack](https://img.shields.io/badge/community%20chat-slack-FF1493.svg)](http://slack.shopware.com) [![Support](https://img.shields.io/badge/support-contact%20author-blue])](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_in_post_shopware)
+[![Slack](https://img.shields.io/badge/community%20chat-slack-FF1493.svg)](http://slack.shopware.com) [![Support](https://img.shields.io/badge/support-contact%20author-blue])](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_in_post_shopware)
 
 At BitBag we do believe in open source. However, we are able to do it just because of our awesome clients, who are kind enough to share some parts of our work with the community. Therefore, if you feel like there is a possibility for us working together, feel free to reach us out. You will find out more about our professional services, technologies and contact details at [https://bitbag.io/](https://bitbag.io/?utm_source=github&utm_medium=referral&utm_campaign=plugins_in_post_shopware).
 
@@ -32,9 +32,8 @@ At BitBag we do believe in open source. However, we are able to do it just becau
 
 This plugin allows customers to choose InPost parcel lockers during the checkout process and pick up their orders wherever they want.
 
-
 ## We are here to help
-This **open-source plugin was developed to help the Shopware community** and make InPost shipments method available to any Shopware store. If you have any additional questions, would like help with installing or configuring the plugin or need any assistance with your Shopware project - let us know!
+This **open-source plugin was developed to help the Shopware community** and make InPost shipments method available to any Shopware store. If you have any additional questions, would like help with installing or configuring the plugin, or need any assistance with your Shopware project - let us know!
 
 [![](https://bitbag.io/wp-content/uploads/2020/10/button-contact.png)](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_in_post_shopware)
 
@@ -53,7 +52,7 @@ We work on stable, supported and up-to-date versions of packages. We recommend y
 | shopware/platform      | ^6.4    |
 
 
-For the full installation guide please go to [installation](doc/installation.md)
+For the full installation guide please go to [installation](doc/installation.md).
 
 --- 
 
@@ -68,14 +67,19 @@ You need to add the required API credentials.
 ![Required API data](./doc/images/api_configuration_admin_panel.png)
 
 ### Shipping method
-You need to add the InPost shipping method in the back office so your customers can use it.
+You need to add the InPost shipping method in the back office, so your customers can use it.
 
 ![InPost shipping method in Storefront](./doc/images/add_shipping_method_storefront_admin_panel.png)
 
 ### Required phone number
-You need to add phone numer as field required in the back office settings
+You need to set the phone number field as required.
 
 ![Required phone number in settings](./doc/images/phone_numer_required_admin_panel.png)
+
+### Products weight
+You need to set the weight of all products in your store. The InPost parcel weight is calculated automatically according to the products ordered.
+
+![Products weight](./doc/images/product_weight_admin_panel.png)
 
 # About us
 
@@ -118,7 +122,7 @@ To learn more about our contribution workflow and more, we encourage ypu to use 
 
 ---
 
-This plugin's source code is completely free and released under the terms of the MIT license.
+This plugin source code is completely free and released under the terms of the MIT license.
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen.)
 
@@ -126,6 +130,6 @@ This plugin's source code is completely free and released under the terms of the
 
 ---
 
-If you want to contact us, the best way is to fill the form on [our website](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_in_post_shopware) or send us an e-mail to hello@bitbag.io with your question(s). We guarantee that we answer as soon as we can!
+If you want to contact us, the best way is to fill the form on [our website](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_in_post_shopware) or e-mail us to hello@bitbag.io with your question(s). We guarantee that we answer as soon as we can!
 
 [![](https://bitbag.io/wp-content/uploads/2021/08/badges-bitbag.png)](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_in_post_shopware)
