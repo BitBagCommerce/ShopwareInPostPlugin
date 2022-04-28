@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Subscriber;
 
+use BitBag\ShopwareInPostPlugin\Core\Checkout\Cart\Address\CartValidator;
 use BitBag\ShopwareInPostPlugin\Extension\Content\Order\OrderInPostExtensionInterface;
 use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodPayloadFactoryInterface;
 use Shopware\Core\Checkout\Cart\Order\CartConvertedEvent;
@@ -32,11 +33,11 @@ class CartConvertedSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            CartConvertedEvent::class => 'addPointNameToInpostExtension',
+            CartConvertedEvent::class => 'updateInPostOrderData',
         ];
     }
 
-    public function addPointNameToInpostExtension(CartConvertedEvent $event): void
+    public function updateInPostOrderData(CartConvertedEvent $event): void
     {
         $orderData = $event->getConvertedCart();
 
@@ -51,7 +52,9 @@ class CartConvertedSubscriber implements EventSubscriberInterface
         /** @var ShippingMethodTranslationEntity $shippingMethodTranslation */
         $shippingMethodTranslation = $shippingMethodTranslations->first();
 
-        if ($orderData['deliveries'][0]['shippingMethodId'] !== $shippingMethodTranslation->getShippingMethodId()) {
+        $delivery = $orderData['deliveries'][0];
+
+        if ($delivery['shippingMethodId'] !== $shippingMethodTranslation->getShippingMethodId()) {
             return;
         }
 
@@ -67,11 +70,24 @@ class CartConvertedSubscriber implements EventSubscriberInterface
             return;
         }
 
+        $orderPostCode = $delivery['shippingOrderAddress']['zipcode'];
+
+        if (!$this->isPostCodeValid($delivery['shippingOrderAddress']['zipcode'])) {
+            $delivery['shippingOrderAddress']['zipcode'] = trim(substr_replace($orderPostCode, '-', 2, 0));
+
+            $orderData['deliveries'][0] = $delivery;
+        }
+
         $orderData['extensions'][OrderInPostExtensionInterface::PROPERTY_KEY] = [
             'id' => Uuid::randomHex(),
             'pointName' => $customParcelLocker,
         ];
 
         $event->setConvertedCart($orderData);
+    }
+
+    private function isPostCodeValid(string $postCode): bool
+    {
+        return (bool) preg_match(CartValidator::POST_CODE_REGEX, $postCode);
     }
 }
