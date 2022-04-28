@@ -73,7 +73,7 @@ final class PackageController
     {
         $order = $this->orderFinder->getWithAssociations($orderId, $context);
 
-        $package = $this->packageApiService->createPackage($order);
+        $package = $this->packageApiService->createPackage($order, $context);
 
         $orderInPostExtensionData = $this->orderExtensionDataResolver->resolve($order);
 

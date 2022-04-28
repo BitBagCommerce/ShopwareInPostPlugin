@@ -24,7 +24,7 @@ final class ReceiverPayloadFactory implements ReceiverPayloadFactoryInterface
         $orderCustomer = $order->getOrderCustomer();
 
         if (null === $orderCustomer) {
-            throw new OrderException('order.customerEmailNotFound', $order->getId());
+            throw new OrderException('order.customerEmailNotFound');
         }
 
         $orderShippingAddress = $this->orderShippingAddressResolver->resolve($order);
@@ -32,7 +32,7 @@ final class ReceiverPayloadFactory implements ReceiverPayloadFactoryInterface
         $phoneNumber = $orderShippingAddress->getPhoneNumber();
 
         if (null === $phoneNumber) {
-            throw new OrderException('order.nullPhoneNumber', $order->getId());
+            throw new OrderException('order.nullPhoneNumber');
         }
 
         [, $street, $houseNumber] = $this->splitStreet($orderShippingAddress->getStreet());

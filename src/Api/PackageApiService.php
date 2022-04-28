@@ -7,6 +7,7 @@ namespace BitBag\ShopwareInPostPlugin\Api;
 use BitBag\ShopwareInPostPlugin\Exception\InpostApiException;
 use BitBag\ShopwareInPostPlugin\Factory\Package\PackagePayloadFactoryInterface;
 use Shopware\Core\Checkout\Order\OrderEntity;
+use Shopware\Core\Framework\Context;
 
 final class PackageApiService implements PackageApiServiceInterface
 {
@@ -21,9 +22,9 @@ final class PackageApiService implements PackageApiServiceInterface
     }
 
     /** @psalm-return array<array-key, mixed> */
-    public function createPackage(OrderEntity $order): array
+    public function createPackage(OrderEntity $order, Context $context): array
     {
-        $inPostPackageData = $this->packagePayloadFactory->create($order);
+        $inPostPackageData = $this->packagePayloadFactory->create($order, $context);
 
         $package = $this->webClient->createShipment($inPostPackageData);
 

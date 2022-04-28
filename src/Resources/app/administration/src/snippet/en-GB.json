@@ -15,7 +15,7 @@
         "pointNameNotFound": "Point name for order %s was not found",
         "alreadyCreated": "A package has already been created for order %s",
         "fillRequiredCustomFields": "Fill in all required package details before creating the package",
-        "nullWeight": "Package weight cannot be 0",
+        "nullWeight": "Package weight must be greater than 0.0 kg",
         "created": "Package has been created",
         "packageIdNotFound": "Create a package before fetching the label"
     },
@@ -31,12 +31,8 @@
     "rule": {
         "notFound": "Rule was not found"
     },
-    "administration": {
-        "order": {
-            "inpost": {
-                "getLabel": "Get label",
-                "createPackage": "Create package"
-            }
-        }
+    "cardDetails": {
+        "getLabel": "Get label",
+        "createPackage": "Create package"
     }
 }
