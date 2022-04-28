@@ -8,8 +8,8 @@ use BitBag\ShopwareInPostPlugin\Exception\RuleNotFoundException;
 use BitBag\ShopwareInPostPlugin\Factory\CustomFieldsForPackageDetailsPayloadFactory;
 use BitBag\ShopwareInPostPlugin\Factory\RulePayloadFactoryInterface;
 use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodPayloadFactoryInterface;
+use BitBag\ShopwareInPostPlugin\Finder\CashOnDeliveryPaymentMethodFinderInterface;
 use BitBag\ShopwareInPostPlugin\Finder\PackageDetailsCustomFieldSetFinderInterface;
-use BitBag\ShopwareInPostPlugin\Finder\PaymentMethodCashOnDeliveryFinderInterface;
 use BitBag\ShopwareInPostPlugin\Finder\RuleFinderInterface;
 use BitBag\ShopwareInPostPlugin\Finder\ShippingMethodFinderInterface;
 use Shopware\Core\Checkout\Shipping\ShippingMethodEntity;
@@ -39,7 +39,7 @@ final class BitBagShopwareInPostPlugin extends Plugin
 
     private EntityRepositoryInterface $ruleRepository;
 
-    private PaymentMethodCashOnDeliveryFinderInterface $paymentMethodCashOnDeliveryFinder;
+    private CashOnDeliveryPaymentMethodFinderInterface $cashOnDeliveryPaymentMethodFinder;
 
     public function setShippingMethodRepository(EntityRepositoryInterface $shippingMethodRepository): void
     {
@@ -88,10 +88,10 @@ final class BitBagShopwareInPostPlugin extends Plugin
         $this->ruleRepository = $ruleRepository;
     }
 
-    public function setPaymentMethodCashOnDeliveryFinder(
-        PaymentMethodCashOnDeliveryFinderInterface $paymentMethodCashOnDeliveryFinder
+    public function setCashOnDeliveryPaymentMethodFinder(
+        CashOnDeliveryPaymentMethodFinderInterface $cashOnDeliveryPaymentMethodFinder
     ): void {
-        $this->paymentMethodCashOnDeliveryFinder = $paymentMethodCashOnDeliveryFinder;
+        $this->cashOnDeliveryPaymentMethodFinder = $cashOnDeliveryPaymentMethodFinder;
     }
 
     public function activate(ActivateContext $activateContext): void
@@ -178,17 +178,15 @@ final class BitBagShopwareInPostPlugin extends Plugin
         $ruleName = 'Disable payment cash on delivery';
         $rule = $this->ruleFinder->getRuleIdsByName($ruleName, $context);
         if (0 === $rule->getTotal()) {
-            $paymentMethodCahOnDelivery = $this->paymentMethodCashOnDeliveryFinder->find($context);
+            $paymentMethodCahOnDelivery = $this->cashOnDeliveryPaymentMethodFinder->find($context);
 
-            if (0 < $paymentMethodCahOnDelivery->getTotal()) {
-                $paymentMethodId = $paymentMethodCahOnDelivery->firstId();
-                if (null !== $paymentMethodId) {
-                    $rule = $this->rulePayloadFactory->create($ruleName, $paymentMethodId);
+            $paymentMethodId = $paymentMethodCahOnDelivery->firstId();
+            if (null !== $paymentMethodId) {
+                $rule = $this->rulePayloadFactory->create($ruleName, $paymentMethodId);
 
-                    $this->ruleRepository->create([$rule], $context);
+                $this->ruleRepository->create([$rule], $context);
 
-                    $rule = $this->ruleFinder->getRuleIdsByName($ruleName, $context);
-                }
+                $rule = $this->ruleFinder->getRuleIdsByName($ruleName, $context);
             }
         }
 

@@ -11,7 +11,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\IdSearchResult;
 
-final class PaymentMethodCashOnDeliveryFinder implements PaymentMethodCashOnDeliveryFinderInterface
+final class CashOnDeliveryPaymentMethodFinder implements CashOnDeliveryPaymentMethodFinderInterface
 {
     private EntityRepositoryInterface $paymentMethodRepository;
 
