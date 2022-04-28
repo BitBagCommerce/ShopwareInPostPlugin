@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Factory\Package;
 
+use BitBag\ShopwareInPostPlugin\Core\Checkout\Cart\Address\CartValidator;
 use BitBag\ShopwareInPostPlugin\Exception\Order\OrderException;
 use BitBag\ShopwareInPostPlugin\Provider\Defaults;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderShippingAddressResolverInterface;
@@ -41,7 +42,7 @@ final class ReceiverPayloadFactory implements ReceiverPayloadFactoryInterface
             'first_name' => $orderShippingAddress->getFirstName(),
             'last_name' => $orderShippingAddress->getLastName(),
             'email' => $orderCustomer->getEmail(),
-            'phone' => $this->getValidPhoneNumber($phoneNumber),
+            'phone' => $this->sanitizePhoneNumber($phoneNumber),
             'address' => [
                 'street' => $street,
                 'building_number' => $houseNumber,
@@ -54,16 +55,12 @@ final class ReceiverPayloadFactory implements ReceiverPayloadFactoryInterface
 
     private function splitStreet(string $street): array
     {
-        preg_match(
-            "/(?<streetName>[[:alnum:].'\- ]+)\s+(?<houseNumber>\d{1,10}((\s)?\w{1,3})?(\/\d{1,10})?)$/",
-            $street,
-            $streetAddress
-        );
+        preg_match(CartValidator::STREET_FIRST_REGEX, $street, $streetAddress);
 
         return $streetAddress;
     }
 
-    private function getValidPhoneNumber(string $value): string
+    private function sanitizePhoneNumber(string $value): string
     {
         return str_replace(['-', ' ', '+48 ', '+48'], '', $value);
     }

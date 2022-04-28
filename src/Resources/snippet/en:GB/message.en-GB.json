@@ -3,7 +3,7 @@
         "notFound": "You need to select point before create an order"
     },
     "checkout": {
-        "streetBuildingNumberInvalid": "Street and building number is invalid (valid format is like \"Street 11/2\"",
+        "streetSplittingError": "Street and building number is invalid (valid format is like \"Street 11/2\"",
         "postCodeInvalid": "Post code is not valid (valid format is XX-XXX)"
     }
 }
