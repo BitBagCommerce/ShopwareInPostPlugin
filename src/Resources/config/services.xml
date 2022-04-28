@@ -11,44 +11,16 @@
         <service class="BitBag\ShopwareInPostPlugin\BitBagShopwareInPostPlugin"
                  id="BitBag\ShopwareInPostPlugin\BitBagShopwareInPostPlugin"
         >
-            <call method="setShippingMethodRepository">
-                <argument type="service" id="shipping_method.repository" />
+            <call method="setCustomFieldSetConfigurator">
+                <argument type="service" id="BitBag\ShopwareInPostPlugin\Plugin\CustomFieldSetConfigurator" />
             </call>
 
-            <call method="setShippingMethodFactory">
-                <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\ShippingMethodPayloadFactory" />
+            <call method="setRuleConfigurator">
+                <argument type="service" id="BitBag\ShopwareInPostPlugin\Plugin\RuleConfigurator" />
             </call>
 
-            <call method="setShippingMethodFinder">
-                <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\ShippingMethodFinder" />
-            </call>
-
-            <call method="setCustomFieldSetRepository">
-                <argument type="service" id="custom_field_set.repository" />
-            </call>
-
-            <call method="setCustomFieldsForPackageDetailsPayloadFactory">
-                <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\CustomFieldsForPackageDetailsPayloadFactory" />
-            </call>
-
-            <call method="setPackageDetailsCustomFieldSetFinder">
-                <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\PackageDetailsCustomFieldSetFinder" />
-            </call>
-
-            <call method="setRuleFinder">
-                <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\RuleFinder" />
-            </call>
-
-            <call method="setRulePayloadFactory">
-                <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\RulePayloadFactory" />
-            </call>
-
-            <call method="setRuleRepository">
-                <argument type="service" id="rule.repository" />
-            </call>
-
-            <call method="setCashOnDeliveryPaymentMethodFinder">
-                <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\CashOnDeliveryPaymentMethodFinder" />
+            <call method="setShippingMethodConfigurator">
+                <argument type="service" id="BitBag\ShopwareInPostPlugin\Plugin\ShippingMethodConfigurator" />
             </call>
         </service>
 
