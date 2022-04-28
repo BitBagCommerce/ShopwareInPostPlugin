@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace BitBag\ShopwareInPostPlugin\Factory\Package;
 
 use BitBag\ShopwareInPostPlugin\Exception\Order\OrderException;
-use BitBag\ShopwareInPostPlugin\Exception\ShippingAddress\ShippingAddressException;
 use BitBag\ShopwareInPostPlugin\Provider\Defaults;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderShippingAddressResolverInterface;
 use Shopware\Core\Checkout\Order\OrderEntity;
@@ -47,7 +46,7 @@ final class ReceiverPayloadFactory implements ReceiverPayloadFactoryInterface
                 'street' => $street,
                 'building_number' => $houseNumber,
                 'city' => $orderShippingAddress->getCity(),
-                'post_code' => $this->getValidPostCode($orderShippingAddress->getZipcode()),
+                'post_code' => $orderShippingAddress->getZipcode(),
                 'country_code' => Defaults::CURRENCY_CODE,
             ],
         ];
@@ -55,9 +54,11 @@ final class ReceiverPayloadFactory implements ReceiverPayloadFactoryInterface
 
     private function splitStreet(string $street): array
     {
-        if (!preg_match('/^([^\d]*[^\d\s]) *(\d.*)$/', $street, $streetAddress)) {
-            throw new ShippingAddressException('Street cannot be split');
-        }
+        preg_match(
+            "/(?<streetName>[[:alnum:].'\- ]+)\s+(?<houseNumber>\d{1,10}((\s)?\w{1,3})?(\/\d{1,10})?)$/",
+            $street,
+            $streetAddress
+        );
 
         return $streetAddress;
     }
@@ -65,23 +66,5 @@ final class ReceiverPayloadFactory implements ReceiverPayloadFactoryInterface
     private function getValidPhoneNumber(string $value): string
     {
         return str_replace(['-', ' ', '+48 ', '+48'], '', $value);
-    }
-
-    private function isValidPostCode(string $postCode): bool
-    {
-        return (bool) preg_match('/^(\d{2})(-\d{3})?$/i', $postCode);
-    }
-
-    private function getValidPostCode(string $postCode): string
-    {
-        if (false === $this->isValidPostCode($postCode)) {
-            $postCode = trim(substr_replace($postCode, '-', 2, 0));
-
-            if (false === $this->isValidPostCode($postCode)) {
-                throw new ShippingAddressException('shippingAddress.postCodeInvalid');
-            }
-        }
-
-        return $postCode;
     }
 }
