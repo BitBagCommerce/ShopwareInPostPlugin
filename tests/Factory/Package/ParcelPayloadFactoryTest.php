@@ -11,6 +11,7 @@ use BitBag\ShopwareInPostPlugin\Factory\Package\ParcelPayloadFactory;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderCustomFieldsResolverInterface;
 use PHPUnit\Framework\TestCase;
 use Shopware\Core\Checkout\Order\OrderEntity;
+use Shopware\Core\Framework\Context;
 
 final class ParcelPayloadFactoryTest extends TestCase
 {
@@ -31,6 +32,8 @@ final class ParcelPayloadFactoryTest extends TestCase
             'width' => self::PACKAGE_WIDTH,
             'height' => self::PACKAGE_HEIGHT,
         ];
+
+        $context = $this->createMock(Context::class);
 
         $orderWeightCalculator = $this->createMock(OrderWeightCalculatorInterface::class);
 
@@ -70,7 +73,7 @@ final class ParcelPayloadFactoryTest extends TestCase
                     'unit' => 'kg',
                 ],
             ],
-            $parcelPayloadFactory->create($this->getOrder())
+            $parcelPayloadFactory->create($this->getOrder(), $context)
         );
     }
 

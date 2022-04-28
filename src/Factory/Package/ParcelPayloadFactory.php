@@ -9,6 +9,7 @@ use BitBag\ShopwareInPostPlugin\Calculator\OrderWeightCalculatorInterface;
 use BitBag\ShopwareInPostPlugin\Exception\PackageException;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderCustomFieldsResolverInterface;
 use Shopware\Core\Checkout\Order\OrderEntity;
+use Shopware\Core\Framework\Context;
 
 final class ParcelPayloadFactory implements ParcelPayloadFactoryInterface
 {
@@ -28,11 +29,11 @@ final class ParcelPayloadFactory implements ParcelPayloadFactoryInterface
         $this->centimetersToMillimetersCalculator = $centimetersToMillimetersCalculator;
     }
 
-    public function create(OrderEntity $order): array
+    public function create(OrderEntity $order, Context $context): array
     {
         $orderCustomFields = $this->customFieldsResolver->resolve($order);
 
-        $weight = $this->orderWeightCalculator->calculate($order);
+        $weight = $this->orderWeightCalculator->calculate($order, $context);
 
         if (0.0 === $weight) {
             throw new PackageException('package.nullWeight');
