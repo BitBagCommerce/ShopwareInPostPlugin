@@ -175,7 +175,7 @@ final class BitBagShopwareInPostPlugin extends Plugin
 
     private function getRuleId(Context $context): string
     {
-        $ruleName = 'Disable payment cash on delivery';
+        $ruleName = 'Hide InPost when Cash on Delivery is chosen';
         $rule = $this->ruleFinder->getRuleIdsByName($ruleName, $context);
         if (0 === $rule->getTotal()) {
             $paymentMethodCahOnDelivery = $this->cashOnDeliveryPaymentMethodFinder->find($context);
