@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace BitBag\ShopwareInPostPlugin\Core\Checkout\Cart\Address;
 
 use BitBag\ShopwareInPostPlugin\Core\Checkout\Cart\Custom\Error\InvalidPostCodeError;
+use BitBag\ShopwareInPostPlugin\Core\Checkout\Cart\Custom\Error\NullWeightError;
 use BitBag\ShopwareInPostPlugin\Core\Checkout\Cart\Custom\Error\StreetSplittingError;
 use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodPayloadFactoryInterface;
 use Shopware\Core\Checkout\Cart\Cart;
 use Shopware\Core\Checkout\Cart\CartValidatorInterface;
 use Shopware\Core\Checkout\Cart\Delivery\Struct\Delivery;
 use Shopware\Core\Checkout\Cart\Error\ErrorCollection;
+use Shopware\Core\Checkout\Cart\LineItem\LineItem;
 use Shopware\Core\Checkout\Customer\Aggregate\CustomerAddress\CustomerAddressEntity;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 
@@ -58,6 +60,20 @@ final class CartValidator implements CartValidatorInterface
 
         if (!preg_match(self::STREET_WITH_BUILDING_NUMBER_REGEX, $address->getStreet())) {
             $errors->add(new StreetSplittingError($address->getId()));
+
+            return;
+        }
+
+        /** @var LineItem $lineItem */
+        foreach ($cart->getLineItems()->getElements() as $lineItem) {
+            $deliveryInformation = $lineItem->getDeliveryInformation();
+            if (null !== $deliveryInformation) {
+                if (0.0 === $deliveryInformation->getWeight()) {
+                    $errors->add(new NullWeightError($cart->getToken()));
+
+                    return;
+                }
+            }
         }
     }
 
