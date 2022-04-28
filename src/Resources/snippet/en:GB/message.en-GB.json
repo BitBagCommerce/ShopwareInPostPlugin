@@ -1,5 +1,9 @@
 {
     "pointName": {
         "notFound": "You need to select point before create an order"
+    },
+    "checkout": {
+        "streetSplittingError": "Street and building number is invalid (valid format is: \"Street 11/2\"",
+        "postCodeInvalid": "Post code is not valid (valid format is: 12-345)"
     }
 }
