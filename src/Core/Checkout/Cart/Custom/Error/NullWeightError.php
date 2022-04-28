@@ -13,6 +13,7 @@ final class NullWeightError extends Error
     public function __construct(string $cartToken)
     {
         $this->cartToken = $cartToken;
+
         parent::__construct();
     }
 
