@@ -4,6 +4,7 @@
     },
     "checkout": {
         "streetSplittingError": "Street and building number is invalid (valid format is: \"Street 11/2\"",
-        "postCodeInvalid": "Post code is not valid (valid format is: 12-345)"
+        "postCodeInvalid": "Post code is not valid (valid format is: 12-345)",
+        "nullWeightError": "One of product not have set weight"
     }
 }
