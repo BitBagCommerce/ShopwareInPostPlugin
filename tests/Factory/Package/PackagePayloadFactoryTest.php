@@ -14,6 +14,7 @@ use BitBag\ShopwareInPostPlugin\Resolver\OrderExtensionDataResolver;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderPaymentMethodTypeResolver;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderShippingAddressResolverInterface;
 use PHPUnit\Framework\TestCase;
+use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\Struct\ArrayEntity;
 use Shopware\Core\Framework\Uuid\Uuid;
 
@@ -53,6 +54,8 @@ final class PackagePayloadFactoryTest extends TestCase
         $orderExtension->setUniqueIdentifier($inPostOrderExtensionId);
 
         $order = $this->getOrder($orderShippingAddress, $orderExtension);
+
+        $context = $this->createMock(Context::class);
 
         $orderShippingAddressResolver = $this->createMock(OrderShippingAddressResolverInterface::class);
 
@@ -128,7 +131,7 @@ final class PackagePayloadFactoryTest extends TestCase
                     'currency' => Defaults::CURRENCY,
                 ],
             ],
-            $packagePayloadFactory->create($order)
+            $packagePayloadFactory->create($order, $context)
         );
     }
 }

@@ -12,6 +12,7 @@ use BitBag\ShopwareInPostPlugin\Resolver\OrderExtensionDataResolverInterface;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderPaymentMethodTypeResolverInterface;
 use Shopware\Core\Checkout\Order\OrderEntity;
 use Shopware\Core\Checkout\Payment\Cart\PaymentHandler\CashPayment;
+use Shopware\Core\Framework\Context;
 
 final class PackagePayloadFactory implements PackagePayloadFactoryInterface
 {
@@ -39,7 +40,7 @@ final class PackagePayloadFactory implements PackagePayloadFactoryInterface
         $this->orderExtensionDataResolver = $orderExtensionDataResolver;
     }
 
-    public function create(OrderEntity $order): array
+    public function create(OrderEntity $order, Context $context): array
     {
         $orderInPostExtensionData = $this->orderExtensionDataResolver->resolve($order);
 
@@ -50,7 +51,7 @@ final class PackagePayloadFactory implements PackagePayloadFactoryInterface
         $data = [
             'receiver' => $this->createReceiverPayloadFactory->create($order),
             'parcels' => [
-                $this->createParcelPayloadFactory->create($order),
+                $this->createParcelPayloadFactory->create($order, $context),
             ],
             'service' => WebClientInterface::INPOST_LOCKER_STANDARD_SERVICE,
             'custom_attributes' => [
