@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
+>
+    <services>
+        <service id="BitBag\ShopwareInPostPlugin\Plugin\CustomFieldSetConfigurator"
+        >
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\PackageDetailsCustomFieldSetFinder" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\CustomFieldsForPackageDetailsPayloadFactory" />
+            <argument type="service" id="custom_field_set.repository" />
+        </service>
+
+        <service id="BitBag\ShopwareInPostPlugin\Plugin\RuleConfigurator"
+        >
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\RuleFinder" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\CashOnDeliveryPaymentMethodFinder" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\RulePayloadFactory" />
+            <argument type="service" id="rule.repository" />
+        </service>
+
+        <service id="BitBag\ShopwareInPostPlugin\Plugin\ShippingMethodConfigurator"
+        >
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\ShippingMethodFinder" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\ShippingMethodPayloadFactory" />
+            <argument type="service" id="shipping_method.repository" />
+        </service>
+    </services>
+</container>

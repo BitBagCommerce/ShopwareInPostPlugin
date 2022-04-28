@@ -6,6 +6,7 @@ namespace BitBag\ShopwareInPostPlugin\Tests\Factory;
 
 use BitBag\ShopwareInPostPlugin\Factory\RulePayloadFactory;
 use PHPUnit\Framework\TestCase;
+use Shopware\Core\Framework\Uuid\Uuid;
 
 final class RulePayloadFactoryTest extends TestCase
 {
@@ -13,21 +14,23 @@ final class RulePayloadFactoryTest extends TestCase
     {
         $name = 'rule-factory';
 
+        $paymentMethodId = Uuid::randomHex();
+
         self::assertEquals(
             [
                 'name' => $name,
-                'priority' => 100,
+                'priority' => 0,
                 'conditions' => [
                     [
-                        'type' => 'cartCartAmount',
+                        'type' => 'paymentMethod',
                         'value' => [
-                            'amount' => 0,
-                            'operator' => '>=',
+                            'paymentMethodIds' => [$paymentMethodId],
+                            'operator' => '!=',
                         ],
                     ],
                 ],
             ],
-            (new RulePayloadFactory())->create($name)
+            (new RulePayloadFactory())->create($name, $paymentMethodId)
         );
     }
 }
