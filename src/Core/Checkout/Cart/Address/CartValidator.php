@@ -12,7 +12,6 @@ use Shopware\Core\Checkout\Cart\Cart;
 use Shopware\Core\Checkout\Cart\CartValidatorInterface;
 use Shopware\Core\Checkout\Cart\Delivery\Struct\Delivery;
 use Shopware\Core\Checkout\Cart\Error\ErrorCollection;
-use Shopware\Core\Checkout\Cart\LineItem\LineItem;
 use Shopware\Core\Checkout\Customer\Aggregate\CustomerAddress\CustomerAddressEntity;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 
@@ -46,11 +45,21 @@ final class CartValidator implements CartValidatorInterface
             return;
         }
 
-        $shippingMethodCustomFields = $context->getShippingMethod()->getCustomFields();
+        $technicalName = null;
 
-        if (!isset($shippingMethodCustomFields['technical_name']) ||
-            $shippingMethodCustomFields['technical_name'] !== ShippingMethodPayloadFactoryInterface::SHIPPING_KEY
-        ) {
+        $shippingMethod = $context->getShippingMethod();
+
+        $shippingMethodCustomFields = $shippingMethod->getCustomFields();
+
+        if (isset($shippingMethodCustomFields['technical_name'])) {
+            $technicalName = $shippingMethodCustomFields['technical_name'];
+        }
+
+        if (isset($shippingMethod->getTranslated()['customFields']['technical_name'])) {
+            $technicalName = $shippingMethod->getTranslated()['customFields']['technical_name'];
+        }
+
+        if ($technicalName !== ShippingMethodPayloadFactoryInterface::SHIPPING_KEY) {
             return;
         }
 
@@ -64,15 +73,12 @@ final class CartValidator implements CartValidatorInterface
             return;
         }
 
-        /** @var LineItem $lineItem */
         foreach ($cart->getLineItems()->getElements() as $lineItem) {
             $deliveryInformation = $lineItem->getDeliveryInformation();
-            if (null !== $deliveryInformation) {
-                if (0.0 === $deliveryInformation->getWeight()) {
-                    $errors->add(new NullWeightError($cart->getToken()));
+            if (null !== $deliveryInformation && 0.0 === $deliveryInformation->getWeight()) {
+                $errors->add(new NullWeightError($cart->getToken()));
 
-                    return;
-                }
+                return;
             }
         }
     }
