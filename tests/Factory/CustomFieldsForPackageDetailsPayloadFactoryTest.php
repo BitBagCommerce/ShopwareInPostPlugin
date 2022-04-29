@@ -30,6 +30,7 @@ class CustomFieldsForPackageDetailsPayloadFactoryTest extends TestCase
             'config' => [
                 'label' => [
                     'en-GB' => 'Package details',
+                    'pl-PL' => 'Szczegóły paczki',
                 ],
                 'technical_name' => $customFieldPrefix,
             ],
@@ -41,6 +42,7 @@ class CustomFieldsForPackageDetailsPayloadFactoryTest extends TestCase
                     'config' => [
                         'label' => [
                             'en-GB' => 'Insurance value (can be left empty)',
+                            'pl-PL' => 'Wartość ubezpieczenia (może zostać puste)',
                         ],
                     ],
                 ],
@@ -51,6 +53,7 @@ class CustomFieldsForPackageDetailsPayloadFactoryTest extends TestCase
                     'config' => [
                         'label' => [
                             'en-GB' => 'Height (cm)',
+                            'pl-PL' => 'Wysokość (cm)',
                         ],
                     ],
                 ],
@@ -61,6 +64,7 @@ class CustomFieldsForPackageDetailsPayloadFactoryTest extends TestCase
                     'config' => [
                         'label' => [
                             'en-GB' => 'Width (cm)',
+                            'pl-PL' => 'Szerokość (cm)',
                         ],
                     ],
                 ],
@@ -71,6 +75,7 @@ class CustomFieldsForPackageDetailsPayloadFactoryTest extends TestCase
                     'config' => [
                         'label' => [
                             'en-GB' => 'Depth (cm)',
+                            'pl-PL' => 'Głębokość (cm)',
                         ],
                     ],
                 ],

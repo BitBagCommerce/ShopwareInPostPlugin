@@ -17,6 +17,7 @@ final class CustomFieldsForPackageDetailsPayloadFactory implements CustomFieldsF
             'config' => [
                 'label' => [
                     'en-GB' => 'Package details',
+                    'pl-PL' => 'Szczegóły paczki',
                 ],
                 'technical_name' => $customFieldPrefix,
             ],
@@ -28,6 +29,7 @@ final class CustomFieldsForPackageDetailsPayloadFactory implements CustomFieldsF
                     'config' => [
                         'label' => [
                             'en-GB' => 'Insurance value (can be left empty)',
+                            'pl-PL' => 'Wartość ubezpieczenia (może zostać puste)',
                         ],
                     ],
                 ],
@@ -38,6 +40,7 @@ final class CustomFieldsForPackageDetailsPayloadFactory implements CustomFieldsF
                     'config' => [
                         'label' => [
                             'en-GB' => 'Height (cm)',
+                            'pl-PL' => 'Wysokość (cm)',
                         ],
                     ],
                 ],
@@ -48,6 +51,7 @@ final class CustomFieldsForPackageDetailsPayloadFactory implements CustomFieldsF
                     'config' => [
                         'label' => [
                             'en-GB' => 'Width (cm)',
+                            'pl-PL' => 'Szerokość (cm)',
                         ],
                     ],
                 ],
@@ -58,6 +62,7 @@ final class CustomFieldsForPackageDetailsPayloadFactory implements CustomFieldsF
                     'config' => [
                         'label' => [
                             'en-GB' => 'Depth (cm)',
+                            'pl-PL' => 'Głębokość (cm)',
                         ],
                     ],
                 ],
