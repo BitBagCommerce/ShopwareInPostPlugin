@@ -34,8 +34,14 @@ Component.register('sw-order-detail-inpost-detail-card', {
 
                     const getLabelButtonEl = this.$refs.getLabel;
 
+                    const createPackageButtonEl = this.$refs.createPackage;
+
                     if (getLabelButtonEl) {
                         getLabelButtonEl.classList.remove('hide');
+                    }
+
+                    if (createPackageButtonEl) {
+                        createPackageButtonEl.remove();
                     }
                 })
                 .catch((err) => {
@@ -207,7 +213,7 @@ Component.register('sw-order-detail-inpost-detail-card', {
                 const createPackageButtonEl = this.$refs.createPackage;
 
                 if (createPackageButtonEl) {
-                    createPackageButtonEl.classList.add('hide');
+                    createPackageButtonEl.remove();
                 }
             }
         }
