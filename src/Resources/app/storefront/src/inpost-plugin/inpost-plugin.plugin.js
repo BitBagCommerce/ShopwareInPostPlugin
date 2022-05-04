@@ -22,7 +22,7 @@ export default class InpostPlugin extends Plugin {
 
         if (confirmFormSubmitButtonEl) {
             confirmFormSubmitButtonEl.addEventListener('click', (e) => {
-                const pointNameNotSelectedMessageEl = document.getElementById('pointNameNotSelectedMessage');
+                const pointNameNotSelectedMessageEl = document.querySelector('.point-name-not-selected-message');
 
                 const inpostParcelLockerEl = document.getElementById('inpost-parcel-locker');
 
