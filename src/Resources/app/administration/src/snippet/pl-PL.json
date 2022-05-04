@@ -5,7 +5,7 @@
             "notFound": "Nie znaleziono informacji InPost dla zamówienia %s"
         },
         "nullPhoneNumber": "Numer telefonu dla zamówienia %s nie może być pusty",
-        "shippingMethodNotFound": "Metoda wysyłki dla zamówienia %s nie zostało znalezione",
+        "shippingMethodNotFound": "Metoda wysyłki dla zamówienia %s nie zostało znaleziona",
         "paymentMethodNotFound": "Metoda płatności dla zamówienia %s nie może być pusta",
         "shippingAddressNotFound": "Dane do wysyłki dla zamówienia %s nie mogą być puste",
         "customerEmailNotFound": "E-mail klienta dla zamówienia %s nie może być pusty",
@@ -13,7 +13,7 @@
     },
     "package": {
         "pointNameNotFound": "Paczkomat dla zamówienia %s nie został znaleziony",
-        "alreadyCreated": "Paczka InPost już została utworzona dla zamówienia %s",
+        "alreadyCreated": "Paczka InPost została już utworzona dla zamówienia %s",
         "fillRequiredCustomFields": "Uzupełnij wszystkie potrzebne informacje w \"Szczegóły paczki\" przed stworzeniem paczki",
         "nullWeight": "Waga paczki musi być większa niż 0.0 kg",
         "created": "Paczka została utworzona",
