@@ -45,21 +45,7 @@ final class CartValidator implements CartValidatorInterface
             return;
         }
 
-        $technicalName = null;
-
-        $shippingMethod = $context->getShippingMethod();
-
-        $shippingMethodCustomFields = $shippingMethod->getCustomFields();
-
-        if (isset($shippingMethodCustomFields['technical_name'])) {
-            $technicalName = $shippingMethodCustomFields['technical_name'];
-        }
-
-        if (isset($shippingMethod->getTranslated()['customFields']['technical_name'])) {
-            $technicalName = $shippingMethod->getTranslated()['customFields']['technical_name'];
-        }
-
-        if ($technicalName !== ShippingMethodPayloadFactoryInterface::SHIPPING_KEY) {
+        if ($this->getTechnicalName($context) !== ShippingMethodPayloadFactoryInterface::SHIPPING_KEY) {
             return;
         }
 
@@ -97,5 +83,24 @@ final class CartValidator implements CartValidatorInterface
                 $errors->add(new InvalidPostCodeError($addressId));
             }
         }
+    }
+
+    private function getTechnicalName(SalesChannelContext $context): ?string
+    {
+        $technicalName = null;
+
+        $shippingMethod = $context->getShippingMethod();
+
+        $shippingMethodCustomFields = $shippingMethod->getCustomFields();
+
+        if (isset($shippingMethodCustomFields['technical_name'])) {
+            $technicalName = $shippingMethodCustomFields['technical_name'];
+        }
+
+        if (isset($shippingMethod->getTranslated()['customFields']['technical_name'])) {
+            $technicalName = $shippingMethod->getTranslated()['customFields']['technical_name'];
+        }
+
+        return $technicalName;
     }
 }
