@@ -23,7 +23,7 @@
         "credentialsDataNotFound": "Uzupełnij dane do API przed utworzeniem paczki",
         "providedDataNotValid": "Podane dane do API nie są prawidłowe",
         "resourceNotFound": "Nie możesz utworzyć paczki dla tej organizacji",
-        "noCarriers": "Twoje konto InPost nie ma przypisanego żadnego przewodnika"
+        "noCarriers": "Twoje konto InPost nie ma przypisanego żadnego przewoźnika"
     },
     "rule": {
         "notFound": "Nie znaleziono reguły podczas tworzenia metody wysyłki"
