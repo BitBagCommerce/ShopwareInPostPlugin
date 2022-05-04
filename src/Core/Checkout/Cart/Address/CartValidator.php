@@ -88,9 +88,7 @@ final class CartValidator implements CartValidatorInterface
     private function getTechnicalName(SalesChannelContext $context): ?string
     {
         $technicalName = null;
-
         $shippingMethod = $context->getShippingMethod();
-
         $shippingMethodCustomFields = $shippingMethod->getCustomFields();
 
         if (isset($shippingMethodCustomFields['technical_name'])) {
