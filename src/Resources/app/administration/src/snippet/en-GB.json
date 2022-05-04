@@ -30,6 +30,7 @@
     },
     "cardDetails": {
         "getLabel": "Get label",
-        "createPackage": "Create package"
+        "createPackage": "Create package",
+        "pointName": "point-name"
     }
 }
