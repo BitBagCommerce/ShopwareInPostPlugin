@@ -11,21 +11,16 @@ Component.register('sw-order-detail-inpost-detail-card--get-label', {
     props: [
         'order'
     ],
-
     data() {
         return {
             hideButton: true
         }
     },
-
     created() {
-        const _this = this;
-
-        this.$root.$on('getLabel.hideButton', function(hideButton) {
-            _this.hideButton = hideButton;
+        this.$root.$on('getLabel.hideButton', (hideButton) => {
+            this.hideButton = hideButton;
         });
     },
-
     methods: {
         getLabel() {
             const orderId = this.order.id;

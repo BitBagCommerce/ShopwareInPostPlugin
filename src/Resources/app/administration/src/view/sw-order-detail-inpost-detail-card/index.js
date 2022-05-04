@@ -9,13 +9,11 @@ Component.register('sw-order-detail-inpost-detail-card', {
     props: [
         'order'
     ],
-
     data() {
         return {
             showCard: false
         }
     },
-
     created() {
         const _this = this;
 
@@ -28,11 +26,8 @@ Component.register('sw-order-detail-inpost-detail-card', {
                 }
             });
     },
-
     methods: {
         getInPostResponseData(order) {
-            const _this = this;
-
             if (!order) {
                 return;
             }
@@ -44,7 +39,7 @@ Component.register('sw-order-detail-inpost-detail-card', {
                     return this.CustomApiService.getInpostDataByPointName(pointName)
                         .then((inPostResponse) => {
                             if (inPostResponse.data && inPostResponse.data.error) {
-                                _this.showCard = true;
+                                this.showCard = true;
 
                                 return;
                             }

@@ -8,7 +8,6 @@ Component.register('sw-order-detail-inpost-detail-card--point-details', {
     props: [
         'order'
     ],
-
     created() {
         const order = this.order;
 
@@ -19,7 +18,6 @@ Component.register('sw-order-detail-inpost-detail-card--point-details', {
                 this.setInPostDetailsData(inPostResponse);
             });
     },
-
     methods: {
         setInPostDetailsData(inPostResponseData) {
             if (!inPostResponseData) {
@@ -67,7 +65,6 @@ Component.register('sw-order-detail-inpost-detail-card--point-details', {
                 provinceEl.textContent = addressDetails.province;
             }
         },
-
         getInPostResponseData(order) {
             if (!order) {
                 return;
@@ -94,7 +91,6 @@ Component.register('sw-order-detail-inpost-detail-card--point-details', {
                 }
             }
         },
-
         removeInPostDetailCardIfNotFoundInPost(order) {
             if (!order || !order.extensions.inPost || !order.extensions.inPost.pointName) {
                 const inpostDetailCardEl = this.$refs.inpostDetailsCard;

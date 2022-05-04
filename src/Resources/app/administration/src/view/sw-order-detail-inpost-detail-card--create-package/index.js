@@ -11,13 +11,11 @@ Component.register('sw-order-detail-inpost-detail-card--create-package', {
     props: [
         'order'
     ],
-
     data() {
         return {
             showButton: true
         }
     },
-
     methods: {
         createPackage() {
             const orderId = this.order.id;
