@@ -23,7 +23,7 @@ final class ParcelPayloadFactoryTest extends TestCase
 
     public const PACKAGE_WIDTH = 30;
 
-    public const PACKAGE_HEIGHT = 45.5;
+    public const PACKAGE_HEIGHT = 15.5;
 
     public function testCreate(): void
     {
@@ -51,8 +51,12 @@ final class ParcelPayloadFactoryTest extends TestCase
 
         $centimetersToMillimetersCalculator->expects(self::exactly(3))
                                            ->method('calculate')
-                                           ->withConsecutive([20], [30], [45.5])
-                                           ->willReturnOnConsecutiveCalls(200, 300, 455);
+                                           ->withConsecutive(
+                                               [self::PACKAGE_DEPTH],
+                                               [self::PACKAGE_WIDTH],
+                                               [self::PACKAGE_HEIGHT],
+                                           )
+                                           ->willReturnOnConsecutiveCalls(200, 300, 155);
 
         $parcelPayloadFactory = new ParcelPayloadFactory(
             $orderWeightCalculator,
@@ -65,7 +69,7 @@ final class ParcelPayloadFactoryTest extends TestCase
                 'dimensions' => [
                     'length' => 200,
                     'width' => 300,
-                    'height' => 455,
+                    'height' => 155,
                     'unit' => 'mm',
                 ],
                 'weight' => [
