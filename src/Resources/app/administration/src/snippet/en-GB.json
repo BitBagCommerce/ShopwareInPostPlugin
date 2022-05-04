@@ -19,9 +19,6 @@
         "created": "Package has been created",
         "packageIdNotFound": "Create a package before fetching the label"
     },
-    "shippingMethod": {
-        "notInpost": "InPost is needed to complete this operation"
-    },
     "api": {
         "credentialsDataNotFound": "Fill in API credentials before creating the package",
         "providedDataNotValid": "Provided data is not valid",
