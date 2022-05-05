@@ -1,28 +1,12 @@
-<div class="hide" ref="inpostDetailsCard">
+<div ref="inpostDetailsCard" v-show="showCard">
     <sw-card title="InPost details">
         <div class="container">
-            <div class="inpost-point-detail">
-                <div class="image" ref="pointImageDiv">
-                    <img src="" alt="paczkomat" ref="pointImage" />
-                </div>
-
-                <div class="information">
-                    <p class="text-bold" ref="pointName"></p>
-                    <p ref="street"></p>
-                    <p ref="postCode"></p>
-                    <p ref="city"></p>
-                    <p ref="province"></p>
-                </div>
-            </div>
+            <sw-order-detail-inpost-detail-card--point-details :order="order" />
 
             <div class="actions">
-                <button @click="this.getLabel" class="sw-button sw-button--primary" ref="getLabel">
-                    {{ $tc('cardDetails.getLabel') }}
-                </button>
+                <sw-order-detail-inpost-detail-card--get-label :order="order" />
 
-                <button @click="this.createPackage" class="sw-button sw-button--contrast" ref="createPackage">
-                    {{ $tc('cardDetails.createPackage') }}
-                </button>
+                <sw-order-detail-inpost-detail-card--create-package :order="order" />
             </div>
         </div>
     </sw-card>
