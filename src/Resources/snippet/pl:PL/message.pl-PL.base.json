@@ -1,6 +1,7 @@
 {
     "pointName": {
-        "notFound": "Paczkomat nie został wybrany"
+        "notFound": "Paczkomat nie został wybrany",
+        "changePoint": "Zmień paczkomat"
     },
     "checkout": {
         "streetSplittingError": "Podana ulica jest niepoprawna (wymagany format: \"Polna 11/2\")",

@@ -1,6 +1,7 @@
 {
     "pointName": {
-        "notFound": "You need to select point before create an order"
+        "notFound": "You need to select point before create an order",
+        "changePoint": "Change point"
     },
     "checkout": {
         "streetSplittingError": "Street and building number is invalid (valid format is: \"Street 11/2\")",
