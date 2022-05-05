@@ -19,7 +19,7 @@ Component.register('sw-order-detail-inpost-detail-card--create-package', {
     created() {
         const order = this.order;
 
-        if (order && order.extensions && order.extensions.inPost && order.extensions.inPost.packageId) {
+        if (order?.extensions?.inPost?.packageId) {
             this.showButton = false;
         }
     },

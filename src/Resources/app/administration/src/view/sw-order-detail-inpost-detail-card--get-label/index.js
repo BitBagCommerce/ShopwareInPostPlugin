@@ -23,7 +23,7 @@ Component.register('sw-order-detail-inpost-detail-card--get-label', {
 
         const order = this.order;
 
-        if (order && order.extensions && order.extensions.inPost && order.extensions.inPost.packageId) {
+        if (order?.extensions?.inPost?.packageId) {
             this.hideButton = false;
         }
     },
