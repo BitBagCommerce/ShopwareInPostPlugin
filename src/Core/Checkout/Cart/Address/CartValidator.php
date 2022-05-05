@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Core\Checkout\Cart\Address;
 
+use BitBag\ShopwareInPostPlugin\Core\Checkout\Cart\Custom\Error\InvalidPhoneNumberError;
 use BitBag\ShopwareInPostPlugin\Core\Checkout\Cart\Custom\Error\InvalidPostCodeError;
 use BitBag\ShopwareInPostPlugin\Core\Checkout\Cart\Custom\Error\NullWeightError;
 use BitBag\ShopwareInPostPlugin\Core\Checkout\Cart\Custom\Error\StreetSplittingError;
@@ -23,6 +24,10 @@ final class CartValidator implements CartValidatorInterface
     public const STREET_WITH_BUILDING_NUMBER_REGEX = "/^([^\d]*[^\d\s]) *(\d.*)$/";
 
     public const POST_CODE_REGEX = "/^(\d{2})(-\d{3})?$/i";
+
+    public const PHONE_NUMBER_REGEX = "/(?:(?:(?:\+|00)?48)|(?:\(\+?48\)))?(?:1[2-8]|2[2-69]|3[2-49]|4[1-8]|5[0-9]|6[0-35-9]|[7-8][1-9]|9[145])\d{7}$/";
+
+    public const PHONE_NUMBER_LENGTH = 9;
 
     public function validate(Cart $cart, ErrorCollection $errors, SalesChannelContext $context): void
     {
@@ -67,13 +72,33 @@ final class CartValidator implements CartValidatorInterface
         /** @var LineItem $lineItem */
         foreach ($cart->getLineItems()->getElements() as $lineItem) {
             $deliveryInformation = $lineItem->getDeliveryInformation();
-            if (null !== $deliveryInformation) {
-                if (0.0 === $deliveryInformation->getWeight()) {
-                    $errors->add(new NullWeightError($cart->getToken()));
+            if (null !== $deliveryInformation && 0.0 === $deliveryInformation->getWeight()) {
+                $errors->add(new NullWeightError($cart->getToken()));
 
-                    return;
-                }
+                return;
             }
+        }
+
+        $phoneNumber = $address->getPhoneNumber();
+
+        if (null === $phoneNumber) {
+            $errors->add(new InvalidPhoneNumberError($address->getId()));
+
+            return;
+        }
+
+        $phoneNumber = str_replace(['+48', '+', '-', ' '], '', $phoneNumber);
+
+        preg_match(self::PHONE_NUMBER_REGEX, $phoneNumber, $phoneNumberMatches);
+
+        if ([] === $phoneNumberMatches || self::PHONE_NUMBER_LENGTH !== strlen($phoneNumberMatches[0])) {
+            $errors->add(new InvalidPhoneNumberError($address->getId()));
+
+            return;
+        }
+
+        if ($phoneNumber !== $phoneNumberMatches[0]) {
+            $address->setPhoneNumber($phoneNumberMatches[0]);
         }
     }
 
