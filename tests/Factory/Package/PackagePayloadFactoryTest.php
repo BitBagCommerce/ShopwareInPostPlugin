@@ -126,10 +126,6 @@ final class PackagePayloadFactoryTest extends TestCase
                 'custom_attributes' => [
                     'target_point' => $inPostOrderExtensionData['pointName'],
                 ],
-                'cod' => [
-                    'amount' => $order->getAmountTotal(),
-                    'currency' => Defaults::CURRENCY,
-                ],
             ],
             $packagePayloadFactory->create($order, $context)
         );

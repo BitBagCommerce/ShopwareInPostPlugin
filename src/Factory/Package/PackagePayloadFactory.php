@@ -11,7 +11,6 @@ use BitBag\ShopwareInPostPlugin\Resolver\OrderCustomFieldsResolverInterface;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderExtensionDataResolverInterface;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderPaymentMethodTypeResolverInterface;
 use Shopware\Core\Checkout\Order\OrderEntity;
-use Shopware\Core\Checkout\Payment\Cart\PaymentHandler\CashPayment;
 use Shopware\Core\Framework\Context;
 
 final class PackagePayloadFactory implements PackagePayloadFactoryInterface
@@ -61,8 +60,6 @@ final class PackagePayloadFactory implements PackagePayloadFactoryInterface
 
         $data = $this->addInsurance($data, $order);
 
-        $data = $this->addCollectionAmount($data, $order);
-
         return $data;
     }
 
@@ -73,20 +70,6 @@ final class PackagePayloadFactory implements PackagePayloadFactoryInterface
         if (null !== $customFieldInsurance) {
             $data['insurance'] = [
                 'amount' => $customFieldInsurance,
-                'currency' => Defaults::CURRENCY,
-            ];
-        }
-
-        return $data;
-    }
-
-    private function addCollectionAmount(array $data, OrderEntity $order): array
-    {
-        $paymentMethodType = $this->orderPaymentMethodTypeResolver->resolve($order);
-
-        if ($paymentMethodType === CashPayment::class) {
-            $data['cod'] = [
-                'amount' => $order->getAmountTotal(),
                 'currency' => Defaults::CURRENCY,
             ];
         }
