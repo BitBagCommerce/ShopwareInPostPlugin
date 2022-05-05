@@ -35,7 +35,7 @@ final class PackageApiService implements PackageApiServiceInterface
             $errorDetails = $error['details'];
 
             if ([] !== $errorDetails) {
-                if (isset($detailsError['custom_attributes'][0]['target_point']) &&
+                if (isset($errorDetails['custom_attributes'][0]['target_point']) &&
                     'does_not_exist' === $errorDetails['custom_attributes'][0]['target_point'][0]
                 ) {
                     throw new PackageNotFoundException('package.pointNameNotFound');
