@@ -25,16 +25,16 @@ final class ParcelPayloadFactory implements ParcelPayloadFactoryInterface
 
     private OrderCustomFieldsResolverInterface $customFieldsResolver;
 
-    private CentimetersToMillimetersCalculatorInterface $centimetersToMillimetersCalculator;
+    private CentimetersToMillimetersCalculatorInterface $unitConverter;
 
     public function __construct(
         OrderWeightCalculatorInterface $orderWeightCalculator,
         OrderCustomFieldsResolverInterface $customFieldsResolver,
-        CentimetersToMillimetersCalculatorInterface $centimetersToMillimetersCalculator
+        CentimetersToMillimetersCalculatorInterface $unitConverter
     ) {
         $this->orderWeightCalculator = $orderWeightCalculator;
         $this->customFieldsResolver = $customFieldsResolver;
-        $this->centimetersToMillimetersCalculator = $centimetersToMillimetersCalculator;
+        $this->unitConverter = $unitConverter;
     }
 
     public function create(OrderEntity $order, Context $context): array
@@ -51,9 +51,9 @@ final class ParcelPayloadFactory implements ParcelPayloadFactoryInterface
             throw new PackageException('package.tooHeavy');
         }
 
-        $depth = $this->centimetersToMillimetersCalculator->calculate($orderCustomFields['depth']);
-        $width = $this->centimetersToMillimetersCalculator->calculate($orderCustomFields['width']);
-        $height = $this->centimetersToMillimetersCalculator->calculate($orderCustomFields['height']);
+        $depth = $this->unitConverter->calculate($orderCustomFields['depth']);
+        $width = $this->unitConverter->calculate($orderCustomFields['width']);
+        $height = $this->unitConverter->calculate($orderCustomFields['height']);
 
         if (self::MAX_DEPTH_AVAILABLE < $depth ||
             self::MAX_WIDTH_AVAILABLE < $width ||
