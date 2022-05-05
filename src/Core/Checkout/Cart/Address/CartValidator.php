@@ -11,10 +11,7 @@ use BitBag\ShopwareInPostPlugin\Core\Checkout\Cart\Custom\Error\StreetSplittingE
 use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodPayloadFactoryInterface;
 use Shopware\Core\Checkout\Cart\Cart;
 use Shopware\Core\Checkout\Cart\CartValidatorInterface;
-use Shopware\Core\Checkout\Cart\Delivery\Struct\Delivery;
 use Shopware\Core\Checkout\Cart\Error\ErrorCollection;
-use Shopware\Core\Checkout\Cart\LineItem\LineItem;
-use Shopware\Core\Checkout\Customer\Aggregate\CustomerAddress\CustomerAddressEntity;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 
 final class CartValidator implements CartValidatorInterface
@@ -31,14 +28,14 @@ final class CartValidator implements CartValidatorInterface
 
     public function validate(Cart $cart, ErrorCollection $errors, SalesChannelContext $context): void
     {
-        /** @var Delivery|null $delivery */
         $delivery = $cart->getDeliveries()->first();
+
         if (null === $delivery) {
             return;
         }
 
-        /** @var CustomerAddressEntity|null $address */
         $address = $delivery->getLocation()->getAddress();
+
         if (null === $address) {
             return;
         }
@@ -51,11 +48,7 @@ final class CartValidator implements CartValidatorInterface
             return;
         }
 
-        $shippingMethodCustomFields = $context->getShippingMethod()->getCustomFields();
-
-        if (!isset($shippingMethodCustomFields['technical_name']) ||
-            $shippingMethodCustomFields['technical_name'] !== ShippingMethodPayloadFactoryInterface::SHIPPING_KEY
-        ) {
+        if ($this->getTechnicalName($context) !== ShippingMethodPayloadFactoryInterface::SHIPPING_KEY) {
             return;
         }
 
@@ -69,9 +62,9 @@ final class CartValidator implements CartValidatorInterface
             return;
         }
 
-        /** @var LineItem $lineItem */
         foreach ($cart->getLineItems()->getElements() as $lineItem) {
             $deliveryInformation = $lineItem->getDeliveryInformation();
+
             if (null !== $deliveryInformation && 0.0 === $deliveryInformation->getWeight()) {
                 $errors->add(new NullWeightError($cart->getToken()));
 
@@ -116,5 +109,22 @@ final class CartValidator implements CartValidatorInterface
                 $errors->add(new InvalidPostCodeError($addressId));
             }
         }
+    }
+
+    private function getTechnicalName(SalesChannelContext $context): ?string
+    {
+        $technicalName = null;
+        $shippingMethod = $context->getShippingMethod();
+        $shippingMethodCustomFields = $shippingMethod->getCustomFields();
+
+        if (isset($shippingMethodCustomFields['technical_name'])) {
+            $technicalName = $shippingMethodCustomFields['technical_name'];
+        }
+
+        if (isset($shippingMethod->getTranslated()['customFields']['technical_name'])) {
+            $technicalName = $shippingMethod->getTranslated()['customFields']['technical_name'];
+        }
+
+        return $technicalName;
     }
 }
