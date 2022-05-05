@@ -13,6 +13,7 @@ final class InvalidPostCodeError extends Error
     public function __construct(string $addressId)
     {
         $this->addressId = $addressId;
+
         parent::__construct();
     }
 
