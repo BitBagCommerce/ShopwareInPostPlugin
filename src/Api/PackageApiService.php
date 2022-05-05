@@ -31,11 +31,12 @@ final class PackageApiService implements PackageApiServiceInterface
         try {
             $package = $this->webClient->createShipment($inPostPackageData);
         } catch (ClientException $e) {
-            $detailsError = json_decode($e->getMessage(), true)['details'];
+            $error = json_decode($e->getMessage(), true);
+            $errorDetails = $error['details'];
 
-            if ([] !== $detailsError) {
+            if ([] !== $errorDetails) {
                 if (isset($detailsError['custom_attributes'][0]['target_point']) &&
-                    'does_not_exist' === $detailsError['custom_attributes'][0]['target_point'][0]
+                    'does_not_exist' === $errorDetails['custom_attributes'][0]['target_point'][0]
                 ) {
                     throw new PackageNotFoundException('package.pointNameNotFound');
                 }
