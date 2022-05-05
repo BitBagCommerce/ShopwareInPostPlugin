@@ -20,6 +20,12 @@ Component.register('sw-order-detail-inpost-detail-card--get-label', {
         this.$root.$on('getLabel.hideButton', (hideButton) => {
             this.hideButton = hideButton;
         });
+
+        const order = this.order;
+
+        if (order && order.extensions && order.extensions.inPost && order.extensions.inPost.packageId) {
+            this.hideButton = false;
+        }
     },
     methods: {
         getLabel() {

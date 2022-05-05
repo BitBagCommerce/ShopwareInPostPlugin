@@ -16,6 +16,13 @@ Component.register('sw-order-detail-inpost-detail-card--create-package', {
             showButton: true
         }
     },
+    created() {
+        const order = this.order;
+
+        if (order && order.extensions && order.extensions.inPost && order.extensions.inPost.packageId) {
+            this.showButton = false;
+        }
+    },
     methods: {
         createPackage() {
             const orderId = this.order.id;
