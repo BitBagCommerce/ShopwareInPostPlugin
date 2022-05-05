@@ -17,7 +17,9 @@
         "fillRequiredCustomFields": "Uzupełnij wszystkie potrzebne informacje w \"Szczegóły paczki\" przed stworzeniem paczki",
         "nullWeight": "Waga paczki musi być większa niż 0.0 kg",
         "created": "Paczka została utworzona",
-        "packageIdNotFound": "Utwórz paczkę przed pobraniem etykiety"
+        "packageIdNotFound": "Utwórz paczkę przed pobraniem etykiety",
+        "tooHeavy": "Paczka jest za ciężka (maksymalna waga 25 kg)",
+        "tooLarge": "Paczka jest za duża (maksymalny wymiar 41cm x 38cm x 64cm)"
     },
     "api": {
         "credentialsDataNotFound": "Uzupełnij dane do API przed utworzeniem paczki",
@@ -30,6 +32,7 @@
     },
     "cardDetails": {
         "getLabel": "Pobierz etykietę",
-        "createPackage": "Utwórz paczkę"
+        "createPackage": "Utwórz paczkę",
+        "pointName": "paczkomat"
     }
 }
