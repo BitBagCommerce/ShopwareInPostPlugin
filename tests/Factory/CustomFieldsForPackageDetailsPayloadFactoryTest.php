@@ -32,6 +32,7 @@ class CustomFieldsForPackageDetailsPayloadFactoryTest extends TestCase
                     'en-GB' => 'Package details',
                     'pl-PL' => 'Szczegóły paczki',
                 ],
+                'translated' => true,
                 'technical_name' => $customFieldPrefix,
             ],
             'customFields' => [
