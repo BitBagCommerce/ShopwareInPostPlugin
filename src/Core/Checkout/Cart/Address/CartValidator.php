@@ -10,9 +10,7 @@ use BitBag\ShopwareInPostPlugin\Core\Checkout\Cart\Custom\Error\StreetSplittingE
 use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodPayloadFactoryInterface;
 use Shopware\Core\Checkout\Cart\Cart;
 use Shopware\Core\Checkout\Cart\CartValidatorInterface;
-use Shopware\Core\Checkout\Cart\Delivery\Struct\Delivery;
 use Shopware\Core\Checkout\Cart\Error\ErrorCollection;
-use Shopware\Core\Checkout\Customer\Aggregate\CustomerAddress\CustomerAddressEntity;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 
 final class CartValidator implements CartValidatorInterface
@@ -25,14 +23,14 @@ final class CartValidator implements CartValidatorInterface
 
     public function validate(Cart $cart, ErrorCollection $errors, SalesChannelContext $context): void
     {
-        /** @var Delivery|null $delivery */
         $delivery = $cart->getDeliveries()->first();
+
         if (null === $delivery) {
             return;
         }
 
-        /** @var CustomerAddressEntity|null $address */
         $address = $delivery->getLocation()->getAddress();
+
         if (null === $address) {
             return;
         }
@@ -61,6 +59,7 @@ final class CartValidator implements CartValidatorInterface
 
         foreach ($cart->getLineItems()->getElements() as $lineItem) {
             $deliveryInformation = $lineItem->getDeliveryInformation();
+
             if (null !== $deliveryInformation && 0.0 === $deliveryInformation->getWeight()) {
                 $errors->add(new NullWeightError($cart->getToken()));
 
