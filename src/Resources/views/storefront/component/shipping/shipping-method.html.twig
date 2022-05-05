@@ -3,9 +3,17 @@
 {% block component_shipping_method_label %}
     {{ parent() }}
 
-    {% if (shipping.id is same as(context.shippingMethod.id)) and
-        shipping.customFields.technical_name == constant('BitBag\\ShopwareInPostPlugin\\Factory\\ShippingMethodPayloadFactoryInterface::SHIPPING_KEY')
-    %}
+    {% set technicalName = null %}
+
+    {% if context.shippingMethod.customFields.technical_name is not empty %}
+        {% set technicalName = context.shippingMethod.customFields.technical_name %}
+    {% endif %}
+
+    {% if context.shippingMethod.translated.customFields.technical_name is not empty %}
+        {% set technicalName = context.shippingMethod.translated.customFields.technical_name %}
+    {% endif %}
+
+    {% if (shipping.id is same as(context.shippingMethod.id)) and technicalName == constant('BitBag\\ShopwareInPostPlugin\\Factory\\ShippingMethodPayloadFactoryInterface::SHIPPING_KEY') %}
         <div class="inpostPoint hide" data-inpost-plugin-selectedPoint>
             <div class="inpostDetails">
                 <img class="image" data-inpost-plugin-thumbnail/>

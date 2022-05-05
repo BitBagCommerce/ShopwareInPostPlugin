@@ -6,7 +6,7 @@ namespace BitBag\ShopwareInPostPlugin\Core\Checkout\Cart\Custom\Error;
 
 use Shopware\Core\Checkout\Cart\Error\Error;
 
-final class InvalidPostCodeError extends Error
+final class InvalidPhoneNumberError extends Error
 {
     private string $addressId;
 
@@ -24,7 +24,7 @@ final class InvalidPostCodeError extends Error
 
     public function getMessageKey(): string
     {
-        return 'postCodeInvalid';
+        return 'invalidPhoneNumberError';
     }
 
     public function getLevel(): int

@@ -21,9 +21,6 @@
         "tooHeavy": "Package is too heavy (maximum 25 kg)",
         "tooLarge": "Package is too large (maximum 41cm x 38cm x 64cm)"
     },
-    "shippingMethod": {
-        "notInpost": "InPost is needed to complete this operation"
-    },
     "api": {
         "credentialsDataNotFound": "Fill in API credentials before creating the package",
         "providedDataNotValid": "Provided data is not valid",
@@ -35,6 +32,7 @@
     },
     "cardDetails": {
         "getLabel": "Get label",
-        "createPackage": "Create package"
+        "createPackage": "Create package",
+        "pointName": "point-name"
     }
 }
