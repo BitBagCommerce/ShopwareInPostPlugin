@@ -17,7 +17,9 @@
         "fillRequiredCustomFields": "Fill in all required package details before creating the package",
         "nullWeight": "Package weight must be greater than 0.0 kg",
         "created": "Package has been created",
-        "packageIdNotFound": "Create a package before fetching the label"
+        "packageIdNotFound": "Create a package before fetching the label",
+        "tooHeavy": "Package is too heavy (maximum 25 kg)",
+        "tooLarge": "Package is too large (maximum 41cm x 38cm x 64cm)"
     },
     "api": {
         "credentialsDataNotFound": "Fill in API credentials before creating the package",
