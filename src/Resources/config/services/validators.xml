@@ -4,7 +4,8 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="BitBag\ShopwareInPostPlugin\Core\Checkout\Cart\Address\CartValidator">
+        <service id="BitBag\ShopwareInPostPlugin\Core\Checkout\Cart\Validator\CartValidator"
+        >
             <tag name="shopware.cart.validator"/>
         </service>
     </services>

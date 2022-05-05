@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BitBag\ShopwareInPostPlugin\Core\Checkout\Cart\Address;
+namespace BitBag\ShopwareInPostPlugin\Core\Checkout\Cart\Validator;
 
 use BitBag\ShopwareInPostPlugin\Core\Checkout\Cart\Custom\Error\InvalidPhoneNumberError;
 use BitBag\ShopwareInPostPlugin\Core\Checkout\Cart\Custom\Error\InvalidPostCodeError;
@@ -28,6 +28,10 @@ final class CartValidator implements CartValidatorInterface
 
     public function validate(Cart $cart, ErrorCollection $errors, SalesChannelContext $context): void
     {
+        if ($this->getTechnicalName($context) !== ShippingMethodPayloadFactoryInterface::SHIPPING_KEY) {
+            return;
+        }
+
         $delivery = $cart->getDeliveries()->first();
 
         if (null === $delivery) {
@@ -37,18 +41,6 @@ final class CartValidator implements CartValidatorInterface
         $address = $delivery->getLocation()->getAddress();
 
         if (null === $address) {
-            return;
-        }
-
-        preg_match(self::STREET_FIRST_REGEX, $address->getStreet(), $streetMatches);
-
-        if (empty($streetMatches)) {
-            $errors->add(new StreetSplittingError($address->getId()));
-
-            return;
-        }
-
-        if ($this->getTechnicalName($context) !== ShippingMethodPayloadFactoryInterface::SHIPPING_KEY) {
             return;
         }
 

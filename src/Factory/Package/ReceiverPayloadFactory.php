@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Factory\Package;
 
-use BitBag\ShopwareInPostPlugin\Core\Checkout\Cart\Address\CartValidator;
+use BitBag\ShopwareInPostPlugin\Core\Checkout\Cart\Validator\CartValidator;
 use BitBag\ShopwareInPostPlugin\Exception\Order\OrderException;
 use BitBag\ShopwareInPostPlugin\Provider\Defaults;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderShippingAddressResolverInterface;
