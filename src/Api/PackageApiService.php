@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace BitBag\ShopwareInPostPlugin\Api;
 
 use BitBag\ShopwareInPostPlugin\Exception\InpostApiException;
+use BitBag\ShopwareInPostPlugin\Exception\PackageNotFoundException;
 use BitBag\ShopwareInPostPlugin\Factory\Package\PackagePayloadFactoryInterface;
+use GuzzleHttp\Exception\ClientException;
 use Shopware\Core\Checkout\Order\OrderEntity;
 use Shopware\Core\Framework\Context;
 
@@ -26,7 +28,21 @@ final class PackageApiService implements PackageApiServiceInterface
     {
         $inPostPackageData = $this->packagePayloadFactory->create($order, $context);
 
-        $package = $this->webClient->createShipment($inPostPackageData);
+        try {
+            $package = $this->webClient->createShipment($inPostPackageData);
+        } catch (ClientException $e) {
+            $detailsError = json_decode($e->getMessage(), true)['details'];
+
+            if ([] !== $detailsError) {
+                if (isset($detailsError['custom_attributes'][0]['target_point']) &&
+                    'does_not_exist' === $detailsError['custom_attributes'][0]['target_point'][0]
+                ) {
+                    throw new PackageNotFoundException('package.pointNameNotFound');
+                }
+            }
+
+            throw $e;
+        }
 
         if (!isset($package['error'])) {
             return $package;
