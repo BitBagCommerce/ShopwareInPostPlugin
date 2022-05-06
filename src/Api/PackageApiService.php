@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BitBag\ShopwareInPostPlugin\Api;
 
 use BitBag\ShopwareInPostPlugin\Exception\InpostApiException;
+use BitBag\ShopwareInPostPlugin\Exception\PackageException;
 use BitBag\ShopwareInPostPlugin\Exception\PackageNotFoundException;
 use BitBag\ShopwareInPostPlugin\Factory\Package\PackagePayloadFactoryInterface;
 use GuzzleHttp\Exception\ClientException;
@@ -39,6 +40,12 @@ final class PackageApiService implements PackageApiServiceInterface
                     'does_not_exist' === $errorDetails['custom_attributes'][0]['target_point'][0]
                 ) {
                     throw new PackageNotFoundException('package.pointNameNotFound');
+                }
+
+                if (isset($errorDetails['receiver'][0]['email']) &&
+                    'invalid' === $errorDetails['receiver'][0]['email'][0]
+                ) {
+                    throw new PackageException('package.emailInvalid');
                 }
             }
 
