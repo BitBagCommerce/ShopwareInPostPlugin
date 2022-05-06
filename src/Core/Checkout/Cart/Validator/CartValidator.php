@@ -22,7 +22,7 @@ final class CartValidator implements CartValidatorInterface
 
     public const POST_CODE_REGEX = "/^(\d{2})(-\d{3})?$/i";
 
-    public const PHONE_NUMBER_REGEX = "/(?:(?:(?:\+|00)?48)|(?:\(\+?48\)))?(?:1[2-8]|2[2-69]|3[2-49]|4[1-8]|5[0-9]|6[0-35-9]|[7-8][1-9]|9[145])\d{7}$/";
+    public const PHONE_NUMBER_REGEX = "/(?:(?:\+|00)[0-9]{1,3})?(\d{9,12})/";
 
     public const PHONE_NUMBER_LENGTH = 9;
 
