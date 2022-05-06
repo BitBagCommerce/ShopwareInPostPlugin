@@ -47,6 +47,12 @@ final class PackageApiService implements PackageApiServiceInterface
                 ) {
                     throw new PackageException('package.emailInvalid');
                 }
+
+                if (isset($errorDetails['receiver'][0]['phone'][0]) &&
+                    'invalid' === $errorDetails['receiver'][0]['phone'][0]
+                ) {
+                    throw new PackageException('package.phoneNumberInvalid');
+                }
             }
 
             throw $e;
