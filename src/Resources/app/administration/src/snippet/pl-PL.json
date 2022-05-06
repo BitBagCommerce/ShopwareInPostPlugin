@@ -21,6 +21,7 @@
         "tooHeavy": "Paczka jest za ciężka (maksymalna waga 25 kg)",
         "tooLarge": "Paczka jest za duża (maksymalny wymiar 41cm x 38cm x 64cm)",
         "emailInvalid": "Podany przez klienta e-mail jest niepoprawny"
+        "offerSelected": "Opłać paczkę przed pobraniem etykiety"
     },
     "api": {
         "credentialsDataNotFound": "Uzupełnij dane do API przed utworzeniem paczki",

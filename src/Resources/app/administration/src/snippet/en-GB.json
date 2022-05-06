@@ -21,6 +21,7 @@
         "tooHeavy": "Package is too heavy (maximum 25 kg)",
         "tooLarge": "Package is too large (maximum 41cm x 38cm x 64cm)",
         "emailInvalid": "Client e-mail is invalid"
+        "offerSelected": "You need to pay for the package before fetching the label"
     },
     "api": {
         "credentialsDataNotFound": "Fill in API credentials before creating the package",

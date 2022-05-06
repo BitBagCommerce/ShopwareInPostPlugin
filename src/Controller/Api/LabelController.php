@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace BitBag\ShopwareInPostPlugin\Controller\Api;
 
 use BitBag\ShopwareInPostPlugin\Api\WebClientInterface;
+use BitBag\ShopwareInPostPlugin\Exception\PackageException;
 use BitBag\ShopwareInPostPlugin\Exception\PackageNotFoundException;
 use BitBag\ShopwareInPostPlugin\Finder\OrderFinderInterface;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderExtensionDataResolverInterface;
+use GuzzleHttp\Exception\ClientException;
 use OpenApi\Annotations as OA;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\Routing\Annotation\RouteScope;
@@ -82,7 +84,22 @@ final class LabelController
 
         $packageId = $orderInPostExtensionData['packageId'];
 
-        $label = $this->webClient->getLabelByShipmentId($packageId);
+        try {
+            $label = $this->webClient->getLabelByShipmentId($packageId);
+        } catch (ClientException $e) {
+            $error = json_decode($e->getMessage(), true);
+            $errorDetails = $error['details'];
+
+            if ([] !== $errorDetails) {
+                if (isset($errorDetails['action'], $errorDetails['shipment_status']) &&
+                    'get_label' === $errorDetails['action'] && 'offer_selected' === $errorDetails['shipment_status']
+                ) {
+                    throw new PackageException('package.offerSelected');
+                }
+            }
+
+            throw $e;
+        }
 
         $filename = sprintf('filename="label_%s.pdf"', $packageId);
 
