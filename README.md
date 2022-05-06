@@ -1,3 +1,5 @@
+# ![Logo](doc/images/bitbag-shopware-inpost-plugin.png)
+
 # InPost Plugin for Shopware
 
 ---
