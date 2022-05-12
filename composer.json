@@ -20,10 +20,12 @@
     "extra": {
         "shopware-plugin-class": "BitBag\\ShopwareInPostPlugin\\BitBagShopwareInPostPlugin",
         "label": {
-            "en-GB": "BitBag InPost"
+            "en-GB": "BitBag InPost",
+            "de-DE": "BitBag InPost"
         },
         "description": {
-            "en-GB": "This plugin allow to checkout order with InPost shipping method"
+            "en-GB": "This plugin allow to checkout order with InPost shipping method",
+            "de-DE": "This plugin allow to checkout order with InPost shipping method"
         }
     },
     "autoload": {
