@@ -6,8 +6,6 @@
     <services>
         <service id="BitBag\ShopwareInPostPlugin\Resolver\OrderCustomFieldsResolver" />
 
-        <service id="BitBag\ShopwareInPostPlugin\Resolver\OrderPaymentMethodTypeResolver" />
-
         <service id="BitBag\ShopwareInPostPlugin\Resolver\OrderShippingAddressResolver"
         >
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Resolver\OrderDeliveryResolver" />

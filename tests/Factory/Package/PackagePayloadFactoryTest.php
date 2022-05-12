@@ -11,7 +11,6 @@ use BitBag\ShopwareInPostPlugin\Factory\Package\ReceiverPayloadFactory;
 use BitBag\ShopwareInPostPlugin\Provider\Defaults;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderCustomFieldsResolver;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderExtensionDataResolver;
-use BitBag\ShopwareInPostPlugin\Resolver\OrderPaymentMethodTypeResolver;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderShippingAddressResolverInterface;
 use PHPUnit\Framework\TestCase;
 use Shopware\Core\Framework\Context;
@@ -88,7 +87,6 @@ final class PackagePayloadFactoryTest extends TestCase
             $createReceiverPayloadFactory,
             $parcelPayloadFactory,
             new OrderCustomFieldsResolver(),
-            new OrderPaymentMethodTypeResolver(),
             new OrderExtensionDataResolver()
         );
 
