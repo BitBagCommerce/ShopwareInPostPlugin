@@ -15,7 +15,6 @@ use BitBag\ShopwareInPostPlugin\Exception\PackageNotFoundException;
 use BitBag\ShopwareInPostPlugin\Provider\Defaults;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderCustomFieldsResolverInterface;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderExtensionDataResolverInterface;
-use BitBag\ShopwareInPostPlugin\Resolver\OrderPaymentMethodTypeResolverInterface;
 use Shopware\Core\Checkout\Order\OrderEntity;
 use Shopware\Core\Framework\Context;
 
@@ -27,21 +26,17 @@ final class PackagePayloadFactory implements PackagePayloadFactoryInterface
 
     private OrderCustomFieldsResolverInterface $orderCustomFieldsResolver;
 
-    private OrderPaymentMethodTypeResolverInterface $orderPaymentMethodTypeResolver;
-
     private OrderExtensionDataResolverInterface $orderExtensionDataResolver;
 
     public function __construct(
         ReceiverPayloadFactoryInterface $createReceiverPayloadFactory,
         ParcelPayloadFactoryInterface $parcelPayloadFactory,
         OrderCustomFieldsResolverInterface $orderCustomFieldsResolver,
-        OrderPaymentMethodTypeResolverInterface $orderPaymentMethodTypeResolver,
         OrderExtensionDataResolverInterface $orderExtensionDataResolver
     ) {
         $this->createReceiverPayloadFactory = $createReceiverPayloadFactory;
         $this->createParcelPayloadFactory = $parcelPayloadFactory;
         $this->orderCustomFieldsResolver = $orderCustomFieldsResolver;
-        $this->orderPaymentMethodTypeResolver = $orderPaymentMethodTypeResolver;
         $this->orderExtensionDataResolver = $orderExtensionDataResolver;
     }
 
