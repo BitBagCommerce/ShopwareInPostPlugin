@@ -20,7 +20,7 @@
         <env name="SHELL_VERBOSITY" value="-1"/>
     </php>
     <testsuites>
-        <testsuite name="BitBagShopwareInPostPlugin">
+        <testsuite name="bitb1BitBagShopwareInPostPlugin">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
