@@ -3,7 +3,7 @@
     "description": "InPost integration for Shopware",
     "version": "1.0.0",
     "type": "shopware-platform-plugin",
-    "license": "MIT",
+    "license": "open-source",
     "authors": [
         {
             "name": "BitBag"
