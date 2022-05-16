@@ -8,8 +8,8 @@
     </imports>
 
     <services>
-        <service class="BitBag\ShopwareInPostPlugin\BitBagShopwareInPostPlugin"
-                 id="BitBag\ShopwareInPostPlugin\BitBagShopwareInPostPlugin"
+        <service class="BitBag\ShopwareInPostPlugin\bitb1BitBagShopwareInPostPlugin"
+                 id="BitBag\ShopwareInPostPlugin\bitb1BitBagShopwareInPostPlugin"
         >
             <call method="setCustomFieldSetConfigurator">
                 <argument type="service" id="BitBag\ShopwareInPostPlugin\Plugin\CustomFieldSetConfigurator" />
