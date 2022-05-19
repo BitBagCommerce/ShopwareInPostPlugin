@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Api;
 
-use BitBag\ShopwareInPostPlugin\Exception\InpostApiException;
+use BitBag\ShopwareInPostPlugin\Exception\InPostApiException;
 use BitBag\ShopwareInPostPlugin\Exception\PackageException;
 use BitBag\ShopwareInPostPlugin\Exception\PackageNotFoundException;
 use BitBag\ShopwareInPostPlugin\Factory\Package\PackagePayloadFactoryInterface;
@@ -22,12 +22,14 @@ final class PackageApiService implements PackageApiServiceInterface
 {
     private PackagePayloadFactoryInterface $packagePayloadFactory;
 
-    private WebClientInterface $webClient;
+    private SalesChannelAwareWebClientInterface $salesChannelAwareWebClient;
 
-    public function __construct(PackagePayloadFactoryInterface $packagePayloadFactory, WebClientInterface $webClient)
-    {
+    public function __construct(
+        PackagePayloadFactoryInterface $packagePayloadFactory,
+        SalesChannelAwareWebClientInterface $salesChannelAwareWebClient
+    ) {
         $this->packagePayloadFactory = $packagePayloadFactory;
-        $this->webClient = $webClient;
+        $this->salesChannelAwareWebClient = $salesChannelAwareWebClient;
     }
 
     /** @psalm-return array<array-key, mixed> */
@@ -36,7 +38,7 @@ final class PackageApiService implements PackageApiServiceInterface
         $inPostPackageData = $this->packagePayloadFactory->create($order, $context);
 
         try {
-            $package = $this->webClient->createShipment($inPostPackageData);
+            $package = $this->salesChannelAwareWebClient->createShipment($inPostPackageData, $order->getSalesChannelId());
         } catch (ClientException $e) {
             $error = json_decode($e->getMessage(), true);
             $errorDetails = $error['details'];
@@ -70,11 +72,11 @@ final class PackageApiService implements PackageApiServiceInterface
 
         switch ($package['error']) {
             case 'validation_failed':
-                throw new InpostApiException('api.providedDataNotValid');
+                throw new InPostApiException('api.providedDataNotValid');
             case 'resource_not_found':
-                throw new InpostApiException('api.resourceNotFound');
+                throw new InPostApiException('api.resourceNotFound');
             case 'no_carriers':
-                throw new InpostApiException('api.noCarriers');
+                throw new InPostApiException('api.noCarriers');
             default:
                 return $package;
         }

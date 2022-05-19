@@ -38,6 +38,7 @@ final class OrderFinder implements OrderFinderInterface
             'transactions',
             'transactions.paymentMethod',
             OrderInPostExtensionInterface::PROPERTY_KEY,
+            'salesChannel',
         ]);
 
         $order = $this->orderRepository->search($orderCriteria, $context)->first();

@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Model;
 
-final class InpostApiConfig
+final class InPostApiConfig
 {
     private string $organizationId;
 

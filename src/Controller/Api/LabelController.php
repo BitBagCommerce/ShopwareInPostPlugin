@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Controller\Api;
 
-use BitBag\ShopwareInPostPlugin\Api\WebClientInterface;
+use BitBag\ShopwareInPostPlugin\Api\SalesChannelAwareWebClientInterface;
 use BitBag\ShopwareInPostPlugin\Exception\PackageException;
 use BitBag\ShopwareInPostPlugin\Exception\PackageNotFoundException;
 use BitBag\ShopwareInPostPlugin\Finder\OrderFinderInterface;
@@ -29,18 +29,18 @@ final class LabelController
 {
     private OrderFinderInterface $orderFinder;
 
-    private WebClientInterface $webClient;
-
     private OrderExtensionDataResolverInterface $orderExtensionDataResolver;
+
+    private SalesChannelAwareWebClientInterface $salesChannelAwareWebClient;
 
     public function __construct(
         OrderFinderInterface $orderFinder,
-        WebClientInterface $webClient,
-        OrderExtensionDataResolverInterface $orderExtensionDataResolver
+        OrderExtensionDataResolverInterface $orderExtensionDataResolver,
+        SalesChannelAwareWebClientInterface $salesChannelAwareWebClient
     ) {
         $this->orderFinder = $orderFinder;
-        $this->webClient = $webClient;
         $this->orderExtensionDataResolver = $orderExtensionDataResolver;
+        $this->salesChannelAwareWebClient = $salesChannelAwareWebClient;
     }
 
     /**
@@ -91,17 +91,15 @@ final class LabelController
         $packageId = $orderInPostExtensionData['packageId'];
 
         try {
-            $label = $this->webClient->getLabelByShipmentId($packageId);
+            $label = $this->salesChannelAwareWebClient->getLabelByShipmentId($packageId, $order->getSalesChannelId());
         } catch (ClientException $e) {
             $error = json_decode($e->getMessage(), true);
             $errorDetails = $error['details'];
 
-            if ([] !== $errorDetails) {
-                if (isset($errorDetails['action'], $errorDetails['shipment_status']) &&
-                    'get_label' === $errorDetails['action'] && 'offer_selected' === $errorDetails['shipment_status']
-                ) {
-                    throw new PackageException('package.offerSelected');
-                }
+            if (([] !== $errorDetails) && isset($errorDetails['action'], $errorDetails['shipment_status']) &&
+                'get_label' === $errorDetails['action'] && 'offer_selected' === $errorDetails['shipment_status']
+            ) {
+                throw new PackageException('package.offerSelected');
             }
 
             throw $e;

@@ -34,7 +34,7 @@ Component.register('sw-order-detail-inpost-detail-card', {
                 const pointName = order.extensions.inPost.pointName;
 
                 if (pointName) {
-                    return this.CustomApiService.getInpostDataByPointName(pointName)
+                    return this.CustomApiService.getInPostDataByPointName(pointName)
                         .then((inPostResponse) => {
                             if (inPostResponse.data && inPostResponse.data.error) {
                                 this.showCard = true;

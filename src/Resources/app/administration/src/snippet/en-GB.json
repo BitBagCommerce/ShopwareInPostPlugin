@@ -25,10 +25,11 @@
         "phoneNumberInvalid": "Client phone number is invalid"
     },
     "api": {
-        "credentialsDataNotFound": "Fill in API credentials before creating the package",
+        "credentialsDataNotFound": "API data cannot be null",
         "providedDataNotValid": "Provided data is not valid",
         "resourceNotFound": "You cannot create a shipment for this organization",
-        "noCarriers": "No carrier is assigned to your InPost account"
+        "noCarriers": "No carrier is assigned to your InPost account",
+        "credentialsDataOk": "Provided data is valid"
     },
     "rule": {
         "notFound": "Rule was not found"
@@ -37,5 +38,16 @@
         "getLabel": "Get label",
         "createPackage": "Create package",
         "pointName": "point-name"
+    },
+    "config": {
+        "organizationId": "Organization ID",
+        "accessToken": "Access token",
+        "environmentLabel": "Environment",
+        "selectEnvironment": "Choose environment",
+        "environmentProduction": "production",
+        "environmentSandbox": "sandbox",
+        "apiConfiguration": "API Configuration",
+        "checkCredentials": "Check credentials",
+        "saved": "API data was saved"
     }
 }

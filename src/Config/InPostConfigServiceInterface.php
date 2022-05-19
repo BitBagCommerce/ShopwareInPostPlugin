@@ -10,11 +10,11 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Config;
 
-use BitBag\ShopwareInPostPlugin\Model\InpostApiConfig;
+use BitBag\ShopwareInPostPlugin\Model\InPostApiConfig;
 
-interface InpostConfigServiceInterface
+interface InPostConfigServiceInterface
 {
-    public const SYSTEM_CONFIG_PREFIX = 'BitBagShopwareInPostPlugin.config';
+    public const SYSTEM_CONFIG_PREFIX = 'bitb1BitBagShopwareInPostPlugin';
 
-    public function getInpostApiConfig(): InpostApiConfig;
+    public function getInPostApiConfig(?string $salesChannelId): InPostApiConfig;
 }

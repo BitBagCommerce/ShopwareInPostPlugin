@@ -37,10 +37,19 @@ class CustomApiService extends ApiService {
             });
     }
 
-    getInpostDataByPointName(pointName) {
+    getInPostDataByPointName(pointName) {
         const apiRoute = `https://api-pl-points.easypack24.net/v1/points/${pointName}`;
 
         return this.httpClient.get(apiRoute);
+    }
+
+    checkCredentials(values) {
+        const apiRoute = `${this.getApiBasePath()}/_action/bitbag-inpost-plugin/check-credentials`;
+
+        return this.httpClient
+            .post(apiRoute, values, {
+                headers: this.getBasicHeaders()
+            });
     }
 }
 

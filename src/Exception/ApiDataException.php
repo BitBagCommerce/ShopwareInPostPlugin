@@ -17,7 +17,7 @@ final class ApiDataException extends ShopwareHttpException
 {
     public function getErrorCode(): string
     {
-        return 'BITBAG_INPOST_PLUGIN__API_DATA_EXCEPTION';
+        return 'BITBAG_IN_POST_PLUGIN__API_DATA_EXCEPTION';
     }
 
     public function getStatusCode(): int

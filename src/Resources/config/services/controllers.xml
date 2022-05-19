@@ -16,8 +16,15 @@
 
         <service id="BitBag\ShopwareInPostPlugin\Controller\Api\LabelController">
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\OrderFinder" />
-            <argument type="service" id="BitBag\ShopwareInPostPlugin\Api\WebClient" />
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Resolver\OrderExtensionDataResolver" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Api\SalesChannelAwareWebClient" />
+
+            <tag name="controller.service_arguments"/>
+        </service>
+
+        <service id="BitBag\ShopwareInPostPlugin\Controller\Api\InPostApiController">
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Api\WebClient" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Api\SalesChannelAwareWebClient" />
 
             <tag name="controller.service_arguments"/>
         </service>

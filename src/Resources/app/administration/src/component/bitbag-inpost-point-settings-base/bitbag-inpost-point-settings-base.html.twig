@@ -1,0 +1,27 @@
+{% block bitbag_inpost_point_settings_base %}
+    <sw-page>
+        <template #smart-bar-header>
+            <h2>{{ $tc('config.apiConfiguration') }}</h2>
+        </template>
+        <template #smart-bar-actions>
+            <sw-button variant="contrast" @click="checkCredentials">
+                {{ $tc('config.checkCredentials') }}
+            </sw-button>
+
+            <sw-button variant="primary" @click="saveSystemConfig">
+                {{ $tc('global.default.save') }}
+            </sw-button>
+        </template>
+        <template #content>
+            <sw-card-view>
+                <sw-card :isLoading="isLoading">
+                    <sw-system-config
+                        ref="systemConfig"
+                        sales-channel-switchable
+                        :domain="pluginDomain"
+                    />
+                </sw-card>
+            </sw-card-view>
+        </template>
+    </sw-page>
+{% endblock %}

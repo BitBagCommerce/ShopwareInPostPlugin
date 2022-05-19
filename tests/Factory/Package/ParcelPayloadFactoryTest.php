@@ -17,7 +17,7 @@ final class ParcelPayloadFactoryTest extends TestCase
 {
     public const ORDER_WEIGHT = 1.8;
 
-    public const INPOST_POINT_NAME = 'POP-WAW405';
+    public const IN_POST_POINT_NAME = 'POP-WAW405';
 
     public const PACKAGE_DEPTH = 20;
 
