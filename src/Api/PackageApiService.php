@@ -63,6 +63,10 @@ final class PackageApiService implements PackageApiServiceInterface
                 }
             }
 
+            if (isset($error['error']) && 'token_invalid' === $error['error']) {
+                throw new InPostApiException('api.providedDataNotValid');
+            }
+
             throw $e;
         }
 
