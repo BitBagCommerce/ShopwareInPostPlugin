@@ -61,7 +61,7 @@ final class InPostApiController
      *         description="InPost data are valid",
      *     ),
      *     @OA\Response(
-     *         response="401",
+     *         response="403",
      *         description="InPost data are not valid"
      *     )
      * )
@@ -75,7 +75,7 @@ final class InPostApiController
         $organizationId = $data['organizationId'];
 
         if (null === $organizationId || '' === $organizationId) {
-            return new JsonResponse(['success' => false], Response::HTTP_FORBIDDEN);
+            return new JsonResponse([], Response::HTTP_FORBIDDEN);
         }
 
         $result = $this->testWebClient->checkCredentials(
@@ -84,9 +84,6 @@ final class InPostApiController
             $data['environment']
         );
 
-        return new JsonResponse(
-            ['success' => $result],
-            $result ? Response::HTTP_OK : Response::HTTP_FORBIDDEN
-        );
+        return new JsonResponse([], $result ? Response::HTTP_OK : Response::HTTP_FORBIDDEN);
     }
 }
