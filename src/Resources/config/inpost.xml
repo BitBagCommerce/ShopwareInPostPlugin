@@ -4,31 +4,43 @@
 
     <card>
         <title>API Configuration</title>
+        <title lang="pl-PL">Konfiguracja API</title>
 
         <input-field>
             <name>inPostOrganizationId</name>
             <label>Organization ID</label>
+            <label lang="pl-PL">ID organizacji</label>
             <placeholder>Organization ID</placeholder>
+            <placeholder lang="pl-PL">ID organizacji</placeholder>
+            <required>true</required>
         </input-field>
 
         <input-field>
             <name>inPostAccessToken</name>
             <label>Access token</label>
+            <label lang="pl-PL">Token do API</label>
             <placeholder>Access token</placeholder>
+            <placeholder lang="pl-PL">Token do API</placeholder>
+            <required>true</required>
         </input-field>
 
         <input-field type="single-select">
             <name>inPostEnvironment</name>
             <label>Environment</label>
+            <label lang="pl-PL">Środowisko</label>
             <placeholder>Choose environment</placeholder>
+            <placeholder lang="pl-PL">Wybierz środowisko</placeholder>
+            <required>true</required>
             <options>
                 <option>
                     <id>sandbox</id>
                     <name>Sandbox</name>
+                    <name lang="pl-PL">Deweloperskie</name>
                 </option>
                 <option>
                     <id>production</id>
                     <name>Production</name>
+                    <name lang="pl-PL">Produkcyjne</name>
                 </option>
             </options>
         </input-field>
