@@ -22,9 +22,9 @@
             <tag name="controller.service_arguments"/>
         </service>
 
-        <service id="BitBag\ShopwareInPostPlugin\Controller\Api\InPostApiController">
-            <argument type="service" id="BitBag\ShopwareInPostPlugin\Api\WebClient" />
-            <argument type="service" id="BitBag\ShopwareInPostPlugin\Api\SalesChannelAwareWebClient" />
+        <service id="BitBag\ShopwareInPostPlugin\Controller\Api\InPostApiController"
+        >
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Api\TestWebClient" />
 
             <tag name="controller.service_arguments"/>
         </service>

@@ -10,9 +10,7 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Api;
 
-interface SalesChannelAwareWebClientInterface
+interface TestWebClientInterface
 {
-    public function createShipment(array $data, string $salesChannelId): array;
-
-    public function getLabelByShipmentId(int $shipmentId, ?string $salesChannelId = null): string;
+    public function checkCredentials(string $accessToken, string $organizationId, string $environment): bool;
 }

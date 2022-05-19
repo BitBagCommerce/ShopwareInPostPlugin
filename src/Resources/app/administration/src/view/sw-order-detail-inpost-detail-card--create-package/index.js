@@ -4,7 +4,7 @@ const { Component, Mixin } = Shopware;
 
 Component.register('sw-order-detail-inpost-detail-card--create-package', {
     template,
-    inject: ['CustomApiService'],
+    inject: ['InPostApiService'],
     mixins: [
         Mixin.getByName('notification')
     ],
@@ -27,7 +27,7 @@ Component.register('sw-order-detail-inpost-detail-card--create-package', {
         createPackage() {
             const orderId = this.order.id;
 
-            this.CustomApiService.createPackage(orderId)
+            this.InPostApiService.createPackage(orderId)
                 .then(() => {
                     this.createNotificationSuccess({message: this.$tc('package.created')});
 

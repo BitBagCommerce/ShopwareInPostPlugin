@@ -1,6 +1,6 @@
 const ApiService = Shopware.Classes.ApiService;
 
-class CustomApiService extends ApiService {
+class InPostApiService extends ApiService {
     constructor(httpClient, loginService, apiEndpoint = '') {
         super(httpClient, loginService, apiEndpoint);
     }
@@ -53,4 +53,4 @@ class CustomApiService extends ApiService {
     }
 }
 
-export default CustomApiService;
+export default InPostApiService;

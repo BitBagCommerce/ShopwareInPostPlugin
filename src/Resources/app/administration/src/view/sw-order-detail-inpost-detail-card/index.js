@@ -5,7 +5,7 @@ const { Component } = Shopware;
 
 Component.register('sw-order-detail-inpost-detail-card', {
     template,
-    inject: ['CustomApiService'],
+    inject: ['InPostApiService'],
     props: [
         'order'
     ],
@@ -34,7 +34,7 @@ Component.register('sw-order-detail-inpost-detail-card', {
                 const pointName = order.extensions.inPost.pointName;
 
                 if (pointName) {
-                    return this.CustomApiService.getInPostDataByPointName(pointName)
+                    return this.InPostApiService.getInPostDataByPointName(pointName)
                         .then((inPostResponse) => {
                             if (inPostResponse.data && inPostResponse.data.error) {
                                 this.showCard = true;

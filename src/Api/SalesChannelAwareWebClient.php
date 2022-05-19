@@ -47,7 +47,7 @@ final class SalesChannelAwareWebClient implements SalesChannelAwareWebClientInte
         );
     }
 
-    public function getHeaders(string $accessToken): array
+    private function getHeaders(string $accessToken): array
     {
         return [
             'Content-Type' => 'application/json',

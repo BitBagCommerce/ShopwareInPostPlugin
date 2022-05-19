@@ -4,7 +4,7 @@ Shopware.Component.register('bitbag-inpost-point-settings-base', {
     template,
     inject: [
         'systemConfigApiService',
-        'CustomApiService'
+        'InPostApiService'
     ],
     mixins: [
         'notification',
@@ -56,7 +56,7 @@ Shopware.Component.register('bitbag-inpost-point-settings-base', {
             const responseStatusCodeOk = 200;
             const responseStatusCodeForbidden = 403;
 
-            this.CustomApiService.checkCredentials(values)
+            this.InPostApiService.checkCredentials(values)
                 .then((data) => {
                     if (responseStatusCodeOk === data.status) {
                         this.createNotificationSuccess({message: this.$tc('api.credentialsDataOk')});

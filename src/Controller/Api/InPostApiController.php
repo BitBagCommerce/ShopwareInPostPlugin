@@ -10,9 +10,7 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Controller\Api;
 
-use BitBag\ShopwareInPostPlugin\Api\SalesChannelAwareWebClientInterface;
-use BitBag\ShopwareInPostPlugin\Api\WebClientInterface;
-use GuzzleHttp\Exception\ClientException;
+use BitBag\ShopwareInPostPlugin\Api\TestWebClientInterface;
 use OpenApi\Annotations as OA;
 use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -25,14 +23,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 final class InPostApiController
 {
-    private WebClientInterface $webClient;
+    private TestWebClientInterface $testWebClient;
 
-    private SalesChannelAwareWebClientInterface $salesChannelAwareWebClient;
-
-    public function __construct(WebClientInterface $webClient, SalesChannelAwareWebClientInterface $salesChannelAwareWebClient)
+    public function __construct(TestWebClientInterface $testWebClient)
     {
-        $this->webClient = $webClient;
-        $this->salesChannelAwareWebClient = $salesChannelAwareWebClient;
+        $this->testWebClient = $testWebClient;
     }
 
     /**
@@ -77,26 +72,21 @@ final class InPostApiController
         /** @var array $data = ["accessToken" => "", "organizationId" => "", "environment" => ""] */
         $data = $request->toArray();
 
-        try {
-            $apiBaseUrl = $this->webClient->getApiBaseUrl(
-                WebClientInterface::SANDBOX_ENVIRONMENT === $data['environment']
-            );
+        $organizationId = $data['organizationId'];
 
-            $organizationId = $data['organizationId'];
-
-            if (null === $organizationId || '' === $organizationId) {
-                return new JsonResponse(['success' => false], Response::HTTP_FORBIDDEN);
-            }
-
-            $this->webClient->request(
-                'GET',
-                $apiBaseUrl . "/organizations/${organizationId}/dispatch_orders",
-                $this->salesChannelAwareWebClient->getHeaders($data['accessToken'])
-            );
-
-            return new JsonResponse(['success' => true], Response::HTTP_OK);
-        } catch (ClientException $e) {
+        if (null === $organizationId || '' === $organizationId) {
             return new JsonResponse(['success' => false], Response::HTTP_FORBIDDEN);
         }
+
+        $result = $this->testWebClient->checkCredentials(
+            $data['accessToken'],
+            $organizationId,
+            $data['environment']
+        );
+
+        return new JsonResponse(
+            ['success' => $result],
+            $result ? Response::HTTP_OK : Response::HTTP_FORBIDDEN
+        );
     }
 }
