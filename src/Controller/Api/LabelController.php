@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace BitBag\ShopwareInPostPlugin\Controller\Api;
 
 use BitBag\ShopwareInPostPlugin\Api\SalesChannelAwareWebClientInterface;
+use BitBag\ShopwareInPostPlugin\Exception\InPostApiException;
 use BitBag\ShopwareInPostPlugin\Exception\PackageException;
 use BitBag\ShopwareInPostPlugin\Exception\PackageNotFoundException;
 use BitBag\ShopwareInPostPlugin\Finder\OrderFinderInterface;
@@ -100,6 +101,10 @@ final class LabelController
                 'get_label' === $errorDetails['action'] && 'offer_selected' === $errorDetails['shipment_status']
             ) {
                 throw new PackageException('package.offerSelected');
+            }
+
+            if (isset($error['error']) && 'token_invalid' === $error['error']) {
+                throw new InPostApiException('api.providedDataNotValid');
             }
 
             throw $e;

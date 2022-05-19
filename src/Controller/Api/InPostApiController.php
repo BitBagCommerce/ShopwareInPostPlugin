@@ -72,9 +72,14 @@ final class InPostApiController
         /** @var array $data = ["accessToken" => "", "organizationId" => "", "environment" => ""] */
         $data = $request->toArray();
 
-        $organizationId = $data['organizationId'];
+        $accessToken = $data['accessToken'] ?? null;
+        $organizationId = $data['organizationId'] ?? null;
+        $environment = $data['environment'] ?? null;
 
-        if (null === $organizationId || '' === $organizationId) {
+        if ((null === $accessToken || '' === $accessToken) ||
+            (null === $organizationId || '' === $organizationId) ||
+            (null === $environment || '' === $environment)
+        ) {
             return new JsonResponse([], Response::HTTP_FORBIDDEN);
         }
 
