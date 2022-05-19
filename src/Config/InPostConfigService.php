@@ -11,10 +11,10 @@ declare(strict_types=1);
 namespace BitBag\ShopwareInPostPlugin\Config;
 
 use BitBag\ShopwareInPostPlugin\Exception\ApiDataException;
-use BitBag\ShopwareInPostPlugin\Model\InpostApiConfig;
+use BitBag\ShopwareInPostPlugin\Model\InPostApiConfig;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
 
-final class InpostConfigService implements InpostConfigServiceInterface
+final class InPostConfigService implements InPostConfigServiceInterface
 {
     private SystemConfigService $systemConfigService;
 
@@ -23,16 +23,16 @@ final class InpostConfigService implements InpostConfigServiceInterface
         $this->systemConfigService = $systemConfigService;
     }
 
-    public function getInpostApiConfig(): InpostApiConfig
+    public function getInPostApiConfig(?string $salesChannelId = null): InPostApiConfig
     {
-        $organizationId = $this->systemConfigService->getString(self:: SYSTEM_CONFIG_PREFIX . '.inPostOrganizationId') ?: null;
-        $accessToken = $this->systemConfigService->getString(self:: SYSTEM_CONFIG_PREFIX . '.inPostAccessToken') ?: null;
-        $environment = $this->systemConfigService->getString(self:: SYSTEM_CONFIG_PREFIX . '.inPostEnvironment') ?: null;
+        $organizationId = $this->systemConfigService->getString(self:: SYSTEM_CONFIG_PREFIX . '.inPostOrganizationId', $salesChannelId) ?: null;
+        $accessToken = $this->systemConfigService->getString(self:: SYSTEM_CONFIG_PREFIX . '.inPostAccessToken', $salesChannelId) ?: null;
+        $environment = $this->systemConfigService->getString(self:: SYSTEM_CONFIG_PREFIX . '.inPostEnvironment', $salesChannelId) ?: null;
 
         if (null === $organizationId || null === $accessToken || null === $environment) {
             throw new ApiDataException('api.credentialsDataNotFound');
         }
 
-        return new InpostApiConfig($organizationId, $accessToken, $environment);
+        return new InPostApiConfig($organizationId, $accessToken, $environment);
     }
 }

@@ -13,11 +13,11 @@ namespace BitBag\ShopwareInPostPlugin\Exception;
 use Shopware\Core\Framework\ShopwareHttpException;
 use Symfony\Component\HttpFoundation\Response;
 
-final class InpostApiException extends ShopwareHttpException
+final class InPostApiException extends ShopwareHttpException
 {
     public function getErrorCode(): string
     {
-        return 'BITBAG_INPOST_PLUGIN__INPOST_API_EXCEPTION';
+        return 'BITBAG_IN_POST_PLUGIN__IN_POST_API_EXCEPTION';
     }
 
     public function getStatusCode(): int

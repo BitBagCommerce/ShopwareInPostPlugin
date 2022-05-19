@@ -1,9 +1,9 @@
-import CustomApiService from '../core/service/api/custom-api.service';
+import InPostApiService from '../core/service/api/inpost-api.service';
 
 const Application = Shopware.Application;
 
-Application.addServiceProvider('CustomApiService', (container) => {
+Application.addServiceProvider('InPostApiService', (container) => {
     const initContainer = Application.getContainer('init');
 
-    return new CustomApiService(initContainer.httpClient, container.loginService);
+    return new InPostApiService(initContainer.httpClient, container.loginService);
 });

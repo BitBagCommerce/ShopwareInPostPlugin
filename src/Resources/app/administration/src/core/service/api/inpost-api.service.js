@@ -1,6 +1,6 @@
 const ApiService = Shopware.Classes.ApiService;
 
-class CustomApiService extends ApiService {
+class InPostApiService extends ApiService {
     constructor(httpClient, loginService, apiEndpoint = '') {
         super(httpClient, loginService, apiEndpoint);
     }
@@ -37,11 +37,20 @@ class CustomApiService extends ApiService {
             });
     }
 
-    getInpostDataByPointName(pointName) {
+    getInPostDataByPointName(pointName) {
         const apiRoute = `https://api-pl-points.easypack24.net/v1/points/${pointName}`;
 
         return this.httpClient.get(apiRoute);
     }
+
+    checkCredentials(values) {
+        const apiRoute = `${this.getApiBasePath()}/_action/bitbag-inpost-plugin/check-credentials`;
+
+        return this.httpClient
+            .post(apiRoute, values, {
+                headers: this.getBasicHeaders()
+            });
+    }
 }
 
-export default CustomApiService;
+export default InPostApiService;

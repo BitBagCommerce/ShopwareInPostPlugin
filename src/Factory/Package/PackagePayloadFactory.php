@@ -53,7 +53,7 @@ final class PackagePayloadFactory implements PackagePayloadFactoryInterface
             'parcels' => [
                 $this->createParcelPayloadFactory->create($order, $context),
             ],
-            'service' => WebClientInterface::INPOST_LOCKER_STANDARD_SERVICE,
+            'service' => WebClientInterface::IN_POST_LOCKER_STANDARD_SERVICE,
             'custom_attributes' => [
                 'target_point' => $orderInPostExtensionData['pointName'],
             ],

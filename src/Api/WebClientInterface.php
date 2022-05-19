@@ -22,11 +22,9 @@ interface WebClientInterface
 
     public const API_VERSION = 'v1';
 
-    public const INPOST_LOCKER_STANDARD_SERVICE = 'inpost_locker_standard';
+    public const IN_POST_LOCKER_STANDARD_SERVICE = 'inpost_locker_standard';
 
-    public function createShipment(array $data): array;
+    public function request(string $method, string $url, array $headers, array $data = []): string;
 
-    public function request(string $method, string $url, array $data = []): string;
-
-    public function getLabelByShipmentId(int $shipmentId): string;
+    public function getApiBaseUrl(bool $sandbox): string;
 }

@@ -17,7 +17,7 @@ final class PackageException extends ShopwareHttpException
 {
     public function getErrorCode(): string
     {
-        return 'BITBAG_INPOST_PLUGIN__PACKAGE_EXCEPTION';
+        return 'BITBAG_IN_POST_PLUGIN__PACKAGE_EXCEPTION';
     }
 
     public function getStatusCode(): int

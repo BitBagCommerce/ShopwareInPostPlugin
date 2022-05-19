@@ -17,7 +17,7 @@ final class OrderNotFoundException extends ShopwareHttpException
 {
     public function getErrorCode(): string
     {
-        return 'BITBAG_INPOST_PLUGIN__ORDER_NOT_FOUND_EXCEPTION';
+        return 'BITBAG_IN_POST_PLUGIN__ORDER_NOT_FOUND_EXCEPTION';
     }
 
     public function getStatusCode(): int

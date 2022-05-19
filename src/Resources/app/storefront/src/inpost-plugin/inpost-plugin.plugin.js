@@ -1,6 +1,6 @@
 import Plugin from 'src/plugin-system/plugin.class';
 
-export default class InpostPlugin extends Plugin {
+export default class InPostPlugin extends Plugin {
     init() {
         const main = this;
 
@@ -24,9 +24,9 @@ export default class InpostPlugin extends Plugin {
             confirmFormSubmitButtonEl.addEventListener('click', (e) => {
                 const pointNameNotSelectedMessageEl = document.querySelector('.point-name-not-selected-message');
 
-                const inpostParcelLockerEl = document.getElementById('inpost-parcel-locker');
+                const inPostParcelLockerEl = document.getElementById('inpost-parcel-locker');
 
-                if (!inpostParcelLockerEl || (inpostParcelLockerEl && !inpostParcelLockerEl.value)) {
+                if (!inPostParcelLockerEl || (inPostParcelLockerEl && !inPostParcelLockerEl.value)) {
                     e.preventDefault();
 
                     document.querySelector('.shipping-methods').scrollIntoView({
@@ -46,9 +46,9 @@ export default class InpostPlugin extends Plugin {
     }
 
     updateSelected(point) {
-        const inpostParcelLockerEl = document.querySelector('#inpost-parcel-locker');
+        const inPostParcelLockerEl = document.querySelector('#inpost-parcel-locker');
         const selectedPoint = document.querySelector('[data-inpost-plugin-selectedPoint]');
-        const InpostGeoMap = document.querySelector('[data-inpost-plugin-map]');
+        const inPostGeoMap = document.querySelector('[data-inpost-plugin-map]');
         const pointThumbnail = document.querySelector('[data-inpost-plugin-thumbnail]');
         const pointName = document.querySelector('[data-inpost-plugin-name]');
         const pointAddressOne = document.querySelector('[data-inpost-plugin-addressOne]');
@@ -56,8 +56,8 @@ export default class InpostPlugin extends Plugin {
         const pointNameNotSelectedMessageEl = document.querySelector('.point-name-not-selected-message');
 
         selectedPoint.classList.remove('hide');
-        InpostGeoMap.classList.add('hide');
-        inpostParcelLockerEl.value = point.name;
+        inPostGeoMap.classList.add('hide');
+        inPostParcelLockerEl.value = point.name;
         pointThumbnail.src = point.image_url
         pointName.innerText = point.name;
         pointAddressOne.innerText = point.address.line1;
@@ -70,9 +70,9 @@ export default class InpostPlugin extends Plugin {
 
     changePoint() {
         const selectedPoint = document.querySelector('[data-inpost-plugin-selectedPoint]');
-        const InpostGeoMap = document.querySelector('[data-inpost-plugin-map]');
+        const inPostGeoMap = document.querySelector('[data-inpost-plugin-map]');
 
         selectedPoint.classList.add('hide');
-        InpostGeoMap.classList.remove('hide');
+        inPostGeoMap.classList.remove('hide');
     }
 }

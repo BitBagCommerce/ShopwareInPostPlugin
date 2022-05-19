@@ -25,10 +25,11 @@
         "phoneNumberInvalid": "Podany przez klienta numer telefonu jest niepoprawny"
     },
     "api": {
-        "credentialsDataNotFound": "Uzupełnij dane do API przed utworzeniem paczki",
+        "credentialsDataNotFound": "Nie znaleziono danych do API",
         "providedDataNotValid": "Podane dane do API nie są prawidłowe",
         "resourceNotFound": "Nie możesz utworzyć paczki dla tej organizacji",
-        "noCarriers": "Twoje konto InPost nie ma przypisanego żadnego przewoźnika"
+        "noCarriers": "Twoje konto InPost nie ma przypisanego żadnego przewoźnika",
+        "credentialsDataOk": "Podane dane do API są prawidłowe"
     },
     "rule": {
         "notFound": "Nie znaleziono reguły podczas tworzenia metody wysyłki"
@@ -37,5 +38,16 @@
         "getLabel": "Pobierz etykietę",
         "createPackage": "Utwórz paczkę",
         "pointName": "paczkomat"
+    },
+    "config": {
+        "organizationId": "ID organizacji",
+        "accessToken": "Token do API",
+        "environmentLabel": "Środowisko",
+        "selectEnvironment": "Wybierz środowisko",
+        "environmentProduction": "Produkcyjna",
+        "environmentSandbox": "Deweloperska",
+        "apiConfiguration": "Konfiguracja API",
+        "checkCredentials": "Sprawdź komunikację API",
+        "saved": "Dane zostały zapisane"
     }
 }

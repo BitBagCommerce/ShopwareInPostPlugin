@@ -23,7 +23,7 @@ final class PackagePayloadFactoryTest extends TestCase
 
     public const ORDER_WEIGHT = 1.8;
 
-    public const INPOST_POINT_NAME = 'POP-WAW405';
+    public const IN_POST_POINT_NAME = 'POP-WAW405';
 
     public const PACKAGE_DEPTH = 20;
 
@@ -45,7 +45,7 @@ final class PackagePayloadFactoryTest extends TestCase
 
         $inPostOrderExtensionData = [
             'id' => $inPostOrderExtensionId,
-            'pointName' => self::INPOST_POINT_NAME,
+            'pointName' => self::IN_POST_POINT_NAME,
             'packageId' => null,
         ];
 
@@ -120,7 +120,7 @@ final class PackagePayloadFactoryTest extends TestCase
                         ],
                     ],
                 ],
-                'service' => WebClientInterface::INPOST_LOCKER_STANDARD_SERVICE,
+                'service' => WebClientInterface::IN_POST_LOCKER_STANDARD_SERVICE,
                 'custom_attributes' => [
                     'target_point' => $inPostOrderExtensionData['pointName'],
                 ],

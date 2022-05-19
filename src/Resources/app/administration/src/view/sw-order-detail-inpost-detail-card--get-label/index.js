@@ -4,7 +4,7 @@ const { Component, Mixin } = Shopware;
 
 Component.register('sw-order-detail-inpost-detail-card--get-label', {
     template,
-    inject: ['CustomApiService'],
+    inject: ['InPostApiService'],
     mixins: [
         Mixin.getByName('notification')
     ],
@@ -31,7 +31,7 @@ Component.register('sw-order-detail-inpost-detail-card--get-label', {
         getLabel() {
             const orderId = this.order.id;
 
-            this.CustomApiService.getLabel(orderId)
+            this.InPostApiService.getLabel(orderId)
                 .then((data) => {
                     const file = new Blob([data.data], {type: 'application/pdf'});
                     const blob = URL.createObjectURL(file);

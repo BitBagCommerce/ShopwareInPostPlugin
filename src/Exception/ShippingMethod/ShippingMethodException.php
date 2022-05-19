@@ -17,7 +17,7 @@ final class ShippingMethodException extends ShopwareHttpException
 {
     public function getErrorCode(): string
     {
-        return 'BITBAG_INPOST_PLUGIN__SHIPPING_METHOD_EXCEPTION';
+        return 'BITBAG_IN_POST_PLUGIN__SHIPPING_METHOD_EXCEPTION';
     }
 
     public function getStatusCode(): int

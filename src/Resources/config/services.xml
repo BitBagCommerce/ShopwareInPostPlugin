@@ -26,12 +26,22 @@
 
         <service id="BitBag\ShopwareInPostPlugin\Api\WebClient">
             <argument type="service" id="shopware.app_system.guzzle" />
-            <argument type="service" id="BitBag\ShopwareInPostPlugin\Config\InpostConfigService" />
         </service>
 
         <service id="BitBag\ShopwareInPostPlugin\Api\PackageApiService"
         >
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\Package\PackagePayloadFactory" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Api\SalesChannelAwareWebClient" />
+        </service>
+
+        <service id="BitBag\ShopwareInPostPlugin\Api\SalesChannelAwareWebClient"
+        >
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Api\WebClient" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Config\InPostConfigService" />
+        </service>
+
+        <service id="BitBag\ShopwareInPostPlugin\Api\TestWebClient"
+        >
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Api\WebClient" />
         </service>
     </services>
