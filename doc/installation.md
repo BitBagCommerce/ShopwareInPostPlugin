@@ -9,9 +9,9 @@ You can install the plugin in a variety of ways.
    1. Add to the custom/plugins directory
    2. Install the plugin
          ```bash
-         $ bin/console plugin:install bitb1BitBagShopwareInPostPlugin
+         $ bin/console plugin:install BitBagShopwareInPostPlugin
          ```
    3. Activate the plugin
         ```bash
-        $ bin/console plugin:activate bitb1BitBagShopwareInPostPlugin
+        $ bin/console plugin:activate BitBagShopwareInPostPlugin
          ```

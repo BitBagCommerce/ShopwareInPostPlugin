@@ -17,7 +17,7 @@ use Shopware\Core\Framework\Plugin;
 use Shopware\Core\Framework\Plugin\Context\ActivateContext;
 use Shopware\Core\Framework\Plugin\Context\DeactivateContext;
 
-final class bitb1BitBagShopwareInPostPlugin extends Plugin
+final class BitBagShopwareInPostPlugin extends Plugin
 {
     private CustomFieldSetConfiguratorInterface $customFieldSetConfigurator;
 

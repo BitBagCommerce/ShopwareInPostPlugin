@@ -12,7 +12,7 @@ Shopware.Component.register('bitbag-inpost-point-settings-base', {
     data() {
         return {
             isLoading: true,
-            pluginDomain: 'bitb1BitBagShopwareInPostPlugin.inpost',
+            pluginDomain: 'BitBagShopwareInPostPlugin.inpost',
             organizationId: '',
             accessToken: '',
             environment: '',

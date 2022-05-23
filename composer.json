@@ -18,7 +18,7 @@
         "phpunit/phpunit": "^9.5"
     },
     "extra": {
-        "shopware-plugin-class": "BitBag\\ShopwareInPostPlugin\\bitb1BitBagShopwareInPostPlugin",
+        "shopware-plugin-class": "BitBag\\ShopwareInPostPlugin\\BitBagShopwareInPostPlugin",
         "label": {
             "en-GB": "BitBag InPost",
             "de-DE": "BitBag InPost"

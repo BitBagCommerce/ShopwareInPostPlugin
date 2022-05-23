@@ -14,7 +14,7 @@ use BitBag\ShopwareInPostPlugin\Model\InPostApiConfig;
 
 interface InPostConfigServiceInterface
 {
-    public const SYSTEM_CONFIG_PREFIX = 'bitb1BitBagShopwareInPostPlugin.inpost';
+    public const SYSTEM_CONFIG_PREFIX = 'BitBagShopwareInPostPlugin.inpost';
 
     public function getInPostApiConfig(?string $salesChannelId): InPostApiConfig;
 }
