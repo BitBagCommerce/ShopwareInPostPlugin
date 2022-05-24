@@ -23,7 +23,7 @@ class Migration1649138129OrderInPostExtension extends MigrationStep
     public function update(Connection $connection): void
     {
         $sql = <<<SQL
-CREATE TABLE IF NOT EXISTS `order_inpost_extension` (
+CREATE TABLE IF NOT EXISTS `bitbag_inpost_point_order_extension` (
     `id` BINARY(16) NOT NULL,
     `point_name` VARCHAR(20) NOT NULL,
     `package_id` INT(11) NULL,

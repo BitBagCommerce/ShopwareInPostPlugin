@@ -12,7 +12,7 @@ namespace BitBag\ShopwareInPostPlugin\Factory;
 
 interface CustomFieldsForPackageDetailsPayloadFactoryInterface
 {
-    public const PACKAGE_DETAILS_KEY = 'package_details';
+    public const PACKAGE_DETAILS_KEY = 'bitbag_inpost_point_package_details';
 
     public function create(): array;
 }

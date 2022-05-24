@@ -23,7 +23,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 
 final class OrderInPostExtensionDefinition extends EntityDefinition
 {
-    public const ENTITY_NAME = 'order_inpost_extension';
+    public const ENTITY_NAME = 'bitbag_inpost_point_order_extension';
 
     public function getEntityName(): string
     {

@@ -21,11 +21,13 @@
         "shopware-plugin-class": "BitBag\\ShopwareInPostPlugin\\BitBagShopwareInPostPlugin",
         "label": {
             "en-GB": "BitBag InPost",
-            "de-DE": "BitBag InPost"
+            "de-DE": "BitBag InPost",
+            "pl-PL": "BitBag InPost"
         },
         "description": {
             "en-GB": "This plugin allow to checkout order with InPost shipping method",
-            "de-DE": "This plugin allow to checkout order with InPost shipping method"
+            "de-DE": "This plugin allow to checkout order with InPost shipping method",
+            "pl-PL": "Wtyczka umożliwia realizację zamówienia metodą wysyłki InPost"
         }
     },
     "autoload": {
