@@ -10,12 +10,17 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin;
 
+use BitBag\ShopwareInPostPlugin\Config\InPostConfigServiceInterface;
+use BitBag\ShopwareInPostPlugin\Extension\Content\Order\OrderInPostExtensionDefinition;
+use BitBag\ShopwareInPostPlugin\Factory\CustomFieldsForPackageDetailsPayloadFactoryInterface;
 use BitBag\ShopwareInPostPlugin\Plugin\CustomFieldSetConfiguratorInterface;
 use BitBag\ShopwareInPostPlugin\Plugin\RuleConfiguratorInterface;
 use BitBag\ShopwareInPostPlugin\Plugin\ShippingMethodConfiguratorInterface;
+use Doctrine\DBAL\Connection;
 use Shopware\Core\Framework\Plugin;
 use Shopware\Core\Framework\Plugin\Context\ActivateContext;
 use Shopware\Core\Framework\Plugin\Context\DeactivateContext;
+use Shopware\Core\Framework\Plugin\Context\UninstallContext;
 
 final class BitBagShopwareInPostPlugin extends Plugin
 {
@@ -54,5 +59,39 @@ final class BitBagShopwareInPostPlugin extends Plugin
     public function deactivate(DeactivateContext $deactivateContext): void
     {
         $this->shippingMethodConfigurator->toggleActiveShippingMethod(false, $deactivateContext->getContext());
+    }
+
+    public function uninstall(UninstallContext $uninstallContext): void
+    {
+        if ($uninstallContext->keepUserData()) {
+            return;
+        }
+
+        /** @var Connection $db */
+        $db = $this->container->get(Connection::class);
+
+        // These are actually only tables from old plugin versions. We still remove them here just in case.
+        $db->executeStatement('
+            SET FOREIGN_KEY_CHECKS=0;
+            DROP TABLE IF EXISTS `' . OrderInPostExtensionDefinition::ENTITY_NAME . '`;
+            SET FOREIGN_KEY_CHECKS=1;
+        ');
+
+        $db->executeStatement(
+            'DELETE FROM system_config
+            WHERE configuration_key LIKE :domain',
+            [
+                'domain' => InPostConfigServiceInterface::SYSTEM_CONFIG_PREFIX . '.%',
+            ],
+        );
+
+        $db->executeStatement(
+            'DELETE FROM custom_field_set where JSON_EXTRACT(config, "$.technical_name") = :technicalName',
+            [
+                'technicalName' => CustomFieldsForPackageDetailsPayloadFactoryInterface::PACKAGE_DETAILS_KEY,
+            ],
+        );
+
+        $this->shippingMethodConfigurator->toggleActiveShippingMethod(false, $uninstallContext->getContext());
     }
 }

@@ -26,11 +26,11 @@ class CustomFieldsForPackageDetailsPayloadFactoryTest extends TestCase
         $customFieldPrefix = CustomFieldsForPackageDetailsPayloadFactoryInterface::PACKAGE_DETAILS_KEY;
 
         return [
-            'name' => 'Package details',
+            'name' => 'bitbag_inpost_package_details',
             'config' => [
                 'label' => [
-                    'en-GB' => 'Package details',
-                    'pl-PL' => 'Szczegóły paczki',
+                    'en-GB' => 'Package details (InPost)',
+                    'pl-PL' => 'Szczegóły paczki (InPost)',
                 ],
                 'translated' => true,
                 'technical_name' => $customFieldPrefix,

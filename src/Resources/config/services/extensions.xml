@@ -12,7 +12,7 @@
 
         <service id="BitBag\ShopwareInPostPlugin\Extension\Content\Order\OrderInPostExtensionDefinition"
         >
-            <tag name="shopware.entity.definition" entity="order_inpost_extension" />
+            <tag name="shopware.entity.definition" entity="bitbag_inpost_point_order_extension" />
         </service>
     </services>
 </container>
