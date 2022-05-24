@@ -22,6 +22,10 @@
             <call method="setShippingMethodConfigurator">
                 <argument type="service" id="BitBag\ShopwareInPostPlugin\Plugin\ShippingMethodConfigurator" />
             </call>
+
+            <call method="setConnection">
+                <argument type="service" id="Doctrine\DBAL\Connection" />
+            </call>
         </service>
 
         <service id="BitBag\ShopwareInPostPlugin\Api\WebClient">

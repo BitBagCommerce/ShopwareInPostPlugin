@@ -30,6 +30,8 @@ final class BitBagShopwareInPostPlugin extends Plugin
 
     private ShippingMethodConfiguratorInterface $shippingMethodConfigurator;
 
+    private Connection $connection;
+
     public function setCustomFieldSetConfigurator(CustomFieldSetConfiguratorInterface $customFieldSetConfigurator): void
     {
         $this->customFieldSetConfigurator = $customFieldSetConfigurator;
@@ -43,6 +45,11 @@ final class BitBagShopwareInPostPlugin extends Plugin
     public function setShippingMethodConfigurator(ShippingMethodConfiguratorInterface $shippingMethodConfigurator): void
     {
         $this->shippingMethodConfigurator = $shippingMethodConfigurator;
+    }
+
+    public function setConnection(Connection $connection): void
+    {
+        $this->connection = $connection;
     }
 
     public function activate(ActivateContext $activateContext): void
@@ -67,8 +74,7 @@ final class BitBagShopwareInPostPlugin extends Plugin
             return;
         }
 
-        /** @var Connection $db */
-        $db = $this->container->get(Connection::class);
+        $db = $this->connection;
 
         // These are actually only tables from old plugin versions. We still remove them here just in case.
         $db->executeStatement('
