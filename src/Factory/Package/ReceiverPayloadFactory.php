@@ -41,7 +41,7 @@ final class ReceiverPayloadFactory implements ReceiverPayloadFactoryInterface
             throw new OrderException('order.nullPhoneNumber');
         }
 
-        [, $street, $houseNumber] = $this->splitStreet($orderShippingAddress->getStreet());
+        [, $street, $houseNumber] = $this->splitStreet(trim($orderShippingAddress->getStreet()));
 
         return [
             'company_name' => $orderShippingAddress->getCompany(),
