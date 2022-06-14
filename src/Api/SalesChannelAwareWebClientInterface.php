@@ -15,4 +15,6 @@ interface SalesChannelAwareWebClientInterface
     public function createShipment(array $data, string $salesChannelId): array;
 
     public function getLabelByShipmentId(int $shipmentId, ?string $salesChannelId = null): string;
+
+    public function orderCourier(array $data, ?string $salesChannelId = null): array;
 }

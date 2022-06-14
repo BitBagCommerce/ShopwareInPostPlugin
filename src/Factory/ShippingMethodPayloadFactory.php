@@ -41,6 +41,7 @@ class ShippingMethodPayloadFactory implements ShippingMethodPayloadFactoryInterf
             'active' => true,
             'description' => $name,
             'taxType' => 'auto',
+            'trackingUrl' => 'https://inpost.pl/sledzenie-przesylek?number=%s',
             'translated' => [
                 'name' => $name,
             ],

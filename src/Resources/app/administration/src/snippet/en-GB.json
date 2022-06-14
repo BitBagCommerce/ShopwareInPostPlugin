@@ -49,5 +49,41 @@
         "apiConfiguration": "API Configuration",
         "checkCredentials": "Check credentials",
         "saved": "API data was saved"
+    },
+    "popup": {
+        "title": "Order courier for",
+        "titleOrder": "order",
+        "titleOrders": "orders",
+        "redBackgroundTitle": "Red background",
+        "redBackgroundDescription": "The order(s) does not have a shipping method equal to InPost or the order(s) don't have created InPost package",
+        "greenBackgroundTitle": "Green background",
+        "greenBackgroundDescription": "A courier for this package(s) has already been ordered",
+        "grid": {
+            "orderNumber": "Order number",
+            "salesChannel": "Sales Channel",
+            "customerName": "Customer name",
+            "billingAddress": "Billing address",
+            "orderValue": "Order value",
+            "orderStatus": "Order status",
+            "paymentStatus": "Payment status",
+            "deliveryStatus": "Delivery status",
+            "orderDate": "Order date"
+        },
+        "formData": {
+            "title": "Fill data for courier",
+            "name": "Name (e.g. company name)",
+            "phoneNumber": "Phone number",
+            "email": "E-mail",
+            "street": "Street",
+            "buildingNumber": "Building number",
+            "city": "City",
+            "postalCode": "Postal code"
+        },
+        "cancelButton": "Cancel",
+        "orderCourier": "Order courier",
+        "providedDataNotValid": "Provided data is not valid",
+        "notFoundOrderForCourierOrCourierOrdered": "Package(s) for courier was not found or courier has already been ordered for this order(s)",
+        "problemWhileOrderCourier": "Something went wrong while order a courier. Try order courier again",
+        "courierOrdered": "Courier was ordered for selected orders"
     }
 }

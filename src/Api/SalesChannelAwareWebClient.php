@@ -47,6 +47,18 @@ final class SalesChannelAwareWebClient implements SalesChannelAwareWebClientInte
         );
     }
 
+    public function orderCourier(array $data, ?string $salesChannelId = null): array
+    {
+        $result = $this->webClient->request(
+            'POST',
+            $this->getApiEndpointForDispatchOrders($salesChannelId),
+            $this->getHeaders($this->getApiConfig($salesChannelId)['accessToken']),
+            $data,
+        );
+
+        return json_decode($result, true, 512, \JSON_THROW_ON_ERROR);
+    }
+
     private function getHeaders(string $accessToken): array
     {
         return [
@@ -64,6 +76,15 @@ final class SalesChannelAwareWebClient implements SalesChannelAwareWebClientInte
     {
         return sprintf(
             '%s/organizations/%s/shipments',
+            $this->webClient->getApiBaseUrl($this->isSandbox($salesChannelId)),
+            $this->getApiConfig($salesChannelId)['organizationId']
+        );
+    }
+
+    private function getApiEndpointForDispatchOrders(?string $salesChannelId = null): string
+    {
+        return sprintf(
+            '%s/organizations/%s/dispatch_orders',
             $this->webClient->getApiBaseUrl($this->isSandbox($salesChannelId)),
             $this->getApiConfig($salesChannelId)['organizationId']
         );

@@ -28,5 +28,13 @@
 
             <tag name="controller.service_arguments"/>
         </service>
+
+        <service id="BitBag\ShopwareInPostPlugin\Controller\Api\OrderCourierController">
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\OrderFinder" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Api\SalesChannelAwareWebClient" />
+            <argument type="service" id="order_delivery.repository" />
+
+            <tag name="controller.service_arguments"/>
+        </service>
     </services>
 </container>

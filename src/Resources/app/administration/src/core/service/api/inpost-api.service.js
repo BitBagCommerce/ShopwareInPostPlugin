@@ -51,6 +51,15 @@ class InPostApiService extends ApiService {
                 headers: this.getBasicHeaders()
             });
     }
+
+    orderCourier(ordersIds, formValues) {
+        const apiRoute = `${this.getApiBasePath()}/_action/bitbag-inpost-plugin/order-courier`;
+
+        return this.httpClient
+            .post(apiRoute, {ordersIds, formValues}, {
+                headers: this.getBasicHeaders()
+            });
+    }
 }
 
 export default InPostApiService;

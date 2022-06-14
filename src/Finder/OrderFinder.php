@@ -16,6 +16,7 @@ use Shopware\Core\Checkout\Order\OrderEntity;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 
 final class OrderFinder implements OrderFinderInterface
 {
@@ -48,5 +49,23 @@ final class OrderFinder implements OrderFinderInterface
         }
 
         return $order;
+    }
+
+    public function getWithAssociationsByOrdersIds(array $ordersIds, Context $context): EntitySearchResult
+    {
+        $orderCriteria = new Criteria($ordersIds);
+        $orderCriteria->addAssociations([
+            'deliveries',
+            'lineItems',
+            'lineItems.product',
+            'deliveries.shippingMethod',
+            'addresses',
+            'transactions',
+            'transactions.paymentMethod',
+            OrderInPostExtensionInterface::PROPERTY_KEY,
+            'salesChannel',
+        ]);
+
+        return $this->orderRepository->search($orderCriteria, $context);
     }
 }

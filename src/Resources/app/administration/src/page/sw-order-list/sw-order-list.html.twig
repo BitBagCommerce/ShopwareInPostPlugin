@@ -1,0 +1,23 @@
+{% block sw_order_list_smart_bar_actions_slot %}
+    <sw-context-button class="sw-app-actions__action-button">
+        <template slot="button">
+            <sw-button style="padding: 11px;">
+                <sw-icon
+                    name="small-more"
+                    size="16"
+                />
+            </sw-button>
+        </template>
+
+        <sw-app-action-button
+            key="order-inpost-courier-button"
+            :action="orderCourierInPostData"
+            @run-app-action="orderCourierInPostAction"
+        />
+    </sw-context-button>
+
+    <bitbag-order-selected-items v-if="orderCourierInPostData.renderOrderSelectedItems" :orders="$refs.orderGrid.selection" :onCloseModal="onCloseModal" />
+
+    {% parent %}
+{% endblock %}
+
