@@ -12,6 +12,14 @@ namespace BitBag\ShopwareInPostPlugin\Api;
 
 interface SalesChannelAwareWebClientInterface
 {
+    public const METHOD_POST = 'POST';
+
+    public const SHIPMENTS_LABEL_URL = '%s/shipments/%s/label';
+
+    public const SHIPMENTS_ORGANIZATIONS_URL = '%s/organizations/%s/shipments';
+
+    public const ORGANIZATIONS_DISPATCH_ORDERS = '%s/organizations/%s/dispatch_orders';
+
     public function createShipment(array $data, string $salesChannelId): array;
 
     public function getLabelByShipmentId(int $shipmentId, ?string $salesChannelId = null): string;

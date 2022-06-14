@@ -9,10 +9,10 @@ use BitBag\ShopwareInPostPlugin\Extension\Content\Order\OrderInPostExtensionInte
 use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodPayloadFactoryInterface;
 use BitBag\ShopwareInPostPlugin\Finder\OrderFinderInterface;
 use BitBag\ShopwareInPostPlugin\Provider\Defaults;
+use BitBag\ShopwareInPostPlugin\Service\OrderServiceInterface;
 use OpenApi\Annotations as OA;
 use Shopware\Core\Checkout\Order\OrderEntity;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Shopware\Core\Framework\Struct\ArrayEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -29,16 +29,16 @@ final class OrderCourierController
 
     private SalesChannelAwareWebClientInterface $salesChannelAwareWebClient;
 
-    private EntityRepositoryInterface $orderDeliveryRepository;
+    private OrderServiceInterface $orderService;
 
     public function __construct(
         OrderFinderInterface $orderFinder,
         SalesChannelAwareWebClientInterface $salesChannelAwareWebClient,
-        EntityRepositoryInterface $orderDeliveryRepository
+        OrderServiceInterface $orderService
     ) {
         $this->orderFinder = $orderFinder;
         $this->salesChannelAwareWebClient = $salesChannelAwareWebClient;
-        $this->orderDeliveryRepository = $orderDeliveryRepository;
+        $this->orderService = $orderService;
     }
 
     /**
@@ -112,7 +112,7 @@ final class OrderCourierController
             return new JsonResponse(['error' => true, 'message' => 'popup.providedDataNotValid']);
         }
 
-        $dataFromOrders = $this->getPackagesIdsAndIdsOfInPostOrders($ordersIds, $context);
+        $dataFromOrders = $this->getPackageAndOrderIds($ordersIds, $context);
 
         $packagesIds = $dataFromOrders['packagesIds'];
         $ordersIdsInPostOnly = $dataFromOrders['ordersIdsInPostOnly'];
@@ -143,45 +143,11 @@ final class OrderCourierController
 
         $ordersInPostOnly = $this->orderFinder->getWithAssociationsByOrdersIds($ordersIdsInPostOnly, $context);
 
-        foreach ($result['shipments'] as $shipment) {
-            $packageId = $shipment['id'];
-            $trackingNumber = $shipment['tracking_number'];
-
-            /** @var OrderEntity $order */
-            foreach ($ordersInPostOnly->getElements() as $order) {
-                $deliveries = $order->getDeliveries();
-
-                if (null === $deliveries) {
-                    continue;
-                }
-
-                $delivery = $deliveries->first();
-
-                if (null === $delivery) {
-                    continue;
-                }
-
-                $trackingCodes = $delivery->getTrackingCodes();
-
-                /** @var ArrayEntity|null $inPostExtension */
-                $inPostExtension = $order->getExtension(OrderInPostExtensionInterface::PROPERTY_KEY);
-
-                if (null === $inPostExtension) {
-                    continue;
-                }
-
-                if (!in_array($trackingNumber, $trackingCodes) &&
-                    $packageId === $inPostExtension->get('packageId')
-                ) {
-                    $this->orderDeliveryRepository->update([
-                        [
-                            'id' => $delivery->getId(),
-                            'trackingCodes' => array_merge($trackingCodes, [$trackingNumber]),
-                        ],
-                    ], $context);
-                }
-            }
-        }
+        $this->orderService->saveTrackingNumberInOrder(
+            $result['shipments'],
+            $ordersInPostOnly->getElements(),
+            $context
+        );
 
         return new JsonResponse(['error' => false, 'message' => 'popup.courierOrdered']);
     }
@@ -207,7 +173,7 @@ final class OrderCourierController
             );
     }
 
-    private function getPackagesIdsAndIdsOfInPostOrders(array $ordersIds, Context $context): array
+    private function getPackageAndOrderIds(array $ordersIds, Context $context): array
     {
         $orders = $this->orderFinder->getWithAssociationsByOrdersIds($ordersIds, $context);
 

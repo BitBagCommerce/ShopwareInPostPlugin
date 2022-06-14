@@ -32,7 +32,7 @@
         <service id="BitBag\ShopwareInPostPlugin\Controller\Api\OrderCourierController">
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\OrderFinder" />
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Api\SalesChannelAwareWebClient" />
-            <argument type="service" id="order_delivery.repository" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Service\OrderService" />
 
             <tag name="controller.service_arguments"/>
         </service>

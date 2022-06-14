@@ -27,7 +27,7 @@ final class SalesChannelAwareWebClient implements SalesChannelAwareWebClientInte
     public function createShipment(array $data, string $salesChannelId): array
     {
         $package = $this->webClient->request(
-            'POST',
+            self::METHOD_POST,
             $this->getApiEndpointForShipment($salesChannelId),
             $this->getHeaders($this->getApiConfig($salesChannelId)['accessToken']),
             $data,
@@ -38,7 +38,7 @@ final class SalesChannelAwareWebClient implements SalesChannelAwareWebClientInte
 
     public function getLabelByShipmentId(int $shipmentId, ?string $salesChannelId = null): string
     {
-        $url = sprintf('%s/shipments/%s/label', $this->webClient->getApiBaseUrl($this->isSandbox($salesChannelId)), $shipmentId);
+        $url = sprintf(self::SHIPMENTS_LABEL_URL, $this->webClient->getApiBaseUrl($this->isSandbox($salesChannelId)), $shipmentId);
 
         return $this->webClient->request(
             'GET',
@@ -50,7 +50,7 @@ final class SalesChannelAwareWebClient implements SalesChannelAwareWebClientInte
     public function orderCourier(array $data, ?string $salesChannelId = null): array
     {
         $result = $this->webClient->request(
-            'POST',
+            self::METHOD_POST,
             $this->getApiEndpointForDispatchOrders($salesChannelId),
             $this->getHeaders($this->getApiConfig($salesChannelId)['accessToken']),
             $data,
@@ -75,7 +75,7 @@ final class SalesChannelAwareWebClient implements SalesChannelAwareWebClientInte
     private function getApiEndpointForShipment(?string $salesChannelId = null): string
     {
         return sprintf(
-            '%s/organizations/%s/shipments',
+            self::SHIPMENTS_ORGANIZATIONS_URL,
             $this->webClient->getApiBaseUrl($this->isSandbox($salesChannelId)),
             $this->getApiConfig($salesChannelId)['organizationId']
         );
@@ -84,7 +84,7 @@ final class SalesChannelAwareWebClient implements SalesChannelAwareWebClientInte
     private function getApiEndpointForDispatchOrders(?string $salesChannelId = null): string
     {
         return sprintf(
-            '%s/organizations/%s/dispatch_orders',
+            self::ORGANIZATIONS_DISPATCH_ORDERS,
             $this->webClient->getApiBaseUrl($this->isSandbox($salesChannelId)),
             $this->getApiConfig($salesChannelId)['organizationId']
         );
