@@ -57,6 +57,7 @@ final class ShippingMethodPayloadFactoryTest extends TestCase
                 'active' => true,
                 'description' => $shippingMethodName,
                 'taxType' => 'auto',
+                'trackingUrl' => 'https://inpost.pl/sledzenie-przesylek?number=%s',
                 'translated' => [
                     'name' => $shippingMethodName,
                 ],

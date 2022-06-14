@@ -4,7 +4,8 @@ import './view/sw-order-detail-inpost-detail-card--create-package';
 import './view/sw-order-detail-inpost-detail-card--get-label';
 import './view/sw-order-detail-inpost-detail-card--point-details';
 import './extension/sw-order/sw-order-detail-base';
-
+import './page/sw-order-list';
+import './component/bitbag-order-selected-items';
 import './component/bitbag-inpost-point-settings-base';
 import './component/bitbag-inpost-point-settings-icon';
 

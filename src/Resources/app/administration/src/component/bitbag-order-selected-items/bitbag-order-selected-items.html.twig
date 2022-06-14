@@ -1,0 +1,256 @@
+<div class="sw-modal sw-bulk-edit-modal sw-order-bulk-edit-modal sw-modal--full">
+    <div role="dialog" aria-labelledby="modalTitleEl" tabindex="-1" class="sw-modal__dialog">
+        <header class="sw-modal__header">
+            <div class="sw-modal__titles">
+                <h4 id="modalTitleEl" class="sw-modal__title">
+                    {{ $tc('popup.title') }} {{ selectedOrders.length }} {{ selectedOrders.length == 1 ? $tc('popup.titleOrder') : $tc('popup.titleOrders') }}
+                </h4>
+
+                <small><strong>{{ $tc('popup.redBackgroundTitle') }}</strong> - {{ $tc('popup.redBackgroundDescription') }}</small>
+                <small><strong>{{ $tc('popup.greenBackgroundTitle') }}</strong> - {{ $tc('popup.greenBackgroundDescription') }}</small>
+            </div>
+            <button :title="$tc('popup.cancelButton')" :aria-label="$tc('popup.cancelButton')" class="sw-modal__close" @click="onCloseModal">
+                <span class="sw-icon icon--small-default-x-line-medium sw-icon--fill sw-icon--small">
+                    <svg mlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                        <path fill="#758CA3" fill-rule="evenodd"
+                            d="M8,6.58578644 L11.2928932,3.29289322 C11.6834175,2.90236893 12.3165825,2.90236893 12.7071068,3.29289322 C13.0976311,3.68341751 13.0976311,4.31658249 12.7071068,4.70710678 L9.41421356,8 L12.7071068,11.2928932 C13.0976311,11.6834175 13.0976311,12.3165825 12.7071068,12.7071068 C12.3165825,13.0976311 11.6834175,13.0976311 11.2928932,12.7071068 L8,9.41421356 L4.70710678,12.7071068 C4.31658249,13.0976311 3.68341751,13.0976311 3.29289322,12.7071068 C2.90236893,12.3165825 2.90236893,11.6834175 3.29289322,11.2928932 L6.58578644,8 L3.29289322,4.70710678 C2.90236893,4.31658249 2.90236893,3.68341751 3.29289322,3.29289322 C3.68341751,2.90236893 4.31658249,2.90236893 4.70710678,3.29289322 L8,6.58578644 Z"></path>
+                    </svg>
+                </span>
+            </button>
+        </header>
+        <form method="POST" ref="orderCourierForm" name="order-courier-form">
+            <div class="sw-modal__body">
+                <div class="sw-data-grid is--compact">
+                    <div class="sw-data-grid__wrapper">
+                        <table class="sw-data-grid__table">
+                            <thead class="sw-data-grid__header">
+                            <tr class="sw-data-grid__row">
+                                <th class="sw-data-grid__cell sw-data-grid__cell--header sw-data-grid__cell--property sw-data-grid__cell--sortable sw-data-grid__cell--0 sw-data-grid__cell--align-left">
+                                    <div class="sw-data-grid__cell-content">
+                                        {{ $tc('popup.grid.orderNumber') }}
+                                    </div>
+                                    <span class="sw-data-grid__cell-resize"></span>
+                                </th>
+                                <th class="sw-data-grid__cell sw-data-grid__cell--header sw-data-grid__cell--property sw-data-grid__cell--sortable sw-data-grid__cell--1 sw-data-grid__cell--align-left">
+                                    <div class="sw-data-grid__cell-content">
+                                        {{ $tc('popup.grid.salesChannel') }}
+                                    </div>
+                                    <span class="sw-data-grid__cell-resize"></span>
+                                </th>
+                                <th class="sw-data-grid__cell sw-data-grid__cell--header sw-data-grid__cell--property sw-data-grid__cell--sortable sw-data-grid__cell--2 sw-data-grid__cell--align-left">
+                                    <div class="sw-data-grid__cell-content">
+                                        {{ $tc('popup.grid.customerName') }}
+                                    </div>
+                                    <span class="sw-data-grid__cell-resize"></span>
+                                </th>
+                                <th class="sw-data-grid__cell sw-data-grid__cell--header sw-data-grid__cell--property sw-data-grid__cell--sortable sw-data-grid__cell--3 sw-data-grid__cell--align-left">
+                                    <div class="sw-data-grid__cell-content">
+                                        {{ $tc('popup.grid.billingAddress') }}
+                                    </div>
+                                    <span class="sw-data-grid__cell-resize"></span>
+                                </th>
+                                <th class="sw-data-grid__cell sw-data-grid__cell--header sw-data-grid__cell--property sw-data-grid__cell--sortable sw-data-grid__cell--4 sw-data-grid__cell--align-right">
+                                    <div class="sw-data-grid__cell-content">
+                                        {{ $tc('popup.grid.orderValue') }}
+                                    </div>
+                                    <span class="sw-data-grid__cell-resize"></span>
+                                </th>
+                                <th class="sw-data-grid__cell sw-data-grid__cell--header sw-data-grid__cell--property sw-data-grid__cell--sortable sw-data-grid__cell--5 sw-data-grid__cell--align-left">
+                                    <div class="sw-data-grid__cell-content">
+                                        {{ $tc('popup.grid.orderStatus') }}
+                                    </div>
+                                    <span class="sw-data-grid__cell-resize"></span>
+                                </th>
+                                <th class="sw-data-grid__cell sw-data-grid__cell--header sw-data-grid__cell--property sw-data-grid__cell--sortable sw-data-grid__cell--6 sw-data-grid__cell--align-left">
+                                    <div class="sw-data-grid__cell-content">
+                                        {{ $tc('popup.grid.paymentStatus') }}
+                                    </div>
+                                    <span class="sw-data-grid__cell-resize"></span>
+                                </th>
+                                <th class="sw-data-grid__cell sw-data-grid__cell--header sw-data-grid__cell--property sw-data-grid__cell--sortable sw-data-grid__cell--7 sw-data-grid__cell--align-left">
+                                    <div class="sw-data-grid__cell-content">
+                                        {{ $tc('popup.grid.deliveryStatus') }}
+                                    </div>
+                                    <span class="sw-data-grid__cell-resize"></span>
+                                </th>
+                                <th class="sw-data-grid__cell sw-data-grid__cell--header sw-data-grid__cell--property sw-data-grid__cell--sortable sw-data-grid__cell--8 sw-data-grid__cell--align-left">
+                                    <div class="sw-data-grid__cell-content">
+                                        {{ $tc('popup.grid.orderDate') }}
+                                    </div>
+                                    <span class="sw-data-grid__cell-resize"></span>
+                                </th>
+                                <th aria-hidden="true"
+                                    class="sw-data-grid__cell sw-data-grid__cell--header sw-data-grid__cell-spacer">
+                                    <div class="sw-data-grid__cell-content"></div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="sw-data-grid__body">
+                                <tr :class="['sw-data-grid__row is--selected sw-data-grid__row--0', (item.deliveries[0].shippingMethod.customFields && item.deliveries[0].shippingMethod.customFields.technical_name === 'InPost' ? '' : ' background-red'), (item.extensions.inPost && item.extensions.inPost.packageId !== null ? '' : ' background-red'), (item.deliveries[0].trackingCodes.length > 0 ? ' background-green' : '')]" v-for="item in selectedOrders">
+
+                                <td class="sw-data-grid__cell sw-data-grid__cell--orderNumber sw-data-grid__cell--align-left">
+                                    <div class="sw-data-grid__cell-content">
+                                        <a :href="'#/sw/order/detail/' + item.id" target="_blank" rel="noreferrer noopener">
+                                            {{ item.orderNumber }}
+                                        </a>
+                                    </div>
+                                </td>
+                                <td class="sw-data-grid__cell sw-data-grid__cell--salesChannel-name sw-data-grid__cell--align-left">
+                                    <div class="sw-data-grid__cell-content">
+                                        <span class="sw-data-grid__cell-value">
+                                                {{ item.salesChannel.name }}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td class="sw-data-grid__cell sw-data-grid__cell--orderCustomer-firstName sw-data-grid__cell--align-left">
+                                    <div class="sw-data-grid__cell-content">
+                                        <span class="sw-data-grid__cell-value">
+                                            {{ item.billingAddress.firstName + ' ' + item.billingAddress.lastName }}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td class="sw-data-grid__cell sw-data-grid__cell--billingAddressId sw-data-grid__cell--align-left">
+                                    <div class="sw-data-grid__cell-content">
+                                        {{ item.billingAddress.street }},
+                                        {{ item.billingAddress.zipcode }},
+                                        {{ item.billingAddress.city }}
+                                    </div>
+                                </td>
+                                <td class="sw-data-grid__cell sw-data-grid__cell--amountTotal sw-data-grid__cell--align-right">
+                                    <div class="sw-data-grid__cell-content">
+                                        {{ item.currency.isoCode }} {{ item.amountTotal }}
+                                    </div>
+                                </td>
+                                <td class="sw-data-grid__cell sw-data-grid__cell--stateMachineState-name sw-data-grid__cell--align-left">
+                                    <div class="sw-data-grid__cell-content">
+                                        <span :class="item.stateMachineState.name == 'Cancelled' ? 'sw-label sw-label--appearance-pill sw-label--size-default sw-label--danger' : 'sw-label sw-label--appearance-pill sw-label--size-default sw-label--neutral'">
+                                            <span class="sw-label__caption">
+                                                {{ item.stateMachineState.name }}
+                                            </span>
+                                        </span>
+                                    </div>
+                                </td>
+                                <td class="sw-data-grid__cell sw-data-grid__cell--transactions-last()-stateMachineState-name sw-data-grid__cell--align-left">
+                                    <div class="sw-data-grid__cell-content">
+                                        <span :class="item.transactions[0].stateMachineState.name == 'Cancelled' ? 'sw-label sw-label--appearance-pill sw-label--size-default sw-label--danger' : 'sw-label sw-label--appearance-pill sw-label--size-default sw-label--neutral'">
+                                            <span class="sw-label__caption">
+                                                {{ item.transactions[0].stateMachineState.name }}
+                                            </span>
+                                        </span>
+                                    </div>
+                                </td>
+                                <td class="sw-data-grid__cell sw-data-grid__cell--deliveries[0]-stateMachineState-name sw-data-grid__cell--align-left">
+                                    <div class="sw-data-grid__cell-content">
+                                        <span :class="item.deliveries[0].stateMachineState.name == 'Cancelled' ? 'sw-label sw-label--appearance-pill sw-label--size-default sw-label--danger' : 'sw-label sw-label--appearance-pill sw-label--size-default sw-label--neutral'">
+                                            <span class="sw-label__caption">
+                                                {{ item.deliveries[0].stateMachineState.name }}
+                                            </span>
+                                        </span>
+                                    </div>
+                                </td>
+                                <td class="sw-data-grid__cell sw-data-grid__cell--orderDateTime sw-data-grid__cell--align-left">
+                                    <div class="sw-data-grid__cell-content">
+                                        {{ item.orderDateTime|date }}
+                                    </div>
+                                </td>
+                                <td aria-hidden="true" class="sw-data-grid__cell sw-data-grid__cell-spacer">
+                                    <div class="sw-data-grid__cell-content"></div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="sw-container" style="place-items: stretch; text-align: left; width: 98%; margin: 50px auto 0;">
+                    <h3>{{ $tc('popup.formData.title') }}</h3>
+
+                    <div class="sw-container address-content-container"
+                         style="grid-template-columns: 1fr 1fr 1fr; gap: 0 30px; place-items: stretch;">
+                        <div class="sw-field sw-block-field sw-contextual-field sw-field--text sw-field--default">
+                            <div class="sw-field__label">
+                                <label for="sw-field--name">
+                                    {{ $tc('popup.formData.name') }} <span class="red-star">*</span>
+                                </label>
+                            </div>
+                            <div class="sw-block-field__block">
+                                <input id="name" type="text" name="name" :label="$tc('popup.formData.name')" required>
+                            </div>
+                        </div>
+                        <div class="sw-field sw-block-field sw-contextual-field sw-field--text sw-field--default">
+                            <div class="sw-field__label">
+                                <label for="sw-field--phone-number">
+                                    {{ $tc('popup.formData.phoneNumber') }} <span class="red-star">*</span>
+                                </label>
+                            </div>
+                            <div class="sw-block-field__block">
+                                <input id="phoneNumber" type="text" name="phoneNumber" :label="$tc('popup.formData.phoneNumber')" required>
+                            </div>
+                        </div>
+                        <div class="sw-field sw-block-field sw-contextual-field sw-field--text sw-field--default">
+                            <div class="sw-field__label">
+                                <label for="sw-field--email">
+                                    {{ $tc('popup.formData.email') }} <span class="red-star">*</span>
+                                </label>
+                            </div>
+                            <div class="sw-block-field__block">
+                                <input id="email" type="email" name="email" :label="$tc('popup.formData.email')" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sw-container address-content-container"
+                         style="grid-template-columns: 1fr 120px 150px 150px; gap: 0px 30px; place-items: stretch;">
+                        <div class="sw-field sw-block-field sw-contextual-field sw-field--text sw-field--default">
+                            <div class="sw-field__label">
+                                <label for="sw-field--street">
+                                    {{ $tc('popup.formData.street') }} <span class="red-star">*</span>
+                                </label>
+                            </div>
+                            <div class="sw-block-field__block">
+                                <input id="street" type="text" name="street" :label="$tc('popup.formData.street')" required>
+                            </div>
+                        </div>
+                        <div class="sw-field sw-block-field sw-contextual-field sw-field--text sw-field--default">
+                            <div class="sw-field__label">
+                                <label for="sw-field--building-number">
+                                    {{ $tc('popup.formData.buildingNumber') }} <span class="red-star">*</span>
+                                </label>
+                            </div>
+                            <div class="sw-block-field__block">
+                                <input id="buildingNumber" type="text" name="buildingNumber" :label="$tc('popup.formData.buildingNumber')" required>
+                            </div>
+                        </div>
+                        <div class="sw-field sw-block-field sw-contextual-field sw-field--text sw-field--default">
+                            <div class="sw-field__label">
+                                <label for="sw-field--city">
+                                    {{ $tc('popup.formData.city') }} <span class="red-star">*</span>
+                                </label>
+                            </div>
+                            <div class="sw-block-field__block">
+                                <input id="city" type="text" name="city" :label="$tc('popup.formData.city')" required>
+                            </div>
+                        </div>
+                        <div class="sw-field sw-block-field sw-contextual-field sw-field--text sw-field--default">
+                            <div class="sw-field__label">
+                                <label for="sw-field--post-code">
+                                    {{ $tc('popup.formData.postalCode') }} <span class="red-star">*</span>
+                                </label>
+                            </div>
+                            <div class="sw-block-field__block">
+                                <input id="postCode" type="text" name="postCode" :label="$tc('popup.formData.postalCode')" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="sw-modal__footer">
+                <button type="button" class="sw-button sw-button--small" @click="onCloseModal">
+                    <span class="sw-button__content">{{ $tc('popup.cancelButton') }}</span>
+                </button>
+                <button type="submit" class="sw-button sw-button--primary sw-button--small" @click="submitForm">
+                    <span class="sw-button__content">{{ $tc('popup.orderCourier') }}</span>
+                </button>
+            </footer>
+        </form>
+    </div>
+</div>
