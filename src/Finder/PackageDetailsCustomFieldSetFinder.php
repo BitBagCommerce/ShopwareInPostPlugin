@@ -10,10 +10,11 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Finder;
 
-use BitBag\ShopwareInPostPlugin\Filter\CustomFieldSetForPackageDetailsFilter;
+use BitBag\ShopwareInPostPlugin\Factory\CustomFieldsForPackageDetailsPayloadFactoryInterface;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\IdSearchResult;
 
 final class PackageDetailsCustomFieldSetFinder implements PackageDetailsCustomFieldSetFinderInterface
@@ -27,7 +28,13 @@ final class PackageDetailsCustomFieldSetFinder implements PackageDetailsCustomFi
 
     public function search(Context $context): IdSearchResult
     {
-        $customFieldsCriteria = (new Criteria())->addFilter(new CustomFieldSetForPackageDetailsFilter());
+        $customFieldsCriteria = (new Criteria())
+            ->addFilter(
+                new EqualsFilter(
+                    CustomFieldsForPackageDetailsPayloadFactoryInterface::TECHNICAL_NAME,
+                    CustomFieldsForPackageDetailsPayloadFactoryInterface::PACKAGE_DETAILS_KEY
+                )
+            );
 
         return $this->customFieldSetRepository->searchIds($customFieldsCriteria, $context);
     }

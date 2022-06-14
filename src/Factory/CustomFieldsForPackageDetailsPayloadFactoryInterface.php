@@ -14,5 +14,7 @@ interface CustomFieldsForPackageDetailsPayloadFactoryInterface
 {
     public const PACKAGE_DETAILS_KEY = 'bitbag_inpost_point_package_details';
 
+    public const TECHNICAL_NAME = 'config.technical_name';
+
     public function create(): array;
 }
