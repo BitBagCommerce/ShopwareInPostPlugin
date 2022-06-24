@@ -77,11 +77,7 @@ final class BitBagShopwareInPostPlugin extends Plugin
         $db = $this->connection;
 
         // These are actually only tables from old plugin versions. We still remove them here just in case.
-        $db->executeStatement('
-            SET FOREIGN_KEY_CHECKS=0;
-            DROP TABLE IF EXISTS `' . OrderInPostExtensionDefinition::ENTITY_NAME . '`;
-            SET FOREIGN_KEY_CHECKS=1;
-        ');
+        $db->executeStatement('DROP TABLE IF EXISTS `' . OrderInPostExtensionDefinition::ENTITY_NAME . '`;');
 
         $db->executeStatement(
             'DELETE FROM system_config
