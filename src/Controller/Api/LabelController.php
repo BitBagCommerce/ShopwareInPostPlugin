@@ -45,7 +45,7 @@ final class LabelController
     }
 
     /**
-     * @OA\GET(
+     * @OA\Get(
      *     path="/api/_action/bitbag-inpost-plugin/label/{orderId}",
      *     summary="Gets an InPost package label for an order",
      *     operationId="show",
