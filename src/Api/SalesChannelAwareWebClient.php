@@ -98,6 +98,7 @@ final class SalesChannelAwareWebClient implements SalesChannelAwareWebClientInte
             'accessToken' => $inPostApiConfig->getAccessToken(),
             'organizationId' => $inPostApiConfig->getOrganizationId(),
             'environment' => $inPostApiConfig->getEnvironment(),
+            'widgetToken' => $inPostApiConfig->getWidgetToken(),
         ];
     }
 }

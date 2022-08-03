@@ -12,5 +12,9 @@ namespace BitBag\ShopwareInPostPlugin\Api;
 
 interface TestWebClientInterface
 {
-    public function checkCredentials(string $accessToken, string $organizationId, string $environment): bool;
+    public function checkCredentials(
+        string $accessToken,
+        string $organizationId,
+        string $environment
+    ): bool;
 }

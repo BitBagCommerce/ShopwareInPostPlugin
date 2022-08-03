@@ -10,15 +10,18 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Subscriber;
 
+use BitBag\ShopwareInPostPlugin\Config\InPostConfigServiceInterface;
 use BitBag\ShopwareInPostPlugin\Core\Checkout\Cart\Validator\CartValidator;
 use BitBag\ShopwareInPostPlugin\Extension\Content\Order\OrderInPostExtensionInterface;
 use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodPayloadFactoryInterface;
 use Shopware\Core\Checkout\Cart\Order\CartConvertedEvent;
 use Shopware\Core\Checkout\Shipping\Aggregate\ShippingMethodTranslation\ShippingMethodTranslationEntity;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\Uuid\Uuid;
+use Shopware\Core\System\SystemConfig\SystemConfigService;
+use Shopware\Storefront\Page\Checkout\Confirm\CheckoutConfirmPageLoadedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -26,20 +29,25 @@ class CartConvertedSubscriber implements EventSubscriberInterface
 {
     private RequestStack $requestStack;
 
-    private EntityRepositoryInterface $shippingMethodTranslationRepository;
+    private EntityRepository $shippingMethodTranslationRepository;
+
+    private SystemConfigService $systemConfigService;
 
     public function __construct(
         RequestStack $requestStack,
-        EntityRepositoryInterface $shippingMethodTranslationRepository
+        EntityRepository $shippingMethodTranslationRepository,
+        SystemConfigService $systemConfigService
     ) {
         $this->requestStack = $requestStack;
         $this->shippingMethodTranslationRepository = $shippingMethodTranslationRepository;
+        $this->systemConfigService = $systemConfigService;
     }
 
     public static function getSubscribedEvents(): array
     {
         return [
             CartConvertedEvent::class => 'updateInPostOrderData',
+            CheckoutConfirmPageLoadedEvent::class => 'checkoutConfirmPageLoaded',
         ];
     }
 
@@ -90,6 +98,20 @@ class CartConvertedSubscriber implements EventSubscriberInterface
         ];
 
         $event->setConvertedCart($orderData);
+    }
+
+    public function checkoutConfirmPageLoaded(CheckoutConfirmPageLoadedEvent $event): void
+    {
+        $systemConfigPrefix = InPostConfigServiceInterface::SYSTEM_CONFIG_PREFIX;
+        $salesChannelId = $event->getSalesChannelContext()->getSalesChannelId();
+
+        $environment = $this->systemConfigService->getString($systemConfigPrefix . '.inPostEnvironment', $salesChannelId) ?: null;
+        $widgetToken = $this->systemConfigService->getString($systemConfigPrefix . '.inPostWidgetToken', $salesChannelId) ?: null;
+
+        $event->getPage()->setExtensions([
+            $systemConfigPrefix . '.inPostWidgetToken' => $widgetToken,
+            $systemConfigPrefix . '.inPostEnvironment' => $environment,
+        ]);
     }
 
     private function isPostCodeValid(string $postCode): bool
