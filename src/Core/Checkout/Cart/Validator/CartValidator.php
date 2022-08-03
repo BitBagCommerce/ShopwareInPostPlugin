@@ -32,9 +32,12 @@ final class CartValidator implements CartValidatorInterface
 
     public const PHONE_NUMBER_LENGTH = 9;
 
-    public function validate(Cart $cart, ErrorCollection $errors, SalesChannelContext $context): void
-    {
-        if ($this->getTechnicalName($context) !== ShippingMethodPayloadFactoryInterface::SHIPPING_KEY) {
+    public function validate(
+        Cart $cart,
+        ErrorCollection $errors,
+        SalesChannelContext $context
+    ): void {
+        if (ShippingMethodPayloadFactoryInterface::SHIPPING_KEY !== $this->getTechnicalName($context)) {
             return;
         }
 
@@ -63,6 +66,7 @@ final class CartValidator implements CartValidatorInterface
         foreach ($cart->getLineItems()->getElements() as $lineItem) {
             $deliveryInformation = $lineItem->getDeliveryInformation();
 
+            /** @psalm-suppress DeprecatedMethod */
             if (null !== $deliveryInformation && 0.0 === $deliveryInformation->getWeight()) {
                 $errors->add(new NullWeightError($cart->getToken()));
 
@@ -98,8 +102,11 @@ final class CartValidator implements CartValidatorInterface
         return (bool) preg_match(self::POST_CODE_REGEX, $postCode);
     }
 
-    private function checkPostCodeValidity(string $postCode, string $addressId, ErrorCollection $errors): void
-    {
+    private function checkPostCodeValidity(
+        string $postCode,
+        string $addressId,
+        ErrorCollection $errors
+    ): void {
         if (!$this->isPostCodeValid($postCode)) {
             $postCode = trim(substr_replace($postCode, '-', 2, 0));
 

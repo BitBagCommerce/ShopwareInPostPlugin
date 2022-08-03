@@ -22,8 +22,12 @@ final class WebClient implements WebClientInterface
         $this->apiClient = $client;
     }
 
-    public function request(string $method, string $url, array $headers, array $data = []): string
-    {
+    public function request(
+        string $method,
+        string $url,
+        array $headers,
+        array $data = []
+    ): string {
         $options = [
             'json' => $data,
             'headers' => $headers,

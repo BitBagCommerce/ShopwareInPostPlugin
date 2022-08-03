@@ -32,8 +32,11 @@ class ShippingMethodPayloadFactory implements ShippingMethodPayloadFactoryInterf
         $this->deliveryTimeRepository = $deliveryTimeRepository;
     }
 
-    public function create(string $name, string $ruleId, Context $context): array
-    {
+    public function create(
+        string $name,
+        string $ruleId,
+        Context $context
+    ): array {
         $currencyId = $context->getCurrencyId();
 
         $inPostShippingMethod = [

@@ -44,5 +44,14 @@
                 </option>
             </options>
         </input-field>
+
+        <input-field>
+            <name>inPostWidgetToken</name>
+            <label>Widget token</label>
+            <label lang="pl-PL">Token do mapy (widgetu)</label>
+            <placeholder>Widget token</placeholder>
+            <placeholder lang="pl-PL">Token do mapy (widgetu)</placeholder>
+            <required>true</required>
+        </input-field>
     </card>
 </config>
