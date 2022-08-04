@@ -12,7 +12,7 @@ namespace BitBag\ShopwareInPostPlugin\Finder;
 
 use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodPayloadFactoryInterface;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\ContainsFilter;
@@ -20,9 +20,9 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\IdSearchResult;
 
 final class ShippingMethodFinder implements ShippingMethodFinderInterface
 {
-    private EntityRepositoryInterface $shippingMethodRepository;
+    private EntityRepository $shippingMethodRepository;
 
-    public function __construct(EntityRepositoryInterface $shippingMethodRepository)
+    public function __construct(EntityRepository $shippingMethodRepository)
     {
         $this->shippingMethodRepository = $shippingMethodRepository;
     }

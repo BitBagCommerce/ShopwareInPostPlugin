@@ -14,7 +14,7 @@ use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodPayloadFactoryInterface;
 use BitBag\ShopwareInPostPlugin\Finder\ShippingMethodFinderInterface;
 use Shopware\Core\Checkout\Shipping\ShippingMethodEntity;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 
 final class ShippingMethodConfigurator implements ShippingMethodConfiguratorInterface
 {
@@ -22,12 +22,12 @@ final class ShippingMethodConfigurator implements ShippingMethodConfiguratorInte
 
     private ShippingMethodPayloadFactoryInterface $shippingMethodPayloadFactory;
 
-    private EntityRepositoryInterface $shippingMethodRepository;
+    private EntityRepository $shippingMethodRepository;
 
     public function __construct(
         ShippingMethodFinderInterface $shippingMethodFinder,
         ShippingMethodPayloadFactoryInterface $shippingMethodPayloadFactory,
-        EntityRepositoryInterface $shippingMethodRepository
+        EntityRepository $shippingMethodRepository
     ) {
         $this->shippingMethodFinder = $shippingMethodFinder;
         $this->shippingMethodPayloadFactory = $shippingMethodPayloadFactory;

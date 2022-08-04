@@ -15,14 +15,14 @@ use Shopware\Core\Checkout\Order\Aggregate\OrderLineItem\OrderLineItemEntity;
 use Shopware\Core\Checkout\Order\OrderEntity;
 use Shopware\Core\Content\Product\ProductEntity;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 
 final class OrderWeightCalculator implements OrderWeightCalculatorInterface
 {
-    private EntityRepositoryInterface $productRepository;
+    private EntityRepository $productRepository;
 
-    public function __construct(EntityRepositoryInterface $productRepository)
+    public function __construct(EntityRepository $productRepository)
     {
         $this->productRepository = $productRepository;
     }
@@ -32,7 +32,6 @@ final class OrderWeightCalculator implements OrderWeightCalculatorInterface
         $totalWeight = 0.0;
 
         $orderLineItems = $order->getLineItems();
-
         if (null === $orderLineItems) {
             throw new OrderException('order.productsNotFound');
         }
@@ -50,7 +49,6 @@ final class OrderWeightCalculator implements OrderWeightCalculatorInterface
 
         foreach ($orderLineItems as $item) {
             $product = $item->getProduct();
-
             if (null !== $product) {
                 $parentId = $product->getParentId();
                 $productWeight = $product->getWeight();

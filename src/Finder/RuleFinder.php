@@ -11,16 +11,16 @@ declare(strict_types=1);
 namespace BitBag\ShopwareInPostPlugin\Finder;
 
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\IdSearchResult;
 
 final class RuleFinder implements RuleFinderInterface
 {
-    private EntityRepositoryInterface $ruleRepository;
+    private EntityRepository $ruleRepository;
 
-    public function __construct(EntityRepositoryInterface $ruleRepository)
+    public function __construct(EntityRepository $ruleRepository)
     {
         $this->ruleRepository = $ruleRepository;
     }

@@ -9,7 +9,7 @@ use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodPayloadFactory;
 use BitBag\ShopwareInPostPlugin\Finder\DeliveryTimeFinderInterface;
 use PHPUnit\Framework\TestCase;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\IdSearchResult;
 use Shopware\Core\Framework\Uuid\Uuid;
@@ -22,7 +22,7 @@ final class ShippingMethodPayloadFactoryTest extends TestCase
 
         $deliveryTimePayloadFactory = $this->createMock(DeliveryTimePayloadFactoryInterface::class);
 
-        $deliveryTimeRepository = $this->createMock(EntityRepositoryInterface::class);
+        $deliveryTimeRepository = $this->createMock(EntityRepository::class);
 
         $context = $this->createMock(Context::class);
 

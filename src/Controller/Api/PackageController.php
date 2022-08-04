@@ -16,7 +16,7 @@ use BitBag\ShopwareInPostPlugin\Finder\OrderFinderInterface;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderExtensionDataResolverInterface;
 use OpenApi\Annotations as OA;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +27,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 final class PackageController
 {
-    private EntityRepositoryInterface $orderRepository;
+    private EntityRepository $orderRepository;
 
     private OrderFinderInterface $orderFinder;
 
@@ -36,7 +36,7 @@ final class PackageController
     private OrderExtensionDataResolverInterface $orderExtensionDataResolver;
 
     public function __construct(
-        EntityRepositoryInterface $orderRepository,
+        EntityRepository $orderRepository,
         OrderFinderInterface $orderFinder,
         PackageApiServiceInterface $packageApiService,
         OrderExtensionDataResolverInterface $orderExtensionDataResolver
