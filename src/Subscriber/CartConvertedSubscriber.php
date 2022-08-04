@@ -33,14 +33,18 @@ class CartConvertedSubscriber implements EventSubscriberInterface
 
     private SystemConfigService $systemConfigService;
 
+    private InPostConfigServiceInterface $inPostConfigService;
+
     public function __construct(
         RequestStack $requestStack,
         EntityRepository $shippingMethodTranslationRepository,
-        SystemConfigService $systemConfigService
+        SystemConfigService $systemConfigService,
+        InPostConfigServiceInterface $inPostConfigService
     ) {
         $this->requestStack = $requestStack;
         $this->shippingMethodTranslationRepository = $shippingMethodTranslationRepository;
         $this->systemConfigService = $systemConfigService;
+        $this->inPostConfigService = $inPostConfigService;
     }
 
     public static function getSubscribedEvents(): array
@@ -104,13 +108,11 @@ class CartConvertedSubscriber implements EventSubscriberInterface
     {
         $systemConfigPrefix = InPostConfigServiceInterface::SYSTEM_CONFIG_PREFIX;
         $salesChannelId = $event->getSalesChannelContext()->getSalesChannelId();
-
-        $environment = $this->systemConfigService->getString($systemConfigPrefix . '.inPostEnvironment', $salesChannelId) ?: null;
-        $widgetToken = $this->systemConfigService->getString($systemConfigPrefix . '.inPostWidgetToken', $salesChannelId) ?: null;
+        $configService = $this->inPostConfigService->getInPostApiConfig($salesChannelId);
 
         $event->getPage()->setExtensions([
-            $systemConfigPrefix . '.inPostWidgetToken' => $widgetToken,
-            $systemConfigPrefix . '.inPostEnvironment' => $environment,
+            $systemConfigPrefix . '.inPostWidgetToken' => $configService->getWidgetToken(),
+            $systemConfigPrefix . '.inPostEnvironment' => $configService->getEnvironment(),
         ]);
     }
 
