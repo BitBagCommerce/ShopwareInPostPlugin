@@ -14,6 +14,14 @@
     {% endif %}
 
     {% if (shipping.id is same as(context.shippingMethod.id)) and technicalName == constant('BitBag\\ShopwareInPostPlugin\\Factory\\ShippingMethodPayloadFactoryInterface::SHIPPING_KEY') %}
+        {% if page.extensions['BitBagShopwareInPostPlugin.inpost.inPostEnvironment'] == constant('BitBag\\ShopwareInPostPlugin\\Api\\WebClientInterface::PRODUCTION_ENVIRONMENT') %}
+            <link rel="stylesheet" href="https://geowidget.inpost.pl/inpost-geowidget.css"/>
+            <script src="https://geowidget.inpost.pl/inpost-geowidget.js" defer></script>
+        {% else %}
+            <link rel="stylesheet" href="https://sandbox-easy-geowidget-sdk.easypack24.net/inpost-geowidget.css"/>
+            <script src="https://sandbox-easy-geowidget-sdk.easypack24.net/inpost-geowidget.js"></script>
+        {% endif %}
+
         <div class="inpostPoint hide" data-inpost-plugin-selectedPoint>
             <div class="inpostDetails">
                 <img class="image" data-inpost-plugin-thumbnail/>
@@ -26,7 +34,13 @@
 
             <button class="btn btn-primary" data-inpost-plugin-changePoint>{{ 'pointName.changePoint'|trans }}</button>
         </div>
-        <div id="easypack-map" data-inpost-plugin-map></div>
+
+        <div class="data-inpost-plugin-map-container" data-inpost-plugin-map>
+            <inpost-geowidget onpoint="afterPointSelected"
+                              token="{{ page.extensions['BitBagShopwareInPostPlugin.inpost.inPostWidgetToken'] }}"
+                              language="pl"
+                              config="parcelCollect"></inpost-geowidget>
+        </div>
 
         <p class="error-message hide point-name-not-selected-message">{{ 'pointName.notFound'|trans }}</p>
 

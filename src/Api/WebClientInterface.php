@@ -24,7 +24,12 @@ interface WebClientInterface
 
     public const IN_POST_LOCKER_STANDARD_SERVICE = 'inpost_locker_standard';
 
-    public function request(string $method, string $url, array $headers, array $data = []): string;
+    public function request(
+        string $method,
+        string $url,
+        array $headers,
+        array $data = []
+    ): string;
 
     public function getApiBaseUrl(bool $sandbox): string;
 }

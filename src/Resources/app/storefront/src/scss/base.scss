@@ -29,7 +29,7 @@
 
 }
 
-.inpostPoint.hide, .easypack-widget.hide{
+.hide {
     display: none;
 }
 
@@ -39,4 +39,8 @@
     &.hide {
         display: none;
     }
+}
+
+.data-inpost-plugin-map-container {
+    height: 700px;
 }

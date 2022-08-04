@@ -8,6 +8,7 @@
         >
             <argument type="service" id="request_stack" />
             <argument type="service" id="shipping_method_translation.repository" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Config\InPostConfigService" />
 
             <tag name="kernel.event_subscriber" />
         </service>
