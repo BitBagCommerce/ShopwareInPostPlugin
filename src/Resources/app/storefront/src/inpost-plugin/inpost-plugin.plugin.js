@@ -46,7 +46,7 @@ export default class InPostPlugin extends Plugin {
         inPostGeoMap.classList.add('hide');
 
         const pointThumbnail = document.querySelector('[data-inpost-plugin-thumbnail]');
-        pointThumbnail.src = point.image_url
+        pointThumbnail.src = point.image_url;
 
         const pointName = document.querySelector('[data-inpost-plugin-name]');
         pointName.innerText = point.name;
