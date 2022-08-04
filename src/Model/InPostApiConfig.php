@@ -18,8 +18,11 @@ final class InPostApiConfig
 
     private string $environment;
 
-    public function __construct(string $organizationId, string $accessToken, string $environment)
-    {
+    public function __construct(
+        string $organizationId,
+        string $accessToken,
+        string $environment
+    ) {
         $this->organizationId = $organizationId;
         $this->accessToken = $accessToken;
         $this->environment = $environment;

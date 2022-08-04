@@ -12,7 +12,7 @@ namespace BitBag\ShopwareInPostPlugin\Factory;
 
 use BitBag\ShopwareInPostPlugin\Finder\DeliveryTimeFinderInterface;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 
 class ShippingMethodPayloadFactory implements ShippingMethodPayloadFactoryInterface
 {
@@ -20,20 +20,23 @@ class ShippingMethodPayloadFactory implements ShippingMethodPayloadFactoryInterf
 
     private DeliveryTimePayloadFactoryInterface $createDeliveryTimeFactory;
 
-    private EntityRepositoryInterface $deliveryTimeRepository;
+    private EntityRepository $deliveryTimeRepository;
 
     public function __construct(
         DeliveryTimeFinderInterface $deliveryTimeFinder,
         DeliveryTimePayloadFactoryInterface $createDeliveryTimeFactory,
-        EntityRepositoryInterface $deliveryTimeRepository
+        EntityRepository $deliveryTimeRepository
     ) {
         $this->deliveryTimeFinder = $deliveryTimeFinder;
         $this->createDeliveryTimeFactory = $createDeliveryTimeFactory;
         $this->deliveryTimeRepository = $deliveryTimeRepository;
     }
 
-    public function create(string $name, string $ruleId, Context $context): array
-    {
+    public function create(
+        string $name,
+        string $ruleId,
+        Context $context
+    ): array {
         $currencyId = $context->getCurrencyId();
 
         $inPostShippingMethod = [

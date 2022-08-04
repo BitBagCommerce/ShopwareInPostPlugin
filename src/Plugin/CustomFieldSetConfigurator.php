@@ -13,7 +13,7 @@ namespace BitBag\ShopwareInPostPlugin\Plugin;
 use BitBag\ShopwareInPostPlugin\Factory\CustomFieldsForPackageDetailsPayloadFactoryInterface;
 use BitBag\ShopwareInPostPlugin\Finder\PackageDetailsCustomFieldSetFinderInterface;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 
 final class CustomFieldSetConfigurator implements CustomFieldSetConfiguratorInterface
 {
@@ -21,12 +21,12 @@ final class CustomFieldSetConfigurator implements CustomFieldSetConfiguratorInte
 
     private CustomFieldsForPackageDetailsPayloadFactoryInterface $customFieldsForPackageDetailsPayloadFactory;
 
-    private EntityRepositoryInterface $customFieldSetRepository;
+    private EntityRepository $customFieldSetRepository;
 
     public function __construct(
         PackageDetailsCustomFieldSetFinderInterface $packageDetailsCustomFieldSetFinder,
         CustomFieldsForPackageDetailsPayloadFactoryInterface $customFieldsForPackageDetailsPayloadFactory,
-        EntityRepositoryInterface $customFieldSetRepository
+        EntityRepository $customFieldSetRepository
     ) {
         $this->packageDetailsCustomFieldSetFinder = $packageDetailsCustomFieldSetFinder;
         $this->customFieldsForPackageDetailsPayloadFactory = $customFieldsForPackageDetailsPayloadFactory;

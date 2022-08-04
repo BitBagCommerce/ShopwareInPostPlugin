@@ -75,10 +75,7 @@ final class BitBagShopwareInPostPlugin extends Plugin
         }
 
         $db = $this->connection;
-
-        // These are actually only tables from old plugin versions. We still remove them here just in case.
         $db->executeStatement('DROP TABLE IF EXISTS `' . OrderInPostExtensionDefinition::ENTITY_NAME . '`;');
-
         $db->executeStatement(
             'DELETE FROM system_config
             WHERE configuration_key LIKE :domain',
@@ -86,7 +83,6 @@ final class BitBagShopwareInPostPlugin extends Plugin
                 'domain' => InPostConfigServiceInterface::SYSTEM_CONFIG_PREFIX . '.%',
             ],
         );
-
         $db->executeStatement(
             'DELETE FROM custom_field_set where JSON_EXTRACT(config, "$.technical_name") = :technicalName',
             [

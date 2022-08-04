@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace BitBag\ShopwareInPostPlugin\Controller\Api;
 
 use BitBag\ShopwareInPostPlugin\Api\SalesChannelAwareWebClientInterface;
-use BitBag\ShopwareInPostPlugin\Exception\InPostApiException;
+use BitBag\ShopwareInPostPlugin\Exception\MissingApiConfigException;
 use BitBag\ShopwareInPostPlugin\Exception\PackageException;
 use BitBag\ShopwareInPostPlugin\Exception\PackageNotFoundException;
 use BitBag\ShopwareInPostPlugin\Finder\OrderFinderInterface;
@@ -104,7 +104,7 @@ final class LabelController
             }
 
             if (isset($error['error']) && 'token_invalid' === $error['error']) {
-                throw new InPostApiException('api.providedDataNotValid');
+                throw new MissingApiConfigException('api.providedDataNotValid');
             }
 
             throw $e;

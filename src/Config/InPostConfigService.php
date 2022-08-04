@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Config;
 
-use BitBag\ShopwareInPostPlugin\Exception\ApiDataException;
+use BitBag\ShopwareInPostPlugin\Exception\MissingApiConfigException;
 use BitBag\ShopwareInPostPlugin\Model\InPostApiConfig;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
 
@@ -30,7 +30,7 @@ final class InPostConfigService implements InPostConfigServiceInterface
         $environment = $this->systemConfigService->getString(self:: SYSTEM_CONFIG_PREFIX . '.inPostEnvironment', $salesChannelId) ?: null;
 
         if (null === $organizationId || null === $accessToken || null === $environment) {
-            throw new ApiDataException('api.credentialsDataNotFound');
+            throw new MissingApiConfigException('api.credentialsDataNotFound');
         }
 
         return new InPostApiConfig($organizationId, $accessToken, $environment);

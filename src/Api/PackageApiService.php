@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Api;
 
-use BitBag\ShopwareInPostPlugin\Exception\InPostApiException;
+use BitBag\ShopwareInPostPlugin\Exception\MissingApiConfigException;
 use BitBag\ShopwareInPostPlugin\Exception\PackageException;
 use BitBag\ShopwareInPostPlugin\Exception\PackageNotFoundException;
 use BitBag\ShopwareInPostPlugin\Factory\Package\PackagePayloadFactoryInterface;
@@ -64,7 +64,7 @@ final class PackageApiService implements PackageApiServiceInterface
             }
 
             if (isset($error['error']) && 'token_invalid' === $error['error']) {
-                throw new InPostApiException('api.providedDataNotValid');
+                throw new MissingApiConfigException('api.providedDataNotValid');
             }
 
             throw $e;
@@ -76,11 +76,11 @@ final class PackageApiService implements PackageApiServiceInterface
 
         switch ($package['error']) {
             case 'validation_failed':
-                throw new InPostApiException('api.providedDataNotValid');
+                throw new MissingApiConfigException('api.providedDataNotValid');
             case 'resource_not_found':
-                throw new InPostApiException('api.resourceNotFound');
+                throw new MissingApiConfigException('api.resourceNotFound');
             case 'no_carriers':
-                throw new InPostApiException('api.noCarriers');
+                throw new MissingApiConfigException('api.noCarriers');
             default:
                 return $package;
         }

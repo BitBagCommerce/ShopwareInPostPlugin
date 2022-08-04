@@ -21,8 +21,11 @@ final class TestWebClient implements TestWebClientInterface
         $this->webClient = $webClient;
     }
 
-    public function checkCredentials(string $accessToken, string $organizationId, string $environment): bool
-    {
+    public function checkCredentials(
+        string $accessToken,
+        string $organizationId,
+        string $environment
+    ): bool {
         try {
             $apiBaseUrl = $this->webClient->getApiBaseUrl(
                 WebClientInterface::SANDBOX_ENVIRONMENT === $environment
