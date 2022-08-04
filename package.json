@@ -1,0 +1,26 @@
+{
+  "name": "bitbag-shopware-inpost-plugin",
+  "version": "1.0.0",
+  "description": "# InPost Plugin for Shopware",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BitBagCommerce/ShopwareInPostPlugin.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BitBagCommerce/ShopwareInPostPlugin/issues"
+  },
+  "homepage": "https://github.com/BitBagCommerce/ShopwareInPostPlugin#readme",
+  "devDependencies": {
+    "eslint": "^8.21.0"
+  }
+}

@@ -76,3 +76,7 @@ jobs:
             -
                 name: Run ecs
                 run: vendor/bin/ecs check tests/ src/ --config ecs.php
+
+            -
+                name: Run ESLint
+                run: npx eslint src/Resources/app/storefront/src/inpost-plugin/ --ext .js

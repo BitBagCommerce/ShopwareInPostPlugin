@@ -18,14 +18,18 @@ final class InPostApiConfig
 
     private string $environment;
 
+    private string $widgetToken;
+
     public function __construct(
         string $organizationId,
         string $accessToken,
-        string $environment
+        string $environment,
+        string $widgetToken
     ) {
         $this->organizationId = $organizationId;
         $this->accessToken = $accessToken;
         $this->environment = $environment;
+        $this->widgetToken = $widgetToken;
     }
 
     public function getOrganizationId(): string
@@ -41,5 +45,10 @@ final class InPostApiConfig
     public function getEnvironment(): string
     {
         return $this->environment;
+    }
+
+    public function getWidgetToken(): string
+    {
+        return $this->widgetToken;
     }
 }
