@@ -20,7 +20,6 @@ use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\Uuid\Uuid;
-use Shopware\Core\System\SystemConfig\SystemConfigService;
 use Shopware\Storefront\Page\Checkout\Confirm\CheckoutConfirmPageLoadedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -31,19 +30,15 @@ class CartConvertedSubscriber implements EventSubscriberInterface
 
     private EntityRepository $shippingMethodTranslationRepository;
 
-    private SystemConfigService $systemConfigService;
-
     private InPostConfigServiceInterface $inPostConfigService;
 
     public function __construct(
         RequestStack $requestStack,
         EntityRepository $shippingMethodTranslationRepository,
-        SystemConfigService $systemConfigService,
         InPostConfigServiceInterface $inPostConfigService
     ) {
         $this->requestStack = $requestStack;
         $this->shippingMethodTranslationRepository = $shippingMethodTranslationRepository;
-        $this->systemConfigService = $systemConfigService;
         $this->inPostConfigService = $inPostConfigService;
     }
 
