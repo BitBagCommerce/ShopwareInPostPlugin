@@ -17,12 +17,14 @@ Component.register('sw-order-detail-inpost-detail-card', {
     created() {
         const order = this.order;
 
-        this.getInPostResponseData(order)
-            .then((inPostResponse) => {
+        const response = this.getInPostResponseData(order);
+        if (response) {
+            response.then((inPostResponse) => {
                 if (inPostResponse) {
                     this.showCard = true;
                 }
             });
+        }
     },
     methods: {
         getInPostResponseData(order) {
