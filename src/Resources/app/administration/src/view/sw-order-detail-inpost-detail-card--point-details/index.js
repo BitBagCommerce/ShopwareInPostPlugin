@@ -1,4 +1,4 @@
-import template from './sw-order-detail-inpost-detail-card--create-package.html.twig';
+import template from './sw-order-detail-inpost-detail-card--point-details.html.twig';
 
 const { Component } = Shopware;
 
@@ -13,10 +13,12 @@ Component.register('sw-order-detail-inpost-detail-card--point-details', {
 
         this.removeInPostDetailCardIfNotFoundInPost(order);
 
-        this.getInPostResponseData(order)
-            .then((inPostResponse) => {
+        const response = this.getInPostResponseData(order);
+        if (response) {
+            response.then((inPostResponse) => {
                 this.setInPostDetailsData(inPostResponse);
             });
+        }
     },
     methods: {
         setInPostDetailsData(inPostResponseData) {

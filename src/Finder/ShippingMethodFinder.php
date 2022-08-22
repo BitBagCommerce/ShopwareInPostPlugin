@@ -15,7 +15,7 @@ use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\ContainsFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\IdSearchResult;
 
 final class ShippingMethodFinder implements ShippingMethodFinderInterface
@@ -29,14 +29,14 @@ final class ShippingMethodFinder implements ShippingMethodFinderInterface
 
     public function searchByShippingKey(Context $context): EntitySearchResult
     {
-        $criteria = (new Criteria())->addFilter(new ContainsFilter('name', ShippingMethodPayloadFactoryInterface::SHIPPING_KEY));
+        $criteria = (new Criteria())->addFilter(new EqualsFilter('customFields.technical_name', ShippingMethodPayloadFactoryInterface::SHIPPING_KEY));
 
         return $this->shippingMethodRepository->search($criteria, $context);
     }
 
     public function searchIdsByShippingKey(Context $context): IdSearchResult
     {
-        $criteria = (new Criteria())->addFilter(new ContainsFilter('name', ShippingMethodPayloadFactoryInterface::SHIPPING_KEY));
+        $criteria = (new Criteria())->addFilter(new EqualsFilter('customFields.technical_name', ShippingMethodPayloadFactoryInterface::SHIPPING_KEY));
 
         return $this->shippingMethodRepository->searchIds($criteria, $context);
     }
