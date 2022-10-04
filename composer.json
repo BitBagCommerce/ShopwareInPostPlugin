@@ -11,7 +11,7 @@
     ],
     "require": {
         "shopware/core": "6.4.*",
-        "shopware/platform": "6.4.*"
+        "shopware/storefront": "6.4.*"
     },
     "require-dev": {
         "psalm/plugin-symfony": "^3.1",
