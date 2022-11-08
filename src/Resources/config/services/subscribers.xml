@@ -15,7 +15,7 @@
 
         <service id="BitBag\ShopwareInPostPlugin\Subscriber\CheckoutFinishSubscriber"
         >
-            <argument type="service" id="shopware.app_system.guzzle" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Api\WebClient" />
 
             <tag name="kernel.event_subscriber" />
         </service>

@@ -10,19 +10,19 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Subscriber;
 
+use BitBag\ShopwareInPostPlugin\Api\WebClientInterface;
 use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodPayloadFactoryInterface;
-use GuzzleHttp\Client;
 use Shopware\Core\Framework\Struct\ArrayStruct;
 use Shopware\Storefront\Page\Checkout\Finish\CheckoutFinishPageLoadedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class CheckoutFinishSubscriber implements EventSubscriberInterface
 {
-    private Client $client;
+    private WebClientInterface $webClient;
 
-    public function __construct(Client $client)
+    public function __construct(WebClientInterface $webClient)
     {
-        $this->client = $client;
+        $this->webClient = $webClient;
     }
 
     public static function getSubscribedEvents(): array
@@ -48,19 +48,22 @@ final class CheckoutFinishSubscriber implements EventSubscriberInterface
 
     public function fetchPoint(CheckoutFinishPageLoadedEvent $event): array
     {
+        $headers = [
+            'Content-Type' => 'application/json',
+        ];
+
         /**
          * @psalm-suppress UndefinedMethod
          */
         $point = $event->getPage()->getOrder()->getExtensions()['inPost']['pointName'];
-        $url = 'https://api-pl-points.easypack24.net/v1/points/' . $point;
+        $url = WebClientInterface::IN_POST_POINT_DETAILS . $point;
 
-        $pointDetailsData = $this->client->request(
+        $pointDetailsData = $this->webClient->request(
             'GET',
-            $url
-        )->getBody()->getContents();
+            $url,
+            $headers
+        );
 
-        $pointDetails = json_decode($pointDetailsData, true);
-
-        return $pointDetails;
+        return json_decode($pointDetailsData, true);
     }
 }

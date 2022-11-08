@@ -24,6 +24,8 @@ interface WebClientInterface
 
     public const IN_POST_LOCKER_STANDARD_SERVICE = 'inpost_locker_standard';
 
+    public const IN_POST_POINT_DETAILS = 'https://api-pl-points.easypack24.net/v1/points/';
+
     public function request(
         string $method,
         string $url,
