@@ -16,6 +16,8 @@ interface WebClientInterface
 
     public const SANDBOX_API_ENDPOINT = 'https://sandbox-api-shipx-pl.easypack24.net';
 
+    public const IN_POST_API_POINTS_ENDPOINT = 'https://api-pl-points.easypack24.net/v1/points/';
+
     public const SANDBOX_ENVIRONMENT = 'sandbox';
 
     public const PRODUCTION_ENVIRONMENT = 'production';

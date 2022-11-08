@@ -12,5 +12,12 @@
 
             <tag name="kernel.event_subscriber" />
         </service>
+
+        <service id="BitBag\ShopwareInPostPlugin\Subscriber\CheckoutFinishSubscriber"
+        >
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Api\WebClient" />
+
+            <tag name="kernel.event_subscriber" />
+        </service>
     </services>
 </container>

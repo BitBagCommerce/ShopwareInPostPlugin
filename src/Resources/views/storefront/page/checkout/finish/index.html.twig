@@ -1,0 +1,26 @@
+{% sw_extends '@Storefront/storefront/page/checkout/finish/index.html.twig' %}
+
+{% block page_checkout_finish_details %}
+    {{ parent() }}
+    {% if context.shippingMethod.customFields.technical_name === constant('BitBag\\ShopwareInPostPlugin\\Factory\\ShippingMethodPayloadFactoryInterface::SHIPPING_KEY') %}
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0" style="margin-bottom: 8%;">
+                <div class="col-md-8" style="max-width: 25vh">
+                    <div class="card-body" >
+                        <h5 class="card-title"> {{ context.shippingMethod.name }}</h5>
+                        <p class="card-text">
+                            {{ page.extensions.point_details['name'] }} <br>
+                            {{ page.extensions.point_details['address_details']['street'] }}<br>
+                            {{ page.extensions.point_details['address_details']['post_code'] }}<br>
+                            {{ page.extensions.point_details['address_details']['city'] }} <br>
+                        </p>
+                        <p class="card-text"><small class="text-muted">{{ page.extensions.point_details['payment_point_descr'] }}</small></p>
+                    </div>
+                </div>
+                <div class="col-md-4" style="max-width: 15vh">
+                    <img src="{{ page.extensions.point_details['image_url'] }}" class="img-fluid rounded-start" style="max-width: 15vh" alt="{{ page.extensions.point_details['name'] }}">
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
