@@ -16,21 +16,19 @@ use Shopware\Core\Framework\Struct\ArrayStruct;
 use Shopware\Storefront\Page\Checkout\Finish\CheckoutFinishPageLoadedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-
 final class CheckoutFinishSubscriber implements EventSubscriberInterface
 {
     private Client $client;
 
-    public function __construct(Client $client )
+    public function __construct(Client $client)
     {
         $this->client = $client;
     }
 
-
     public static function getSubscribedEvents(): array
     {
         return [
-            CheckoutFinishPageLoadedEvent::class => 'checkoutFinishPageLoaded'
+            CheckoutFinishPageLoadedEvent::class => 'checkoutFinishPageLoaded',
         ];
     }
 
@@ -38,18 +36,23 @@ final class CheckoutFinishSubscriber implements EventSubscriberInterface
     {
         $shippingMethod = $event->getSalesChannelContext()->getShippingMethod()->getName();
 
-        if ($shippingMethod == ShippingMethodPayloadFactoryInterface::SHIPPING_KEY)
-        {
+        if (ShippingMethodPayloadFactoryInterface::SHIPPING_KEY === $shippingMethod) {
             $pointDetails = $this->fetchPoint($event);
 
+            /**
+             * @psalm-suppress DeprecatedMethod
+             */
             $event->getPage()->addExtension('point_details', new ArrayStruct($pointDetails));
         }
     }
 
     public function fetchPoint(CheckoutFinishPageLoadedEvent $event): array
     {
+        /**
+         * @psalm-suppress UndefinedMethod
+         */
         $point = $event->getPage()->getOrder()->getExtensions()['inPost']['pointName'];
-        $url = 'https://api-pl-points.easypack24.net/v1/points/'.$point;
+        $url = 'https://api-pl-points.easypack24.net/v1/points/' . $point;
 
         $pointDetailsData = $this->client->request(
             'GET',
