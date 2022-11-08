@@ -56,7 +56,7 @@ final class CheckoutFinishSubscriber implements EventSubscriberInterface
          * @psalm-suppress UndefinedMethod
          */
         $point = $event->getPage()->getOrder()->getExtensions()['inPost']['pointName'];
-        $url = WebClientInterface::IN_POST_POINT_DETAILS . $point;
+        $url = WebClientInterface::IN_POST_API_POINTS_ENDPOINT . $point;
 
         $pointDetailsData = $this->webClient->request(
             'GET',

@@ -16,6 +16,8 @@ interface WebClientInterface
 
     public const SANDBOX_API_ENDPOINT = 'https://sandbox-api-shipx-pl.easypack24.net';
 
+    public const IN_POST_API_POINTS_ENDPOINT = 'https://api-pl-points.easypack24.net/v1/points/';
+
     public const SANDBOX_ENVIRONMENT = 'sandbox';
 
     public const PRODUCTION_ENVIRONMENT = 'production';
@@ -23,8 +25,6 @@ interface WebClientInterface
     public const API_VERSION = 'v1';
 
     public const IN_POST_LOCKER_STANDARD_SERVICE = 'inpost_locker_standard';
-
-    public const IN_POST_POINT_DETAILS = 'https://api-pl-points.easypack24.net/v1/points/';
 
     public function request(
         string $method,
