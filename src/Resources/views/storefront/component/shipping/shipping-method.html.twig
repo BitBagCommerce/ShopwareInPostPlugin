@@ -14,7 +14,7 @@
     {% endif %}
 
     {% if (shipping.id is same as(context.shippingMethod.id)) and technicalName == constant('BitBag\\ShopwareInPostPlugin\\Factory\\ShippingMethodPayloadFactoryInterface::SHIPPING_KEY') %}
-        {% if page.extensions['BitBagShopwareInPostPlugin.inpost.inPostEnvironment'] == constant('BitBag\\ShopwareInPostPlugin\\Api\\WebClientInterface::PRODUCTION_ENVIRONMENT') %}
+        {% if page.extensions[constant('BitBag\\ShopwareInPostPlugin\\Config\\InPostConfigServiceInterface::SYSTEM_CONFIG_PREFIX')]['inPostEnvironment'] == constant('BitBag\\ShopwareInPostPlugin\\Api\\WebClientInterface::PRODUCTION_ENVIRONMENT') %}
             <link rel="stylesheet" href="https://geowidget.inpost.pl/inpost-geowidget.css"/>
             <script src="https://geowidget.inpost.pl/inpost-geowidget.js" defer></script>
         {% else %}
@@ -37,7 +37,7 @@
 
         <div class="data-inpost-plugin-map-container" data-inpost-plugin-map>
             <inpost-geowidget onpoint="afterPointSelected"
-                              token="{{ page.extensions['BitBagShopwareInPostPlugin.inpost.inPostWidgetToken'] }}"
+                              token="{{ page.extensions[constant('BitBag\\ShopwareInPostPlugin\\Config\\InPostConfigServiceInterface::SYSTEM_CONFIG_PREFIX')]['inPostWidgetToken'] }}"
                               language="pl"
                               config="parcelCollect"></inpost-geowidget>
         </div>

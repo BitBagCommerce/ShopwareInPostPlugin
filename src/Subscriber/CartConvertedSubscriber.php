@@ -105,9 +105,9 @@ class CartConvertedSubscriber implements EventSubscriberInterface
         $salesChannelId = $event->getSalesChannelContext()->getSalesChannelId();
         $configService = $this->inPostConfigService->getInPostApiConfig($salesChannelId);
 
-        $event->getPage()->setExtensions([
-            $systemConfigPrefix . '.inPostWidgetToken' => $configService->getWidgetToken(),
-            $systemConfigPrefix . '.inPostEnvironment' => $configService->getEnvironment(),
+        $event->getPage()->addArrayExtension($systemConfigPrefix, [
+            'inPostWidgetToken' => $configService->getWidgetToken(),
+            'inPostEnvironment' => $configService->getEnvironment(),
         ]);
     }
 
