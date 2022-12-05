@@ -26,6 +26,10 @@ interface WebClientInterface
 
     public const IN_POST_LOCKER_STANDARD_SERVICE = 'inpost_locker_standard';
 
+    public const SENDING_METHOD_PARCEL_LOCKER = 'parcel_locker';
+
+    public const SENDING_METHOD_DISPATCH_ORDER = 'dispatch_order';
+
     public function request(
         string $method,
         string $url,

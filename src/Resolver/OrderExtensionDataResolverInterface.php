@@ -14,6 +14,6 @@ use Shopware\Core\Checkout\Order\OrderEntity;
 
 interface OrderExtensionDataResolverInterface
 {
-    /** @return array ['id' => 'integer', 'pointName' => 'string', 'packageId' => 'integer'] */
+    /** @return array ['id' => 'integer', 'pointName' => 'string', 'packageId' => 'integer', 'sendingMethod' => 'string'] */
     public function resolve(OrderEntity $order): array;
 }

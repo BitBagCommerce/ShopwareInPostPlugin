@@ -1,10 +1,17 @@
 <?php
 
+/*
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start.
+ * You can find more information about us on https://bitbag.io and write us an email on hello@bitbag.io.
+ */
+
 declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Controller\Api;
 
 use BitBag\ShopwareInPostPlugin\Api\SalesChannelAwareWebClientInterface;
+use BitBag\ShopwareInPostPlugin\Api\WebClientInterface;
 use BitBag\ShopwareInPostPlugin\Extension\Content\Order\OrderInPostExtensionInterface;
 use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodPayloadFactoryInterface;
 use BitBag\ShopwareInPostPlugin\Finder\OrderFinderInterface;
@@ -209,6 +216,7 @@ final class OrderCourierController
                 ShippingMethodPayloadFactoryInterface::SHIPPING_KEY === $technicalName &&
                 null !== $inPostExtension &&
                 null !== $inPostExtension->get('packageId') &&
+                WebClientInterface::SENDING_METHOD_PARCEL_LOCKER !== $inPostExtension->get('sendingMethod') &&
                 0 === count($delivery->getTrackingCodes())
             ) {
                 $packagesIds[] = $inPostExtension->get('packageId');

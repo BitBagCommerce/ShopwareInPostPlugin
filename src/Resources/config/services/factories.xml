@@ -37,6 +37,7 @@
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Factory\Package\ParcelPayloadFactory" />
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Resolver\OrderCustomFieldsResolver" />
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Resolver\OrderExtensionDataResolver" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Config\InPostConfigService" />
         </service>
 
         <service id="BitBag\ShopwareInPostPlugin\Factory\RulePayloadFactory" />

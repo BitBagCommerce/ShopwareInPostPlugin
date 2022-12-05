@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace BitBag\ShopwareInPostPlugin\Factory\Package;
 
 use BitBag\ShopwareInPostPlugin\Api\WebClientInterface;
+use BitBag\ShopwareInPostPlugin\Config\InPostConfigServiceInterface;
 use BitBag\ShopwareInPostPlugin\Exception\PackageNotFoundException;
 use BitBag\ShopwareInPostPlugin\Provider\Defaults;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderCustomFieldsResolverInterface;
@@ -28,25 +29,34 @@ final class PackagePayloadFactory implements PackagePayloadFactoryInterface
 
     private OrderExtensionDataResolverInterface $orderExtensionDataResolver;
 
+    private InPostConfigServiceInterface $inPostConfigService;
+
     public function __construct(
         ReceiverPayloadFactoryInterface $createReceiverPayloadFactory,
         ParcelPayloadFactoryInterface $parcelPayloadFactory,
         OrderCustomFieldsResolverInterface $orderCustomFieldsResolver,
-        OrderExtensionDataResolverInterface $orderExtensionDataResolver
+        OrderExtensionDataResolverInterface $orderExtensionDataResolver,
+        InPostConfigServiceInterface $inPostConfigService
     ) {
         $this->createReceiverPayloadFactory = $createReceiverPayloadFactory;
         $this->createParcelPayloadFactory = $parcelPayloadFactory;
         $this->orderCustomFieldsResolver = $orderCustomFieldsResolver;
         $this->orderExtensionDataResolver = $orderExtensionDataResolver;
+        $this->inPostConfigService = $inPostConfigService;
     }
 
-    public function create(OrderEntity $order, Context $context): array
-    {
+    public function create(
+        OrderEntity $order,
+        Context $context,
+        ?string $salesChannelId = null
+    ): array {
         $orderInPostExtensionData = $this->orderExtensionDataResolver->resolve($order);
 
         if (!isset($orderInPostExtensionData['pointName'])) {
             throw new PackageNotFoundException('package.pointNameNotFound');
         }
+
+        $sendingMethod = $this->inPostConfigService->getInPostApiConfig($salesChannelId)->getSendingMethod();
 
         $data = [
             'receiver' => $this->createReceiverPayloadFactory->create($order),
@@ -58,6 +68,18 @@ final class PackagePayloadFactory implements PackagePayloadFactoryInterface
                 'target_point' => $orderInPostExtensionData['pointName'],
             ],
         ];
+
+        if (WebClientInterface::SENDING_METHOD_DISPATCH_ORDER == $sendingMethod) {
+            $data['custom_attributes'] = [
+                'target_point' => $orderInPostExtensionData['pointName'],
+                'sending_method' => WebClientInterface::SENDING_METHOD_DISPATCH_ORDER,
+            ];
+        } elseif (WebClientInterface::SENDING_METHOD_PARCEL_LOCKER == $sendingMethod) {
+            $data['custom_attributes'] = [
+                'target_point' => $orderInPostExtensionData['pointName'],
+                'sending_method' => WebClientInterface::SENDING_METHOD_PARCEL_LOCKER,
+            ];
+        }
 
         $data = $this->addInsurance($data, $order);
 

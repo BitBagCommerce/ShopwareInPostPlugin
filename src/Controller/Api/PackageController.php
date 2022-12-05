@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace BitBag\ShopwareInPostPlugin\Controller\Api;
 
 use BitBag\ShopwareInPostPlugin\Api\PackageApiServiceInterface;
+use BitBag\ShopwareInPostPlugin\Config\InPostConfigServiceInterface;
 use BitBag\ShopwareInPostPlugin\Exception\PackageException;
 use BitBag\ShopwareInPostPlugin\Finder\OrderFinderInterface;
 use BitBag\ShopwareInPostPlugin\Resolver\OrderExtensionDataResolverInterface;
@@ -35,16 +36,20 @@ final class PackageController
 
     private OrderExtensionDataResolverInterface $orderExtensionDataResolver;
 
+    private InPostConfigServiceInterface $inPostConfigService;
+
     public function __construct(
         EntityRepository $orderRepository,
         OrderFinderInterface $orderFinder,
         PackageApiServiceInterface $packageApiService,
-        OrderExtensionDataResolverInterface $orderExtensionDataResolver
+        OrderExtensionDataResolverInterface $orderExtensionDataResolver,
+        InPostConfigServiceInterface $inPostConfigService
     ) {
         $this->orderRepository = $orderRepository;
         $this->orderFinder = $orderFinder;
         $this->packageApiService = $packageApiService;
         $this->orderExtensionDataResolver = $orderExtensionDataResolver;
+        $this->inPostConfigService = $inPostConfigService;
     }
 
     /**
@@ -76,11 +81,17 @@ final class PackageController
      * )
      * @Route("/api/_action/bitbag-inpost-plugin/package/{orderId}", name="api.action.bitbag_inpost_plugin.package", methods={"POST"})
      */
-    public function create(string $orderId, Context $context): JsonResponse
-    {
+
+    public function create(
+        string $orderId,
+        Context $context,
+        ?string $salesChannelId = null
+    ): JsonResponse {
         $order = $this->orderFinder->getWithAssociations($orderId, $context);
 
         $package = $this->packageApiService->createPackage($order, $context);
+
+        $sendingMethod = $this->inPostConfigService->getInPostApiConfig($salesChannelId)->getSendingMethod();
 
         $orderInPostExtensionData = $this->orderExtensionDataResolver->resolve($order);
 
@@ -94,6 +105,7 @@ final class PackageController
                 'inPost' => [
                     'id' => $orderInPostExtensionData['id'],
                     'packageId' => $package['id'],
+                    'sendingMethod' => $sendingMethod,
                 ],
             ],
         ], $context);

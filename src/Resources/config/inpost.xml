@@ -53,5 +53,25 @@
             <placeholder lang="pl-PL">Token do mapy (widgetu)</placeholder>
             <required>true</required>
         </input-field>
+        <input-field type="single-select">
+            <name>inPostSendingMethod</name>
+            <label>Sending method</label>
+            <label lang="pl-PL">Metoda nadania</label>
+            <placeholder>Choose sending method</placeholder>
+            <placeholder lang="pl-PL">Wybierz metodę nadania</placeholder>
+            <options>
+                <option>
+                    <id>dispatch_order</id>
+                    <name>Pickup by courier</name>
+                    <name lang="pl-PL">Odebranie przez kuriera</name>
+                </option>
+                <option>
+                    <id>parcel_locker</id>
+                    <name>Parcel locker</name>
+                    <name lang="pl-PL">Nadanie w paczkomacie</name>
+                </option>
+            </options>
+            <required>true</required>
+        </input-field>
     </card>
 </config>
