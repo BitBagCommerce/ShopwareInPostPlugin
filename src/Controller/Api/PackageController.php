@@ -81,7 +81,6 @@ final class PackageController
      * )
      * @Route("/api/_action/bitbag-inpost-plugin/package/{orderId}", name="api.action.bitbag_inpost_plugin.package", methods={"POST"})
      */
-
     public function create(
         string $orderId,
         Context $context,
