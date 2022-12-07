@@ -38,7 +38,7 @@ final class OrderInPostExtensionDefinition extends EntityDefinition
             new IntField('package_id', 'packageId'),
             new FkField('order_id', 'orderId', OrderDefinition::class),
             new OneToOneAssociationField('order', 'order_id', 'id', OrderDefinition::class, false),
-            new StringField('sending_method', 'sendingMethod', 20),
+            new StringField('sending_method', 'sendingMethod'),
         ]);
     }
 }

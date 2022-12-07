@@ -56,8 +56,6 @@ final class PackagePayloadFactory implements PackagePayloadFactoryInterface
             throw new PackageNotFoundException('package.pointNameNotFound');
         }
 
-        $sendingMethod = $this->inPostConfigService->getInPostApiConfig($salesChannelId)->getSendingMethod();
-
         $data = [
             'receiver' => $this->createReceiverPayloadFactory->create($order),
             'parcels' => [
@@ -69,18 +67,7 @@ final class PackagePayloadFactory implements PackagePayloadFactoryInterface
             ],
         ];
 
-        if (WebClientInterface::SENDING_METHOD_DISPATCH_ORDER == $sendingMethod) {
-            $data['custom_attributes'] = [
-                'target_point' => $orderInPostExtensionData['pointName'],
-                'sending_method' => WebClientInterface::SENDING_METHOD_DISPATCH_ORDER,
-            ];
-        } elseif (WebClientInterface::SENDING_METHOD_PARCEL_LOCKER == $sendingMethod) {
-            $data['custom_attributes'] = [
-                'target_point' => $orderInPostExtensionData['pointName'],
-                'sending_method' => WebClientInterface::SENDING_METHOD_PARCEL_LOCKER,
-            ];
-        }
-
+        $data = $this->checkSendingMethod($data, $salesChannelId);
         $data = $this->addInsurance($data, $order);
 
         return $data;
@@ -94,6 +81,23 @@ final class PackagePayloadFactory implements PackagePayloadFactoryInterface
             $data['insurance'] = [
                 'amount' => $customFieldInsurance,
                 'currency' => Defaults::CURRENCY,
+            ];
+        }
+
+        return $data;
+    }
+
+    private function checkSendingMethod(array $data, ?string $salesChannelId): array
+    {
+        $sendingMethod = $this->inPostConfigService->getInPostApiConfig($salesChannelId)->getSendingMethod();
+
+        if (WebClientInterface::SENDING_METHOD_DISPATCH_ORDER == $sendingMethod) {
+            $data['custom_attributes'] = [
+                'sending_method' => WebClientInterface::SENDING_METHOD_DISPATCH_ORDER,
+            ];
+        } elseif (WebClientInterface::SENDING_METHOD_PARCEL_LOCKER == $sendingMethod) {
+            $data['custom_attributes'] = [
+                'sending_method' => WebClientInterface::SENDING_METHOD_PARCEL_LOCKER,
             ];
         }
 

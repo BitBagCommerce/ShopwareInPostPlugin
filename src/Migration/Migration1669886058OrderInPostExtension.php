@@ -17,7 +17,7 @@ class Migration1669886058OrderInPostExtension extends MigrationStep
     public function update(Connection $connection): void
     {
         $connection->executeStatement('ALTER TABLE `bitbag_inpost_point_order_extension`
-    ADD COLUMN `sending_method` VARCHAR(20) NULL');
+    ADD COLUMN `sending_method` VARCHAR(255) NULL');
     }
 
     public function updateDestructive(Connection $connection): void

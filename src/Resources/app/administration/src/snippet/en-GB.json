@@ -55,11 +55,11 @@
         "titleOrder": "order",
         "titleOrders": "orders",
         "redBackgroundTitle": "Red background",
-        "redBackgroundDescription": "The order(s) does not have a shipping method equal to InPost or the order(s) don't have created InPost package",
+        "redBackgroundDescription": "The order(s) shipping method is not InPost or the order(s) don't have created InPost package",
         "greenBackgroundTitle": "Green background",
         "greenBackgroundDescription": "A courier for this package(s) has already been ordered",
         "yellowBackgroundTitle": "Yellow background",
-        "yellowBackgroundDescription": "The order(s) have a shipping method equal to InPost, but the package has selected parcel locker as sending method",
+        "yellowBackgroundDescription": "The order(s) shipping method is InPost but the package's sending method is set to parcel locker",
         "grid": {
             "orderNumber": "Order number",
             "salesChannel": "Sales Channel",

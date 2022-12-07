@@ -65,6 +65,13 @@ final class PackageController
      *         in="path",
      *         required=true
      *     ),
+     *      @OA\Parameter(
+     *         name="salesChannelId",
+     *         description="Sales channel identifier",
+     *         @OA\Schema(type="string", pattern="^[0-9a-f]{32}$"),
+     *         in="path",
+     *         required=false
+     *     ),
      *     @OA\Response(
      *         response="201",
      *         description="Package created successfully.",
@@ -87,11 +94,8 @@ final class PackageController
         ?string $salesChannelId = null
     ): JsonResponse {
         $order = $this->orderFinder->getWithAssociations($orderId, $context);
-
         $package = $this->packageApiService->createPackage($order, $context);
-
         $sendingMethod = $this->inPostConfigService->getInPostApiConfig($salesChannelId)->getSendingMethod();
-
         $orderInPostExtensionData = $this->orderExtensionDataResolver->resolve($order);
 
         if (null !== $orderInPostExtensionData['packageId']) {
