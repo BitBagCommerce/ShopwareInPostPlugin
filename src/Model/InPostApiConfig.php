@@ -20,16 +20,20 @@ final class InPostApiConfig
 
     private string $widgetToken;
 
+    private string $sendingMethod;
+
     public function __construct(
         string $organizationId,
         string $accessToken,
         string $environment,
-        string $widgetToken
+        string $widgetToken,
+        string $sendingMethod
     ) {
         $this->organizationId = $organizationId;
         $this->accessToken = $accessToken;
         $this->environment = $environment;
         $this->widgetToken = $widgetToken;
+        $this->sendingMethod = $sendingMethod;
     }
 
     public function getOrganizationId(): string
@@ -50,5 +54,10 @@ final class InPostApiConfig
     public function getWidgetToken(): string
     {
         return $this->widgetToken;
+    }
+
+    public function getSendingMethod(): string
+    {
+        return $this->sendingMethod;
     }
 }

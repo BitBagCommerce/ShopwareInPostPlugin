@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BitBag\ShopwareInPostPlugin\Tests\Factory\Package;
 
 use BitBag\ShopwareInPostPlugin\Api\WebClientInterface;
+use BitBag\ShopwareInPostPlugin\Config\InPostConfigService;
 use BitBag\ShopwareInPostPlugin\Factory\Package\PackagePayloadFactory;
 use BitBag\ShopwareInPostPlugin\Factory\Package\ParcelPayloadFactoryInterface;
 use BitBag\ShopwareInPostPlugin\Factory\Package\ReceiverPayloadFactory;
@@ -16,6 +17,7 @@ use PHPUnit\Framework\TestCase;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\Struct\ArrayEntity;
 use Shopware\Core\Framework\Uuid\Uuid;
+use Shopware\Core\System\SystemConfig\SystemConfigService;
 
 final class PackagePayloadFactoryTest extends TestCase
 {
@@ -83,11 +85,18 @@ final class PackagePayloadFactoryTest extends TestCase
                                   ->method('create')
                                   ->willReturn($parcelPayloadFactoryData);
 
+        $systemConfigService = $this->createMock(SystemConfigService::class);
+        $systemConfigService->method('getString')
+            ->willReturn(Uuid::randomHex());
+
+        $inPostConfigService = new InPostConfigService($systemConfigService);
+
         $packagePayloadFactory = new PackagePayloadFactory(
             $createReceiverPayloadFactory,
             $parcelPayloadFactory,
             new OrderCustomFieldsResolver(),
-            new OrderExtensionDataResolver()
+            new OrderExtensionDataResolver(),
+            $inPostConfigService
         );
 
         self::assertEquals(

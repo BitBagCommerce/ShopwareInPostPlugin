@@ -10,6 +10,7 @@
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Finder\OrderFinder" />
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Api\PackageApiService" />
             <argument type="service" id="BitBag\ShopwareInPostPlugin\Resolver\OrderExtensionDataResolver" />
+            <argument type="service" id="BitBag\ShopwareInPostPlugin\Config\InPostConfigService" />
 
             <tag name="controller.service_arguments"/>
         </service>

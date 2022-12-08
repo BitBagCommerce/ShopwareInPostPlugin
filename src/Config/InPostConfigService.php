@@ -29,8 +29,9 @@ final class InPostConfigService implements InPostConfigServiceInterface
         $accessToken = $this->systemConfigService->getString(self:: SYSTEM_CONFIG_PREFIX . '.inPostAccessToken', $salesChannelId) ?: null;
         $environment = $this->systemConfigService->getString(self:: SYSTEM_CONFIG_PREFIX . '.inPostEnvironment', $salesChannelId) ?: null;
         $widgetToken = $this->systemConfigService->getString(self:: SYSTEM_CONFIG_PREFIX . '.inPostWidgetToken', $salesChannelId) ?: null;
+        $sendingMethod = $this->systemConfigService->getString(self:: SYSTEM_CONFIG_PREFIX . '.inPostSendingMethod', $salesChannelId) ?: null;
 
-        if (null === $organizationId || null === $accessToken || null === $environment || null === $widgetToken) {
+        if (null === $organizationId || null === $accessToken || null === $environment || null === $widgetToken || null === $sendingMethod) {
             throw new MissingApiConfigException('api.credentialsDataNotFound');
         }
 
@@ -38,7 +39,8 @@ final class InPostConfigService implements InPostConfigServiceInterface
             $organizationId,
             $accessToken,
             $environment,
-            $widgetToken
+            $widgetToken,
+            $sendingMethod
         );
     }
 }

@@ -1,10 +1,17 @@
 <?php
 
+/*
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start.
+ * You can find more information about us on https://bitbag.io and write us an email on hello@bitbag.io.
+ */
+
 declare(strict_types=1);
 
 namespace BitBag\ShopwareInPostPlugin\Controller\Api;
 
 use BitBag\ShopwareInPostPlugin\Api\SalesChannelAwareWebClientInterface;
+use BitBag\ShopwareInPostPlugin\Api\WebClientInterface;
 use BitBag\ShopwareInPostPlugin\Extension\Content\Order\OrderInPostExtensionInterface;
 use BitBag\ShopwareInPostPlugin\Factory\ShippingMethodPayloadFactoryInterface;
 use BitBag\ShopwareInPostPlugin\Finder\OrderFinderInterface;
@@ -112,10 +119,8 @@ final class OrderCourierController
             return new JsonResponse(['error' => true, 'message' => 'popup.providedDataNotValid']);
         }
 
-        $dataFromOrders = $this->getPackageAndOrderIds($ordersIds, $context);
-
-        $packagesIds = $dataFromOrders['packagesIds'];
-        $ordersIdsInPostOnly = $dataFromOrders['ordersIdsInPostOnly'];
+        $packagesIds = $this->getPackageIds($ordersIds, $context);
+        $ordersIdsInPostOnly = $this->getOrderIds($ordersIds, $context);
 
         if ([] === $packagesIds || [] === $ordersIdsInPostOnly) {
             return new JsonResponse(['error' => true, 'message' => 'popup.notFoundOrderForCourierOrCourierOrdered'], Response::HTTP_BAD_REQUEST);
@@ -173,12 +178,11 @@ final class OrderCourierController
             );
     }
 
-    private function getPackageAndOrderIds(array $ordersIds, Context $context): array
+    private function getOrders(array $ordersIds, Context $context): array
     {
         $orders = $this->orderFinder->getWithAssociationsByOrdersIds($ordersIds, $context);
 
-        $packagesIds = [];
-        $ordersIdsInPostOnly = [];
+        $ordersInPostOnly = [];
 
         /** @var OrderEntity $order */
         foreach ($orders->getElements() as $order) {
@@ -209,16 +213,43 @@ final class OrderCourierController
                 ShippingMethodPayloadFactoryInterface::SHIPPING_KEY === $technicalName &&
                 null !== $inPostExtension &&
                 null !== $inPostExtension->get('packageId') &&
+                WebClientInterface::SENDING_METHOD_PARCEL_LOCKER !== $inPostExtension->get('sendingMethod') &&
                 0 === count($delivery->getTrackingCodes())
             ) {
-                $packagesIds[] = $inPostExtension->get('packageId');
-                $ordersIdsInPostOnly[] = $order->getId();
+                $ordersInPostOnly[] = $order;
             }
         }
 
-        return [
-            'packagesIds' => $packagesIds,
-            'ordersIdsInPostOnly' => $ordersIdsInPostOnly,
-        ];
+        return $ordersInPostOnly;
+    }
+
+    private function getOrderIds(array $ordersIds, Context $context): array
+    {
+        $ordersInPostOnly = $this->getOrders($ordersIds, $context);
+        $orderIdsInPostOnly = [];
+
+        /** @var OrderEntity $order */
+        foreach ($ordersInPostOnly as $order) {
+            $orderIdsInPostOnly[] = $order->getId();
+        }
+
+        return $orderIdsInPostOnly;
+    }
+
+    private function getPackageIds(array $ordersIds, Context $context): array
+    {
+        $ordersInPostOnly = $this->getOrders($ordersIds, $context);
+        $packagesIds = [];
+
+        /** @var OrderEntity $order */
+        foreach ($ordersInPostOnly as $order) {
+            /** @var ArrayEntity|null $inPostExtension */
+            $inPostExtension = $order->getExtension(OrderInPostExtensionInterface::PROPERTY_KEY);
+            if (null !== $inPostExtension) {
+                $packagesIds[] = $inPostExtension->get('packageId');
+            }
+        }
+
+        return $packagesIds;
     }
 }

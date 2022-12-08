@@ -58,6 +58,8 @@
         "redBackgroundDescription": "Zamówienia nie mają metody wysyłki InPost albo nie mają utworzonej paczki",
         "greenBackgroundTitle": "Zielone tło",
         "greenBackgroundDescription": "Kurier został już zamówiony dla tego zamówienia",
+        "yellowBackgroundTitle": "Żółte tło",
+        "yellowBackgroundDescription": "Zamówienia mają metodę wysłki InPost i mają utworzoną paczkę, ale zamówienie ma wybraną metodę nadania jako nadanie w paczkomacie.",
         "grid": {
             "orderNumber": "Numer zamówienia",
             "salesChannel": "Kanał sprzedaży",
