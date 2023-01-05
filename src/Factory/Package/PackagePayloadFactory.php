@@ -93,15 +93,11 @@ final class PackagePayloadFactory implements PackagePayloadFactoryInterface
 
         switch ($sendingMethod) {
             case WebClientInterface::SENDING_METHOD_DISPATCH_ORDER:
-                $data['custom_attributes'] = [
-                    'sending_method' => WebClientInterface::SENDING_METHOD_DISPATCH_ORDER,
-                ];
+                $data['custom_attributes']['sending_method'] = WebClientInterface::SENDING_METHOD_DISPATCH_ORDER;
 
                 break;
             case WebClientInterface::SENDING_METHOD_PARCEL_LOCKER:
-                $data['custom_attributes'] = [
-                    'sending_method' => WebClientInterface::SENDING_METHOD_PARCEL_LOCKER,
-                ];
+                $data['custom_attributes']['sending_method'] = WebClientInterface::SENDING_METHOD_PARCEL_LOCKER;
 
                 break;
         }
