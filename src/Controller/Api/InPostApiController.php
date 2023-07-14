@@ -12,14 +12,13 @@ namespace BitBag\ShopwareInPostPlugin\Controller\Api;
 
 use BitBag\ShopwareInPostPlugin\Api\TestWebClientInterface;
 use OpenApi\Annotations as OA;
-use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @RouteScope(scopes={"api"})
+ * @Route(defaults={"_routeScope"={"api"}})
  */
 final class InPostApiController
 {
