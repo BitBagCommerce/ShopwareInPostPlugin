@@ -13,17 +13,19 @@ namespace BitBag\ShopwareInPostPlugin\Resolver;
 use BitBag\ShopwareInPostPlugin\Exception\Order\OrderExtensionNotFoundException;
 use BitBag\ShopwareInPostPlugin\Extension\Content\Order\OrderInPostExtensionInterface;
 use Shopware\Core\Checkout\Order\OrderEntity;
+use Shopware\Core\Framework\Struct\ArrayEntity;
 
 final class OrderExtensionDataResolver implements OrderExtensionDataResolverInterface
 {
     public function resolve(OrderEntity $order): array
     {
+        /** @var ArrayEntity $orderExtension */
         $orderExtension = $order->getExtension(OrderInPostExtensionInterface::PROPERTY_KEY);
 
         if (null === $orderExtension) {
             throw new OrderExtensionNotFoundException('order.extension.notFound');
         }
 
-        return $orderExtension->getVars()['data'];
+        return $orderExtension->getVars();
     }
 }
