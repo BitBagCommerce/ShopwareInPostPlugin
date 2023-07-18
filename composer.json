@@ -14,7 +14,7 @@
         "shopware/storefront": "6.5.*"
     },
     "require-dev": {
-        "psalm/plugin-symfony": "^3.1",
+        "psalm/plugin-symfony": "^4.0.4",
         "bitbag/coding-standard": "^1.0",
         "phpunit/phpunit": "^9.5"
     },
