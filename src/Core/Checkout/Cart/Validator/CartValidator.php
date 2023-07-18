@@ -53,7 +53,7 @@ final class CartValidator implements CartValidatorInterface
             return;
         }
 
-        $postCode = $address->getZipcode();
+        $postCode = $address->getZipcode() ?? '';
 
         $this->checkPostCodeValidity($postCode, $address->getId(), $errors);
 

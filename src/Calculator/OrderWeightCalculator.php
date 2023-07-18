@@ -41,11 +41,14 @@ final class OrderWeightCalculator implements OrderWeightCalculatorInterface
         $products = array_map(fn (OrderLineItemEntity $item) => $item->getProduct(), $orderLineItems);
         $products = array_filter($products);
         $parentIds = array_filter($products, fn (ProductEntity $product) => null !== $product->getParentId());
-        $parentProducts = $this->productRepository->search(
-            new Criteria(array_column($parentIds, 'parentId')),
-            $context
-        );
-        $parentProducts = $parentProducts->getElements();
+
+        if ($parentIds) {
+            $parentProducts = $this->productRepository->search(
+                new Criteria(array_column($parentIds, 'parentId')),
+                $context
+            );
+            $parentProducts = $parentProducts->getElements();
+        }
 
         foreach ($orderLineItems as $item) {
             $product = $item->getProduct();
