@@ -44,11 +44,11 @@ final class OrderFinder implements OrderFinderInterface
 
         $order = $this->orderRepository->search($orderCriteria, $context)->first();
 
-        if (null === $order) {
-            throw new OrderNotFoundException('order.notFound');
+        if ($order instanceof OrderEntity) {
+            return $order;
         }
 
-        return $order;
+        throw new OrderNotFoundException('order.notFound');
     }
 
     public function getWithAssociationsByOrdersIds(array $ordersIds, Context $context): EntitySearchResult

@@ -19,7 +19,7 @@ final class OrderExtensionDataResolver implements OrderExtensionDataResolverInte
 {
     public function resolve(OrderEntity $order): array
     {
-        /** @var ArrayEntity $orderExtension */
+        /** @var ArrayEntity|null $orderExtension */
         $orderExtension = $order->getExtension(OrderInPostExtensionInterface::PROPERTY_KEY);
 
         if (null === $orderExtension) {
